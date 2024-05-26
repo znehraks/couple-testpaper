@@ -10,7 +10,7 @@ const QuestionList = ({ questions }: QuestionListProps) => (
   <QuestionsContainer>
     {questions.map((question, index) => (
       <motion.div key={index} initial={{ x: -100 }} animate={{ x: 0 }}>
-        {index + 1}. {question}
+        {question} 
       </motion.div>
     ))}
   </QuestionsContainer>

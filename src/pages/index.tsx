@@ -1,37 +1,66 @@
-/** @jsxImportSource @emotion/react */
-import { useState } from 'react';
+import { Layout } from '@/components/Layout';
+import { HeartIcon, ParentIcon } from '@/components/icons/Icon';
+import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import Questionnaire from '../components/Questionnaire';
-import QuestionList from '../components/QuestionList';
-import { Container } from '../components/styles';
+import { useRouter } from 'next/router';
 
 export default function Home() {
-  const [questions, setQuestions] = useState<string[]>([]);
-
-  const handleQuestionnaireSubmit = async (answers: { [key: string]: string }) => {
-    const response = await fetch('/api/generate-questions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ answers }),
-    });
-
-    const data = await response.json();
-    console.log('data', data);
-    setQuestions(data.questions);
-  };
-
+  const router = useRouter();
   return (
-    <Container>
-      <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        연애고사 문제 생성기
-      </motion.h1>
-      {questions.length === 0 ? (
-        <Questionnaire onSubmit={handleQuestionnaireSubmit} />
-      ) : (
-        <QuestionList questions={questions} />
-      )}
-    </Container>
+    <Layout>
+      <StyledHomeContent initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <StyledHomeTitle>출제를 원하는 시험 유형을 선택해주세요.</StyledHomeTitle>
+        <StyledMenuContainer>
+          <StyledMenu
+            onClick={() => {
+              router.push('/couple-test');
+            }}
+          >
+            <HeartIcon size={42} />
+            <div>연애고사</div>
+          </StyledMenu>
+          <StyledMenu
+            onClick={() => {
+              router.push('/couple-test');
+            }}
+          >
+            <ParentIcon size={42} />
+            <div>부모님고사</div>
+          </StyledMenu>
+        </StyledMenuContainer>
+      </StyledHomeContent>
+    </Layout>
   );
 }
+const StyledHomeContent = styled(motion.div)`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+`;
+
+const StyledHomeTitle = styled.h1`
+  font-size: 32px;
+  text-align: center;
+`;
+
+const StyledMenuContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const StyledMenu = styled.div`
+  width: 120px;
+  height: 120px;
+  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  gap: 8px;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
+`;

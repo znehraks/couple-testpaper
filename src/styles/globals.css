@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'NanumBaeEunHyeCe';
+  src: url('/NanumBaeEunHyeCe.ttf') format('trueType');
+}
+
+body {
+  font-family: 'NanumBaeEunHyeCe';
+}

@@ -24,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         {
           role: 'system',
           content: `You are a test question creator who uses the answers provided by users to create a quiz that requires the other party to guess the answers given by the user.
-            For example, if a user said he likes kimbap, an example of a test question you should ask is, What is this user's favorite food? 1. Pizza 2. Chicken 3. Gimbap The questions must be presented in multiple choice or descriptive form.`,
+            For example, if a user said he likes kimbap, an example of a test question you should ask is, What is this user's favorite food? 1. Pizza 2. Chicken 3. Gimbap The questions must be presented in multiple choice or descriptive form. And all answers must be written in Korean. And separate each questions with /`,
         },
         {
           role: 'user',
@@ -34,8 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       max_tokens: 500,
     });
 
-    const questions = response.choices[0].message?.content?.trim().split('\n') || [];
-
+    const questions = response.choices[0].message?.content?.trim().split('/') || [];
     res.status(200).json({ questions });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
