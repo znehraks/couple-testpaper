@@ -1,16 +1,27 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Intro } from './Intro';
+import { Step } from './Step';
+import { ITestQuestion } from '@/types/utils';
+import {
+  accomodation,
+  colors,
+  currentStatus,
+  drinkFood,
+  drinkKakaotalk,
+  movies,
+  restaurant,
+  schoolDays,
+  simulation,
+  weekendActivity,
+} from '@/data/data';
 
-type QuestionnaireProps = {
-  onSubmit: (answers: { [key: string]: string }) => void;
-};
-
-const fixedQuestions = [
-  '당신의 이름은?', // 주관식
-  '나는 지금?', // 솔로, 연애중, 결혼, 이혼, 미혼, 기타 ??
+// 반드시 포함해야할 질문
+const requiredQuestions = [
+  ['당신의 이름은?', []], // 주관식
+  ['나는 지금?', currentStatus],
 ];
 // 답변을 비슷하게 한 사람 매칭 기능
 
@@ -23,39 +34,76 @@ const fixedQuestions = [
 
 // 시험지는 최대한 진짜 시험지 같이 디자인해서 만들기
 
-const likeQuestions = [];
-
-const questions = [
-  '이 중에 내가 가장 좋아하는 영화는?', // 최근에 개봉한 영화들 3개, 이 중에 없다 1개
-  '이 중에 내가 가장 좋아하는 음식은?', // 한식, 중식, 일식, 양식, 에 포함되는 음식 3개, 이 중에 없다 1개
-  '연예시뮬레이션 예능은?', // 이젠 지겹다, 딱히 관심 없다, 아직 재미있다, 매번 기대된다.
-
-  '주말에 주로 나는?', // 집에서 쉰다, 친구들과 만난다, 데이트한다, 취미생활을 한다.
-  '연인끼리 여행을 간다면 숙소는?', // 호텔, 에어비앤비, 펜션, 노숙, 모텔, 중 3개 이 중에 없다.
-  '학창시절 나는?', // 인싸, 아싸, 둘 다 아니다.
-  '술자리에서 연인에게 카톡이 왔을때 나는?', // 바로 읽고 답장, 읽고 나중에 답장, 읽지 않고 나중에 답장, 읽고 답장하지 않는다.
+const multipleChoiceQuestions = [
+  ['내가 가장 좋아하는 영화는?', movies], // 4개 랜덤 + 이 중에 없다.
+  ['오늘은 소개팅 당일 날, 내가 예약할 식당은?', restaurant],
+  ['연인과 술집에 왔다. 내가 시킬 안주는?', drinkFood], // 4개 랜덤 + 이 중에 없다.
 ];
 
+const fiveChoiceQuestions = [
+  ['나에게 연예시뮬레이션 예능(하트O그널, 나는O로, 솔로O옥 등...)이란?', simulation],
+  ['주말에 주로 나는?', weekendActivity],
+  ['연인끼리 여행을 간다면 숙소는?', accomodation],
+  ['학창시절 나는?', schoolDays],
+  ['술자리에서 연인에게 카톡이 왔을때 나는?', drinkKakaotalk],
+];
+
+const commonQuestions = [
+  [
+    '내가 가장 감동할 때는?',
+    [
+      '기쁜날 같이 기뻐해줄 때',
+      '슬픈날 같이 슬퍼해줄 때',
+      '화난날 같이 화내줄 때',
+      '무서울 때 옆에서 지켜줄 때',
+      '그냥 가만히 둘 때',
+    ],
+  ],
+];
+
+const soloQuestions = [
+  ['나는 연애를 시작할 때', ['천천히', '빠르게']],
+  ['나는 연애를 끝낼 때', ['천천히', '빠르게']],
+  ['나는 연인과의 관계를 정의할 때', ['천천히', '빠르게']],
+]; // 솔로, 기타에 해당
+
+const coupleQuestions = [
+  ['너와 처음 만난 날 내가 입었던 상의의 색깔은?', colors],
+  ['너가 내게 처음으로 사랑한다고 말한 날은?', []],
+  ['너가 내게 처음으로 사랑한다고 말한 장소는?', []],
+]; // 연애중, 결혼에 해당
+
+const marriedQuestions = [['프로포즈 당시 내가 입었던 옷의 색깔은?', colors]];
+
 const simulationQuestions = [];
-
-const Questionnaire = ({ onSubmit }: QuestionnaireProps) => {
+interface IQuestionnaireProps {
+  onSubmit: (result: ITestQuestion[]) => void;
+}
+const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
   const [step, setStep] = useState<number>(0);
-  const [answers, setAnswers] = useState<{ [key: string]: string }>({});
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, question: string) => {
-    setAnswers({
-      ...answers,
-      [question]: e.target.value,
+  const [questions, setQuestions] = useState<(string | string[])[][]>([]);
+  const [answers, setAnswers] = useState<(number | string)[]>([]);
+
+  // 문제 바꾸기 혹은 선지 바꾸기 기능 추가하기
+  // 문제를 드래그 앤 드롭으로 선택할 수 있도록 기능 추가?
+  useEffect(() => {
+    const selectedMultipleChoiceQuestions = multipleChoiceQuestions.map((question) => {
+      const choices = question[1] as string[];
+      const shuffled = choices.sort(() => Math.random() - 0.5);
+      return [question[0], [...shuffled.slice(0, 4), '이 중에 없다']];
     });
-  };
-
-  const handleSubmit = () => {
-    onSubmit(answers);
-  };
-
+    console.log('selectedMultipleChoiceQuestions', selectedMultipleChoiceQuestions);
+    const selectedFiveChoiceQuestions = fiveChoiceQuestions.map((question) => {
+      return [question[0], question[1]];
+    });
+    console.log('selectedFiveChoiceQuestions', selectedFiveChoiceQuestions);
+    setQuestions([...requiredQuestions, ...selectedMultipleChoiceQuestions, ...selectedFiveChoiceQuestions]);
+  }, []);
+  console.log('questions', questions);
   return (
     <StyledContentWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       {step === 0 && <Intro setStep={setStep} />}
-      {step > 0 && <>문제들</>}
+      {step > 0 && <Step step={step} setStep={setStep} questions={questions} setAnswers={setAnswers} />}
     </StyledContentWrapper>
   );
 };
@@ -66,41 +114,6 @@ const StyledContentWrapper = styled(motion.div)`
   flex-direction: column;
   justify-content: center;
   gap: 32px;
-`;
-
-const StyledContentTitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const StyledContentTitle = styled(motion.h1)`
-  font-size: 32px;
-  text-align: center;
-`;
-
-const StyledContentDescription = styled(motion.p)`
-  font-size: 18px;
-`;
-
-const StyledMenuContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-
-const StyledMenu = styled.div`
-  width: 120px;
-  height: 120px;
-  font-size: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  gap: 8px;
-  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export default Questionnaire;

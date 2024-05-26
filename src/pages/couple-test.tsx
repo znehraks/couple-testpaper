@@ -2,21 +2,20 @@
 import { useState } from 'react';
 import Questionnaire from '../components/questionnaire';
 import { Layout } from '@/components/Layout';
+import { ITestQuestion } from '@/types/utils';
+import QuestionList from '@/components/QuestionList';
 
 export default function CoupleTestPage() {
-  const [questions, setQuestions] = useState<string[]>([]);
-
+  const [testQuestions, setTestQuestions] = useState<ITestQuestion[]>([]);
+  const handleSubmit = (result: ITestQuestion[]) => {
+    setTestQuestions(result);
+  };
   return (
     <Layout>
-      {questions.length === 0 ? (
-        <Questionnaire
-          onSubmit={(answer) => {
-            console.log(answer);
-          }}
-        />
+      {testQuestions.length === 0 ? (
+        <Questionnaire setTestQuestions={setTestQuestions} onSubmit={handleSubmit} />
       ) : (
-        // <QuestionList questions={questions} />
-        <></>
+        <QuestionList testQuestions={testQuestions} />
       )}
     </Layout>
   );

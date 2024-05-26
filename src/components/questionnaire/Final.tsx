@@ -1,11 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { StyledMenu, StyledMenuContainer } from '../common/styles';
 
-interface IIntroProps {
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-}
-export const Intro = ({ setStep }: IIntroProps) => {
+export const Intro = () => {
   return (
     <>
       <StyledContentTitleWrapper>
@@ -16,7 +12,7 @@ export const Intro = ({ setStep }: IIntroProps) => {
         </StyledContentDescription>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
-        <StyledMenu onClick={() => setStep((prev) => prev + 1)}>시작하기</StyledMenu>
+        <StyledMenu>제출하기</StyledMenu>
       </StyledMenuContainer>
     </>
   );
@@ -34,4 +30,24 @@ const StyledContentTitle = styled(motion.h1)`
 
 const StyledContentDescription = styled(motion.p)`
   font-size: 18px;
+`;
+
+const StyledMenuContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const StyledMenu = styled.div`
+  width: 120px;
+  height: 120px;
+  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  gap: 8px;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
 `;
