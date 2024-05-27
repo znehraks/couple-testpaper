@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { StyledMenu, StyledMenuContainer } from '../common/styles';
 import { useCallback, useMemo, useState } from 'react';
 
 interface IStepProps {
@@ -27,7 +26,7 @@ export const Step = ({ step, setStep, questions, setAnswers }: IStepProps) => {
   const [quest, choices] = useMemo(() => questions[step - 1] as [string, string[]], [questions, step]);
 
   return (
-    <>
+    <StyledStepWrapper>
       <StyledContentTitleWrapper>
         <StyledContentTitle>{`${step}. ${quest}`}</StyledContentTitle>
         <StyledContentDescription>{isSubjective ? '주관식' : '객관식'}</StyledContentDescription>
@@ -39,13 +38,20 @@ export const Step = ({ step, setStep, questions, setAnswers }: IStepProps) => {
             onChange={(e) => {
               setInputValue(e.target.value);
             }}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') {
+                setAnswers((prev) => [...prev, inputValue]);
+                setInputValue('');
+                handleGoNext();
+              }
+            }}
           />
         ) : (
           <StyledChoiceContainer>
             {choices.map((choice, index) => (
-              <div key={index}>
-                <input type="radio" name="choice" value={choice} />
-                <label>{choice}</label>
+              <div key={choice}>
+                <input id={`choice-${index}`} type="radio" name="choice" value={choice} />
+                <label htmlFor={`choice-${index}`}>{choice}</label>
               </div>
             ))}
           </StyledChoiceContainer>
@@ -55,9 +61,16 @@ export const Step = ({ step, setStep, questions, setAnswers }: IStepProps) => {
         {step > 0 && <StyledButton onClick={handleGoBack}>이전</StyledButton>}
         {step > 0 && step < questions.length && <StyledButton onClick={handleGoNext}>다음</StyledButton>}
       </StyledContentButtonContainer>
-    </>
+    </StyledStepWrapper>
   );
 };
+
+const StyledStepWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+`;
 const StyledContentTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -65,13 +78,13 @@ const StyledContentTitleWrapper = styled.div`
 `;
 
 const StyledContentTitle = styled(motion.h1)`
-  font-size: 32px;
+  font-size: 48px;
   text-align: center;
   word-break: keep-all;
 `;
 
 const StyledContentDescription = styled(motion.p)`
-  font-size: 18px;
+  font-size: 22px;
 `;
 
 const StyledContentButtonContainer = styled.div`
@@ -93,12 +106,19 @@ const StyledButton = styled.button`
 
 const StyledQuestionContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 
 const StyledChoiceContainer = styled.div`
-  min-width: 50%;
-  font-size: 24px;
+  font-size: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  & > div {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
 `;
 
 const StyledInput = styled.input`

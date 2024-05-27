@@ -1,17 +1,19 @@
-/** @jsxImportSource @emotion/react */
-import { motion } from 'framer-motion';
 import { QuestionsContainer } from './styles';
+import { ITestQuestion } from '@/types/utils';
 
 type QuestionListProps = {
-  questions: string[];
+  questions: ITestQuestion[];
 };
 
 const QuestionList = ({ questions }: QuestionListProps) => (
   <QuestionsContainer>
     {questions.map((question, index) => (
-      <motion.div key={index} initial={{ x: -100 }} animate={{ x: 0 }}>
-        {question} 
-      </motion.div>
+      <div key={index}>
+        {question.question}
+        {question.answers.map((answer, index) => (
+          <div key={index}>{answer}</div>
+        ))}
+      </div>
     ))}
   </QuestionsContainer>
 );

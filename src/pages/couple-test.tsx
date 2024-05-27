@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { useState } from 'react';
 import Questionnaire from '../components/questionnaire';
 import { Layout } from '@/components/Layout';
@@ -13,9 +12,9 @@ export default function CoupleTestPage() {
   return (
     <Layout>
       {testQuestions.length === 0 ? (
-        <Questionnaire setTestQuestions={setTestQuestions} onSubmit={handleSubmit} />
+        <Questionnaire onSubmit={handleSubmit} />
       ) : (
-        <QuestionList testQuestions={testQuestions} />
+        <QuestionList questions={testQuestions} />
       )}
     </Layout>
   );
