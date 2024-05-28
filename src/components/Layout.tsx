@@ -37,5 +37,5 @@ const StyledContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 0 32px;
+  padding: 0 48px;
 `;

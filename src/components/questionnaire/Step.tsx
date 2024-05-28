@@ -1,3 +1,4 @@
+import { ITestQuestion } from '@/types/utils';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useCallback, useMemo, useState } from 'react';
@@ -7,21 +8,41 @@ interface IStepProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   questions: (string | string[])[][];
   setAnswers: React.Dispatch<React.SetStateAction<(number | string)[]>>;
+  onSubmit: (result: ITestQuestion[]) => void;
 }
-export const Step = ({ step, setStep, questions, setAnswers }: IStepProps) => {
+export const Step = ({ step, setStep, questions, setAnswers, onSubmit }: IStepProps) => {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [tempAnswers, setTempAnswers] = useState<{ [step: number]: string }>({});
+
   const handleGoBack = useCallback(() => {
     setStep((prev) => prev - 1);
   }, [setStep]);
   const handleGoNext = useCallback(() => {
+    if (step === 1) {
+      setTempAnswers((prev) => ({ ...prev, [step]: inputValue }));
+    } else {
+      setAnswers((prev) => [...prev, tempAnswers[step]]);
+    }
     setStep((prev) => prev + 1);
-  }, [setStep]);
-  console.log(questions);
+  }, [inputValue, setAnswers, setStep, step, tempAnswers]);
+
+  const handleSubmit = useCallback(() => {
+    const result = questions.map((question, index) => {
+      return {
+        question: question[0] as string,
+        answers: question[1] as string[],
+        answerKeys: [tempAnswers[index + 1]],
+      };
+    });
+    setAnswers([]);
+    setTempAnswers({});
+    setStep(0);
+    onSubmit(result);
+  }, [onSubmit, questions, setAnswers, setStep, tempAnswers]);
 
   const isSubjective = useMemo(() => {
     return questions[step - 1][1].length === 0;
   }, [questions, step]);
-
-  const [inputValue, setInputValue] = useState<string>('');
 
   const [quest, choices] = useMemo(() => questions[step - 1] as [string, string[]], [questions, step]);
 
@@ -41,6 +62,7 @@ export const Step = ({ step, setStep, questions, setAnswers }: IStepProps) => {
             onKeyUp={(e) => {
               if (e.key === 'Enter') {
                 setAnswers((prev) => [...prev, inputValue]);
+                setTempAnswers((prev) => ({ ...prev, [step]: inputValue }));
                 setInputValue('');
                 handleGoNext();
               }
@@ -49,8 +71,17 @@ export const Step = ({ step, setStep, questions, setAnswers }: IStepProps) => {
         ) : (
           <StyledChoiceContainer>
             {choices.map((choice, index) => (
-              <div key={choice}>
-                <input id={`choice-${index}`} type="radio" name="choice" value={choice} />
+              <div key={index}>
+                <input
+                  id={`choice-${index}`}
+                  type="radio"
+                  name="choice"
+                  checked={tempAnswers[step] === choice}
+                  value={choice}
+                  onChange={(e) => {
+                    setTempAnswers((prev) => ({ ...prev, [step]: e.target.value }));
+                  }}
+                />
                 <label htmlFor={`choice-${index}`}>{choice}</label>
               </div>
             ))}
@@ -60,6 +91,7 @@ export const Step = ({ step, setStep, questions, setAnswers }: IStepProps) => {
       <StyledContentButtonContainer>
         {step > 0 && <StyledButton onClick={handleGoBack}>이전</StyledButton>}
         {step > 0 && step < questions.length && <StyledButton onClick={handleGoNext}>다음</StyledButton>}
+        {step === questions.length && <StyledButton onClick={handleSubmit}>출제 완료</StyledButton>}
       </StyledContentButtonContainer>
     </StyledStepWrapper>
   );

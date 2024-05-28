@@ -16,3 +16,38 @@ button {
   font-family: 'NanumBaeEunHyeCe';
   src: url('/NanumBaeEunHyeCe.ttf') format('trueType');
 }
+
+@font-face {
+  font-family: 'NanumSquareL';
+  src: url('/NanumSquareL.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'NanumSquareB';
+  src: url('/NanumSquareB.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'NanumSquareEB';
+  src: url('/NanumSquareEB.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'NanumSquareR';
+  src: url('/NanumSquareR.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'NanumMyeongjo';
+  src: url('/NanumMyeongjo.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'NanumMyeongBold';
+  src: url('/NanumMyeongBold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'NanumMyeongExtraBold';
+  src: url('/NanumMyeongExtraBold.otf') format('opentype');
+}

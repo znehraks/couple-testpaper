@@ -10,7 +10,9 @@ export const Container = styled.div`
 export const QuestionsContainer = styled.div`
   margin-top: 20px;
   width: 100%;
-  max-width: 600px;
+  @media (max-width:500px) {
+    max-width: 500px;
+  } 
 `;
 
 export const Button = styled.button`

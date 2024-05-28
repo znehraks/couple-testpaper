@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Intro } from './Intro';
@@ -50,7 +50,7 @@ const fiveChoiceQuestions = [
 
 const commonQuestions = [
   [
-    '내가 가장 감동할 때는?',
+    '상대에게 내가 가장 감동할 때는?',
     [
       '기쁜날 같이 기뻐해줄 때',
       '슬픈날 같이 슬퍼해줄 때',
@@ -59,23 +59,30 @@ const commonQuestions = [
       '그냥 가만히 둘 때',
     ],
   ],
+  [
+    "다른건 다 안맞아도 '이건 꼭 맞아야한다'라고 생각하는 것은?",
+    ['경제관념', '옷 입는 스타일', '음식 취향', '대화 스타일', '그런거 없다'],
+  ],
 ];
 
 const soloQuestions = [
-  ['나는 연애를 시작할 때', ['천천히', '빠르게']],
-  ['나는 연애를 끝낼 때', ['천천히', '빠르게']],
-  ['나는 연인과의 관계를 정의할 때', ['천천히', '빠르게']],
+  [
+    '나는 연애를 시작할 때, 상대방과 안맞는 점이 보이면 주로?',
+    ['손절한다', '상대에게 맞춰준다', '나에게 상대를 맞추려한다', '일단 넘어가고 지켜본다', '신경쓰지 않는다'],
+  ],
+  [
+    '나는 연애를 끝낼 때',
+    ['과감하게 내가 찬다', '과감하진 않아도 먼저 찬다', '상대방의 이별통보를 유도한다', '잠수를 탄다', '동시에 찬다'],
+  ],
 ]; // 솔로, 기타에 해당
 
 const coupleQuestions = [
   ['너와 처음 만난 날 내가 입었던 상의의 색깔은?', colors],
-  ['너가 내게 처음으로 사랑한다고 말한 날은?', []],
+  ['우리가 처음 벚꽃 보러 갔던 장소는?', ['한강', '남산', '현충원', '진해', '이 중에 없다']],
   ['너가 내게 처음으로 사랑한다고 말한 장소는?', []],
 ]; // 연애중, 결혼에 해당
 
-const marriedQuestions = [['프로포즈 당시 내가 입었던 옷의 색깔은?', colors]];
-
-const simulationQuestions = [];
+// const simulationQuestions = [];
 interface IQuestionnaireProps {
   onSubmit: (result: ITestQuestion[]) => void;
 }
@@ -92,18 +99,19 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
       const shuffled = choices.sort(() => Math.random() - 0.5);
       return [question[0], [...shuffled.slice(0, 4), '이 중에 없다']];
     });
-    console.log('selectedMultipleChoiceQuestions', selectedMultipleChoiceQuestions);
     const selectedFiveChoiceQuestions = fiveChoiceQuestions.map((question) => {
       return [question[0], question[1]];
     });
-    console.log('selectedFiveChoiceQuestions', selectedFiveChoiceQuestions);
     setQuestions([...requiredQuestions, ...selectedMultipleChoiceQuestions, ...selectedFiveChoiceQuestions]);
   }, []);
+
   console.log('questions', questions);
   return (
     <StyledContentWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       {step === 0 && <Intro setStep={setStep} />}
-      {step > 0 && <Step step={step} setStep={setStep} questions={questions} setAnswers={setAnswers} />}
+      {step > 0 && (
+        <Step step={step} setStep={setStep} questions={questions} setAnswers={setAnswers} onSubmit={onSubmit} />
+      )}
     </StyledContentWrapper>
   );
 };
