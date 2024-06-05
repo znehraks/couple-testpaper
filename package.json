@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.5",
     "antd": "^5.17.4",
     "dayjs": "^1.11.11",
+    "firebase": "^10.12.2",
     "formidable": "^3.5.1",
     "framer-motion": "^11.2.5",
     "next": "14.2.3",

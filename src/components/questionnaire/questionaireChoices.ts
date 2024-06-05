@@ -220,7 +220,7 @@ export const movies = [
   '인크레더블',
 ];
 
-export const restaurant = ['한식', '중식', '일식', '양식', '기타'];
+export const restaurant = ['한식당', '중식당', '일식당', '양식당', '기타'];
 
 export const drinkFood = [
   '삼겹살',

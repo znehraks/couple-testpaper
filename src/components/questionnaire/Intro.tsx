@@ -10,10 +10,10 @@ export const Intro = ({ setStep }: IIntroProps) => {
     <>
       <StyledContentTitleWrapper>
         <StyledContentTitle>연애고사 출제하기</StyledContentTitle>
-        <StyledContentDescription>이곳에서는 간단한 질문을 통해</StyledContentDescription>
-        <StyledContentDescription>
-          <strong>연애관</strong>에 대한 문제를 출제합니다.
-        </StyledContentDescription>
+        <div>
+          <StyledContentDescription>이곳에서는 간단한 질문을 통해</StyledContentDescription>
+          <StyledContentDescription>나의 연애관에 대한 시험 문제를 출제합니다.</StyledContentDescription>
+        </div>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
         <StyledMenu onClick={() => setStep((prev) => prev + 1)}>시작하기</StyledMenu>
@@ -21,17 +21,24 @@ export const Intro = ({ setStep }: IIntroProps) => {
     </>
   );
 };
+
 const StyledContentTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const StyledContentTitle = styled(motion.h1)`
-  font-size: 42px;
+  font-size: 58px;
   text-align: center;
 `;
 
 const StyledContentDescription = styled(motion.p)`
-  font-size: 18px;
+  font-size: 24px;
 `;

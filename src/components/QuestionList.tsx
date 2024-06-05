@@ -150,4 +150,7 @@ const StyledTestQuestionTitleContainer = styled.div`
 
 const StyledTestQuestionAnswerContainer = styled.div`
   padding-left: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;

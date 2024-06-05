@@ -1,7 +1,12 @@
 import { Layout } from '@/components/Layout';
 import QuestionList from '@/components/QuestionList';
+import { db } from '@/firebaseConfig';
+import { set } from 'firebase/database';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-const testData = [
+const _testData = [
   {
     question: '당신의 이름은?',
     answers: [],
@@ -60,6 +65,19 @@ const testData = [
   },
 ];
 export default function CoupleTestPage() {
+  const router = useRouter();
+  const [testData, setTestData] = useState([]);
+
+  useEffect(() => {
+    console.log(router.query.id);
+    if (!router.query.id) return;
+    (async () => {
+      const docRef = doc(db, 'couple-tests', router.query.id as string);
+      const docSnap = await getDoc(docRef);
+      setTestData(docSnap.data()?.testQuestions);
+    })();
+  }, [router.query.id]);
+
   return (
     <Layout>
       <QuestionList questions={testData} />

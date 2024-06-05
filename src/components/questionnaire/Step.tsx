@@ -34,10 +34,10 @@ export const Step = ({ step, setStep, questions, setAnswers, onSubmit }: IStepPr
         answerKeys: [tempAnswers[index + 1]],
       };
     });
+    onSubmit(result);
     setAnswers([]);
     setTempAnswers({});
     setStep(0);
-    onSubmit(result);
   }, [onSubmit, questions, setAnswers, setStep, tempAnswers]);
 
   const isSubjective = useMemo(() => {
@@ -46,11 +46,20 @@ export const Step = ({ step, setStep, questions, setAnswers, onSubmit }: IStepPr
 
   const [quest, choices] = useMemo(() => questions[step - 1] as [string, string[]], [questions, step]);
 
+  const description = useMemo(() => {
+    switch (step) {
+      case 1:
+        return '이름이 부담스럽다면 별명도 좋아요.';
+      default:
+        return '';
+    }
+  }, [step]);
+
   return (
     <StyledStepWrapper>
       <StyledContentTitleWrapper>
         <StyledContentTitle>{`${step}. ${quest}`}</StyledContentTitle>
-        <StyledContentDescription>{isSubjective ? '주관식' : '객관식'}</StyledContentDescription>
+        <StyledContentDescription>{description}</StyledContentDescription>
       </StyledContentTitleWrapper>
       <StyledQuestionContainer>
         {isSubjective ? (
@@ -107,6 +116,7 @@ const StyledContentTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 `;
 
 const StyledContentTitle = styled(motion.h1)`
@@ -154,6 +164,7 @@ const StyledChoiceContainer = styled.div`
 `;
 
 const StyledInput = styled.input`
-  font-size: 24px;
+  padding: 0 12px;
+  font-size: 36px;
   box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
 `;
