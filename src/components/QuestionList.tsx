@@ -8,12 +8,11 @@ type QuestionListProps = {
 
 const circleNumberMap = ['①', '②', '③', '④', '⑤'];
 const QuestionList = ({ questions }: QuestionListProps) => {
-  console.log('questions', questions);
   // 내가 에 사람 이름을 넣어서 수정
   //  1,2번 문항은 제외하기
   //  다음 페이지로 넘기기 기능 추가
   return (
-    <StyledTestWrapper>
+    <StyledTestWrapper id="pdf-content">
       <StyledTestHeaderWrapper>
         <div>{`${dayjs().get('year') + 1}학년도 연애수학능력시험 문제지`}</div>
         <div>
@@ -67,8 +66,10 @@ const StyledTestWrapper = styled.div`
   border: 1px solid #000000;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 72px 48px 24px 48px;
   overflow-y: auto;
+  width: 980px;
   height: 100%;
 `;
 
@@ -78,6 +79,7 @@ const StyledTestHeaderWrapper = styled.div`
   gap: 16px;
   border-bottom: 2px solid #000000;
   padding-bottom: 8px;
+  width: 100%;
   min-height: 100px;
   & > div:first-of-type {
     font-family: NanumSquareB;

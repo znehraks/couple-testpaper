@@ -17,6 +17,8 @@
     "firebase": "^10.12.2",
     "formidable": "^3.5.1",
     "framer-motion": "^11.2.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "next": "14.2.3",
     "openai": "^4.47.1",
     "prettier": "^3.2.5",

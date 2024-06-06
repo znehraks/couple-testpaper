@@ -1,6 +1,7 @@
 import { Layout } from '@/components/Layout';
 import QuestionList from '@/components/QuestionList';
 import { getCoupleTest } from '@/services/coupleTests';
+import { generatePDF } from '@/services/generatePdf';
 import { ITestQuestion } from '@/types/utils';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
@@ -94,9 +95,14 @@ export default function CoupleTestPage() {
     return null;
   }
 
+  console.log('testData', testData);
+  // 시험지를 pdf파일로 만들어서 다운로드 받을 수 있도록 함
+  // 응시 시작을 모달처럼 띄워서 뒤에 백드롭으로 어둡게처리하고, 응시 시작을 누르면 응시 시작되도록 함
+  // 그 전까지는 눌러도 반응이 안되도록 함
   return (
     <Layout>
-      <QuestionList questions={testData} />
+      <QuestionList questions={testData} /> <button onClick={generatePDF}>Download as PDF</button>
     </Layout>
   );
 }
+

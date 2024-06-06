@@ -36,6 +36,7 @@ const StyledWrapper = styled.div<{ isMobile: boolean }>`
 const StyledContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   flex: 1;
   padding: 0 48px;
   min-width: 1080px;
