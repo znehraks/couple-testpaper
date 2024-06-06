@@ -14,7 +14,7 @@ interface IQuestionnaireProps {
 const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
   const [step, setStep] = useState<number>(0);
   const [questions, setQuestions] = useState<(string | string[])[][]>([]);
-  const [answers, setAnswers] = useState<(number | string)[]>([]);
+  const [, setAnswers] = useState<(number | string)[]>([]);
 
   // 문제 바꾸기 혹은 선지 바꾸기 기능 추가하기
   // 문제를 드래그 앤 드롭으로 선택할 수 있도록 기능 추가?

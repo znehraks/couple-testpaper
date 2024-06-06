@@ -14,17 +14,27 @@ export const Step = ({ step, setStep, questions, setAnswers, onSubmit }: IStepPr
   const [inputValue, setInputValue] = useState<string>('');
   const [tempAnswers, setTempAnswers] = useState<{ [step: number]: string }>({});
 
+  const isValid = useMemo(() => {
+    if (step === 1 && inputValue) {
+      return true;
+    }
+    return tempAnswers[step] !== undefined;
+  }, [inputValue, step, tempAnswers]);
+
   const handleGoBack = useCallback(() => {
     setStep((prev) => prev - 1);
   }, [setStep]);
   const handleGoNext = useCallback(() => {
+    if (!isValid) {
+      return;
+    }
     if (step === 1) {
       setTempAnswers((prev) => ({ ...prev, [step]: inputValue }));
     } else {
       setAnswers((prev) => [...prev, tempAnswers[step]]);
     }
     setStep((prev) => prev + 1);
-  }, [inputValue, setAnswers, setStep, step, tempAnswers]);
+  }, [inputValue, isValid, setAnswers, setStep, step, tempAnswers]);
 
   const handleSubmit = useCallback(() => {
     const result = questions.map((question, index) => {
@@ -99,7 +109,11 @@ export const Step = ({ step, setStep, questions, setAnswers, onSubmit }: IStepPr
       </StyledQuestionContainer>
       <StyledContentButtonContainer>
         {step > 0 && <StyledButton onClick={handleGoBack}>이전</StyledButton>}
-        {step > 0 && step < questions.length && <StyledButton onClick={handleGoNext}>다음</StyledButton>}
+        {step > 0 && step < questions.length && (
+          <StyledButton disabled={!isValid} onClick={handleGoNext}>
+            다음
+          </StyledButton>
+        )}
         {step === questions.length && <StyledButton onClick={handleSubmit}>출제 완료</StyledButton>}
       </StyledContentButtonContainer>
     </StyledStepWrapper>
@@ -134,13 +148,14 @@ const StyledContentButtonContainer = styled.div`
   justify-content: center;
   gap: 24px;
 `;
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ disabled?: boolean }>`
   transition: background-color 0.2s ease-in-out;
   font-size: 24px;
   padding: 4px 8px;
   border-radius: 8px;
   box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
   }

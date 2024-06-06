@@ -1,36 +1,32 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Questionnaire from '../../components/questionnaire';
 import { Layout } from '@/components/Layout';
 import { ITestQuestion } from '@/types/utils';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '@/firebaseConfig';
 import { useRouter } from 'next/router';
+import { addCoupleTest } from '@/services/coupleTests';
+import { useMutation } from '@tanstack/react-query';
 
 export default function CoupleTestPage() {
-  const [testQuestions, setTestQuestions] = useState<ITestQuestion[]>([]);
-  const [isAdOn, setIsAdOn] = useState(false);
-  const [completed, setCompleted] = useState(true);
+  const mutation = useMutation({
+    mutationFn: addCoupleTest,
+    onSuccess: ({ id }) => {
+      setIsAdOn(true);
+      setCompleted(true);
+      // 바로 이렇게 push하지말고, 광고 시청 후에 push하도록 수정
+      router.push(`/couple-test/${id}`);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+  const [, setIsAdOn] = useState(false);
+  const [, setCompleted] = useState(true);
   const router = useRouter();
   const handleSubmit = useCallback(
     async (result: ITestQuestion[]) => {
-      try {
-        const res = await addDoc(collection(db, 'couple-tests'), {
-          testType: 'couple',
-          testQuestions: result,
-          createdAt: new Date()?.toLocaleDateString(),
-        });
-        console.log('res', res);
-        setTestQuestions(result);
-        setIsAdOn(true);
-        setCompleted(true);
-        router.push(`/couple-test/${res.id}`);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        console.log(4);
-      }
+      mutation.mutate(result);
     },
-    [router],
+    [mutation],
   );
 
   return (
