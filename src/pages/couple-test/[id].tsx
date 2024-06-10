@@ -1,11 +1,16 @@
 import { Layout } from '@/components/Layout';
 import QuestionList from '@/components/QuestionList';
+import QuestionListMobile from '@/components/QuestionListMobile';
+import { useMobile } from '@/hooks/useMobile';
 import { getCoupleTest } from '@/services/coupleTests';
-import { generatePDF } from '@/services/generatePdf';
 import { ITestQuestion } from '@/types/utils';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import styled from '@emotion/styled';
+import { useAtom } from 'jotai';
+import { IsGeneratingPDFAtom } from '@/components/store';
+import { generatePDF } from '@/services/generatePdf';
 
 // const _testData = [
 //   {
@@ -66,6 +71,8 @@ import { useEffect } from 'react';
 //   },
 // ];
 export default function CoupleTestPage() {
+  const isMobile = useMobile();
+  const [, setIsGeneratingPDF] = useAtom(IsGeneratingPDFAtom);
   const router = useRouter();
   const { id } = router.query;
   const {
@@ -101,8 +108,33 @@ export default function CoupleTestPage() {
   // 그 전까지는 눌러도 반응이 안되도록 함
   return (
     <Layout>
-      <QuestionList questions={testData} /> <button onClick={generatePDF}>Download as PDF</button>
+      <StyledPdfButton
+        onClick={async () => {
+          setIsGeneratingPDF(true);
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await generatePDF();
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          setIsGeneratingPDF(false);
+        }}
+      >
+        시험지 다운로드
+      </StyledPdfButton>
+      {isMobile ? <QuestionListMobile questions={testData} /> : <QuestionList questions={testData} />}
     </Layout>
   );
 }
 
+const StyledPdfButton = styled.button`
+  position: fixed;
+  bottom: 50px;
+  right: 50%;
+  transform: translateX(50%);
+  transition: background-color 0.2s ease-in-out;
+  font-size: 24px;
+  padding: 4px 8px;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+`;

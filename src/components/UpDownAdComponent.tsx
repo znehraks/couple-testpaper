@@ -9,6 +9,8 @@ export const UpDownAdComponent = ({ side = 'top' }: IUpDownAdComponentProps) => 
 };
 
 const StyledUpDownAdComponentWrapper = styled.div<{ side: IUpDownAdComponentProps['side'] }>`
-  flex: 0.5;
+  font-size: 80px;
   order: ${(props) => (props.side === 'top' ? 0 : 2)};
+  width: 100px;
+  min-height: 100px;
 `;

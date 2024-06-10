@@ -5,6 +5,11 @@
   font-family: 'NanumBaeEunHyeCe';
 }
 
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
 input,
 button {
   background-color: transparent;

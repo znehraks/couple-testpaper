@@ -5,6 +5,13 @@ export const generatePDF = async () => {
   const element = document.getElementById('pdf-content');
   if (!element) return;
 
+  const testTime = document.getElementById('test-time');
+  const testOdd = document.getElementById('test-odd');
+  if (!testTime || !testOdd) return;
+  const originalPaddingBottom = testTime.style.paddingBottom;
+  testTime.style.paddingBottom = '16px';
+  testOdd.style.paddingBottom = '16px';
+
   // 원래 border 스타일을 저장하고 제거하는 함수
   const originalBorder = element.style.border;
   element.style.border = 'none';
@@ -23,6 +30,8 @@ export const generatePDF = async () => {
 
   // 캡처 후 원래 border 스타일 복원
   element.style.border = originalBorder;
+  testTime.style.paddingBottom = originalPaddingBottom;
+  testOdd.style.paddingBottom = originalPaddingBottom;
 
   const imgData = canvas.toDataURL('image/png');
   const pdf = new jsPDF({

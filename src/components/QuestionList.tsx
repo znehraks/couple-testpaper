@@ -11,51 +11,54 @@ const QuestionList = ({ questions }: QuestionListProps) => {
   // 내가 에 사람 이름을 넣어서 수정
   //  1,2번 문항은 제외하기
   //  다음 페이지로 넘기기 기능 추가
+
   return (
-    <StyledTestWrapper id="pdf-content">
-      <StyledTestHeaderWrapper>
-        <div>{`${dayjs().get('year') + 1}학년도 연애수학능력시험 문제지`}</div>
-        <div>
-          <div>제 1교시</div>
-          <div>연애 영역</div>
-          <div>홀수형</div>
-        </div>
-      </StyledTestHeaderWrapper>
-      <StyledTestQuestionWrapper>
-        <StyledTestSectionWrapper>
-          {questions.slice(0, Math.round(questions.length / 2)).map((question, index) => (
-            <StyledTestQuestionBox key={index}>
-              <StyledTestQuestionTitleContainer>
-                {index + 1}. {question.question}
-              </StyledTestQuestionTitleContainer>
-              <StyledTestQuestionAnswerContainer>
-                {question.answers.map((answer, index) => (
-                  <div key={index}>
-                    {circleNumberMap[index]} {answer}
-                  </div>
-                ))}
-              </StyledTestQuestionAnswerContainer>
-            </StyledTestQuestionBox>
-          ))}
-        </StyledTestSectionWrapper>
-        <StyledTestSectionWrapper>
-          {questions.slice(Math.round(questions.length / 2)).map((question, index) => (
-            <StyledTestQuestionBox key={index}>
-              <StyledTestQuestionTitleContainer>
-                {index + 5 + 1}. {question.question}
-              </StyledTestQuestionTitleContainer>
-              <StyledTestQuestionAnswerContainer>
-                {question.answers.map((answer, index) => (
-                  <div key={index}>
-                    {circleNumberMap[index]} {answer}
-                  </div>
-                ))}
-              </StyledTestQuestionAnswerContainer>
-            </StyledTestQuestionBox>
-          ))}
-        </StyledTestSectionWrapper>
-      </StyledTestQuestionWrapper>
-    </StyledTestWrapper>
+    <>
+      <StyledTestWrapper id="pdf-content">
+        <StyledTestHeaderWrapper>
+          <div>{`${dayjs().get('year') + 1}학년도 연애수학능력시험 문제지`}</div>
+          <div>
+            <div id="test-time">제 1교시</div>
+            <div>연애 영역</div>
+            <div id="test-odd">홀수형</div>
+          </div>
+        </StyledTestHeaderWrapper>
+        <StyledTestQuestionWrapper>
+          <StyledTestSectionWrapper>
+            {questions.slice(0, Math.round(questions.length / 2)).map((question, index) => (
+              <StyledTestQuestionBox key={index}>
+                <StyledTestQuestionTitleContainer>
+                  {index + 1}. {question.question}
+                </StyledTestQuestionTitleContainer>
+                <StyledTestQuestionAnswerContainer>
+                  {question.answers.map((answer, index) => (
+                    <div key={index}>
+                      {circleNumberMap[index]} {answer}
+                    </div>
+                  ))}
+                </StyledTestQuestionAnswerContainer>
+              </StyledTestQuestionBox>
+            ))}
+          </StyledTestSectionWrapper>
+          <StyledTestSectionWrapper>
+            {questions.slice(Math.round(questions.length / 2)).map((question, index) => (
+              <StyledTestQuestionBox key={index}>
+                <StyledTestQuestionTitleContainer>
+                  {index + 5 + 1}. {question.question}
+                </StyledTestQuestionTitleContainer>
+                <StyledTestQuestionAnswerContainer>
+                  {question.answers.map((answer, index) => (
+                    <div key={index}>
+                      {circleNumberMap[index]} {answer}
+                    </div>
+                  ))}
+                </StyledTestQuestionAnswerContainer>
+              </StyledTestQuestionBox>
+            ))}
+          </StyledTestSectionWrapper>
+        </StyledTestQuestionWrapper>
+      </StyledTestWrapper>
+    </>
   );
 };
 
@@ -70,7 +73,6 @@ const StyledTestWrapper = styled.div`
   padding: 72px 48px 24px 48px;
   overflow-y: auto;
   width: 980px;
-  height: 100%;
 `;
 
 const StyledTestHeaderWrapper = styled.div`
@@ -78,9 +80,9 @@ const StyledTestHeaderWrapper = styled.div`
   flex-direction: column;
   gap: 16px;
   border-bottom: 2px solid #000000;
-  padding-bottom: 8px;
+  padding-bottom: 16px;
   width: 100%;
-  min-height: 100px;
+  min-height: 120px;
   & > div:first-of-type {
     font-family: NanumSquareB;
     font-size: 20px;
@@ -117,7 +119,7 @@ const StyledTestQuestionWrapper = styled.div`
   flex-direction: row;
   position: relative;
   flex: 1;
-  min-height: 1000px;
+  min-height: 1200px;
 `;
 
 const StyledTestSectionWrapper = styled.div`

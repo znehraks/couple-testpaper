@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@tanstack/react-query": "^5.40.1",
@@ -16,8 +17,9 @@
     "dayjs": "^1.11.11",
     "firebase": "^10.12.2",
     "formidable": "^3.5.1",
-    "framer-motion": "^11.2.5",
+    "framer-motion": "^11.2.6",
     "html2canvas": "^1.4.1",
+    "jotai": "^2.8.3",
     "jspdf": "^2.5.1",
     "next": "14.2.3",
     "openai": "^4.47.1",
