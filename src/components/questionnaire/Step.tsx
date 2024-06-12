@@ -1,16 +1,17 @@
 import { ITestQuestion } from '@/types/utils';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { useAtom } from 'jotai';
 import { useCallback, useMemo, useState } from 'react';
+import { AnswersAtom, QuestionsAtom, StepAtom } from '../store/questionnaireStore';
 
 interface IStepProps {
-  step: number;
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-  questions: (string | string[])[][];
-  setAnswers: React.Dispatch<React.SetStateAction<(number | string)[]>>;
   onSubmit: (result: ITestQuestion[]) => void;
 }
-export const Step = ({ step, setStep, questions, setAnswers, onSubmit }: IStepProps) => {
+export const Step = ({ onSubmit }: IStepProps) => {
+  const [step, setStep] = useAtom(StepAtom);
+  const [questions] = useAtom(QuestionsAtom);
+  const [, setAnswers] = useAtom(AnswersAtom);
   const [inputValue, setInputValue] = useState<string>('');
   const [tempAnswers, setTempAnswers] = useState<{ [step: number]: string }>({});
 

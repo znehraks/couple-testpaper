@@ -1,6 +1,6 @@
 import { Layout } from '@/components/Layout';
-import QuestionList from '@/components/QuestionList';
-import QuestionListMobile from '@/components/QuestionListMobile';
+import QuestionList from '@/components/testQuestion/QuestionList';
+import QuestionListMobile from '@/components/testQuestion/QuestionListMobile';
 import { useMobile } from '@/hooks/useMobile';
 import { getCoupleTest } from '@/services/coupleTests';
 import { ITestQuestion } from '@/types/utils';
@@ -129,12 +129,14 @@ const StyledPdfButton = styled.button`
   bottom: 50px;
   right: 50%;
   transform: translateX(50%);
-  transition: background-color 0.2s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out;
   font-size: 24px;
   padding: 4px 8px;
   cursor: pointer;
   box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  z-index: 2;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.2);
   }
 `;

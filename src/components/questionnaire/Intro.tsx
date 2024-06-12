@@ -1,22 +1,49 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { StyledMenu, StyledMenuContainer } from '../common/styles';
+import { useSetAtom } from 'jotai';
+import { QuestionsAtom, StepAtom, TestCategoryAtom } from '../store/questionnaireStore';
+import { FriendsIcon, HeartIcon } from '../icons/Icon';
+import { useEffect } from 'react';
 
-interface IIntroProps {
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-}
-export const Intro = ({ setStep }: IIntroProps) => {
+export const Intro = () => {
+  const setStep = useSetAtom(StepAtom);
+  const setTestCategory = useSetAtom(TestCategoryAtom);
+  const setQuestions = useSetAtom(QuestionsAtom);
+
+  useEffect(() => {
+    setTestCategory(null);
+    setQuestions([]);
+  }, [setQuestions, setTestCategory]);
+
   return (
     <>
       <StyledContentTitleWrapper>
         <StyledContentTitle>연애고사 출제하기</StyledContentTitle>
         <div>
-          <StyledContentDescription>이곳에서는 간단한 질문을 통해</StyledContentDescription>
-          <StyledContentDescription>나의 연애관에 대한 시험 문제를 출제합니다.</StyledContentDescription>
+          <StyledContentDescription>이 문제를 풀 대상을 선택해주세요.</StyledContentDescription>
+          <StyledContentDescription>대상에 따라 문제의 성격이 달라져요.</StyledContentDescription>
         </div>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
-        <StyledMenu onClick={() => setStep((prev) => prev + 1)}>시작하기</StyledMenu>
+        <StyledMenu
+          onClick={() => {
+            setTestCategory('forAnyone');
+            setStep(1);
+          }}
+        >
+          <FriendsIcon size={42} />
+          친구 및 지인
+        </StyledMenu>
+        <StyledMenu
+          onClick={() => {
+            setTestCategory('forCouple');
+            setStep(1);
+          }}
+        >
+          <HeartIcon size={42} />
+          연인
+        </StyledMenu>
       </StyledMenuContainer>
     </>
   );

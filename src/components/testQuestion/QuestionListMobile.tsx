@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import { ITestQuestion } from '@/types/utils';
 import dayjs from 'dayjs';
+import { Question } from './Question';
 
 type QuestionListProps = {
   questions: ITestQuestion[];
 };
 
-const circleNumberMap = ['①', '②', '③', '④', '⑤'];
 const QuestionListMobile = ({ questions }: QuestionListProps) => {
   // 내가 에 사람 이름을 넣어서 수정
   //  1,2번 문항은 제외하기
@@ -24,18 +24,7 @@ const QuestionListMobile = ({ questions }: QuestionListProps) => {
       </StyledTestHeaderWrapper>
       <StyledTestQuestionWrapper>
         {questions.map((question, index) => (
-          <StyledTestQuestionBox key={index}>
-            <StyledTestQuestionTitleContainer>
-              {index + 1}. {question.question}
-            </StyledTestQuestionTitleContainer>
-            <StyledTestQuestionAnswerContainer>
-              {question.answers.map((answer, index) => (
-                <div key={index}>
-                  {circleNumberMap[index]} {answer}
-                </div>
-              ))}
-            </StyledTestQuestionAnswerContainer>
-          </StyledTestQuestionBox>
+          <Question key={index} question={question} index={index} />
         ))}
       </StyledTestQuestionWrapper>
     </StyledTestWrapper>
@@ -109,26 +98,4 @@ const StyledTestQuestionWrapper = styled.div`
   min-height: fit-content;
   font-size: 24px;
   overflow-y: auto;
-`;
-
-const StyledTestQuestionBox = styled.div`
-  font-family: NanumMyeongjo;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 48px 0px;
-  * {
-    font-family: NanumMyeongjo;
-  }
-`;
-
-const StyledTestQuestionTitleContainer = styled.div`
-  word-break: keep-all;
-`;
-
-const StyledTestQuestionAnswerContainer = styled.div`
-  padding-left: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
 `;

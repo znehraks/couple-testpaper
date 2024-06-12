@@ -31,6 +31,8 @@ const StyledWrapper = styled.div<{ isMobile: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.isMobile ? 'column' : 'row')};
   padding: 8px;
+  width: 100vw;
+  height: 100vh;
 `;
 const StyledContentWrapper = styled.div<{ isMobile: boolean }>`
   display: flex;

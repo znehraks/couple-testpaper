@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import { ITestQuestion } from '@/types/utils';
 import dayjs from 'dayjs';
+import { Question } from './Question';
 
 type QuestionListProps = {
   questions: ITestQuestion[];
 };
 
-const circleNumberMap = ['①', '②', '③', '④', '⑤'];
 const QuestionList = ({ questions }: QuestionListProps) => {
   // 내가 에 사람 이름을 넣어서 수정
   //  1,2번 문항은 제외하기
@@ -15,7 +15,7 @@ const QuestionList = ({ questions }: QuestionListProps) => {
   return (
     <>
       <StyledTestWrapper id="pdf-content">
-        <StyledTestHeaderWrapper>
+        <StyledTestHeaderWrapper id="test-header">
           <div>{`${dayjs().get('year') + 1}학년도 연애수학능력시험 문제지`}</div>
           <div>
             <div id="test-time">제 1교시</div>
@@ -26,34 +26,12 @@ const QuestionList = ({ questions }: QuestionListProps) => {
         <StyledTestQuestionWrapper>
           <StyledTestSectionWrapper>
             {questions.slice(0, Math.round(questions.length / 2)).map((question, index) => (
-              <StyledTestQuestionBox key={index}>
-                <StyledTestQuestionTitleContainer>
-                  {index + 1}. {question.question}
-                </StyledTestQuestionTitleContainer>
-                <StyledTestQuestionAnswerContainer>
-                  {question.answers.map((answer, index) => (
-                    <div key={index}>
-                      {circleNumberMap[index]} {answer}
-                    </div>
-                  ))}
-                </StyledTestQuestionAnswerContainer>
-              </StyledTestQuestionBox>
+              <Question key={index} question={question} index={index} />
             ))}
           </StyledTestSectionWrapper>
           <StyledTestSectionWrapper>
             {questions.slice(Math.round(questions.length / 2)).map((question, index) => (
-              <StyledTestQuestionBox key={index}>
-                <StyledTestQuestionTitleContainer>
-                  {index + 5 + 1}. {question.question}
-                </StyledTestQuestionTitleContainer>
-                <StyledTestQuestionAnswerContainer>
-                  {question.answers.map((answer, index) => (
-                    <div key={index}>
-                      {circleNumberMap[index]} {answer}
-                    </div>
-                  ))}
-                </StyledTestQuestionAnswerContainer>
-              </StyledTestQuestionBox>
+              <Question key={index + 5} question={question} index={index + 5} />
             ))}
           </StyledTestSectionWrapper>
         </StyledTestQuestionWrapper>
@@ -70,9 +48,10 @@ const StyledTestWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 72px 48px 24px 48px;
+  padding: 24px 48px 24px 48px;
   overflow-y: auto;
   width: 980px;
+  height: auto;
 `;
 
 const StyledTestHeaderWrapper = styled.div`
@@ -135,26 +114,4 @@ const StyledTestSectionWrapper = styled.div`
     width: 2px;
     background: #000;
   }
-`;
-
-const StyledTestQuestionBox = styled.div`
-  font-family: NanumMyeongjo;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: 20%;
-  * {
-    font-family: NanumMyeongjo;
-  }
-`;
-
-const StyledTestQuestionTitleContainer = styled.div`
-  word-break: keep-all;
-`;
-
-const StyledTestQuestionAnswerContainer = styled.div`
-  padding-left: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
 `;

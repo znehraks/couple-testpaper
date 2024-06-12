@@ -5,6 +5,7 @@ export const StyledMenuContainer = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  gap: 24px;
 `;
 
 export const StyledMenu = styled.div`
