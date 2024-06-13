@@ -1,48 +1,56 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { StyledMenu, StyledMenuContainer } from '../common/styles';
-import { useSetAtom } from 'jotai';
-import { QuestionsAtom, StepAtom, TestCategoryAtom } from '../store/questionnaireStore';
-import { FriendsIcon, HeartIcon } from '../icons/Icon';
-import { useEffect } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { StepAtom, TestCategoryAtom } from '../store/questionnaireStore';
+import { useMemo } from 'react';
 
 export const Intro = () => {
   const setStep = useSetAtom(StepAtom);
-  const setTestCategory = useSetAtom(TestCategoryAtom);
-  const setQuestions = useSetAtom(QuestionsAtom);
+  const testCategory = useAtomValue(TestCategoryAtom);
 
-  useEffect(() => {
-    setTestCategory(null);
-    setQuestions([]);
-  }, [setQuestions, setTestCategory]);
+  const description = useMemo(() => {
+    switch (testCategory) {
+      case 'forAnyone':
+        return (
+          <>
+            <StyledContentDescription>
+              나에 관한 간단한 질문 <strong>2</strong>개와
+            </StyledContentDescription>
+            <StyledContentDescription>
+              연애와 관련된 질문 <strong>8</strong>개를 선택해서 출제해야 해요
+            </StyledContentDescription>
+          </>
+        );
+      case 'forCouple':
+        return (
+          <>
+            <StyledContentDescription>
+              나에 관한 간단한 질문 <strong>2</strong>개와
+            </StyledContentDescription>
+            <StyledContentDescription>
+              연애와 관련된 질문 <strong>8</strong>개를 선택해서 출제해야 해요
+            </StyledContentDescription>
+          </>
+        );
+      default:
+        return '';
+    }
+  }, [testCategory]);
 
   return (
     <>
       <StyledContentTitleWrapper>
         <StyledContentTitle>연애고사 출제하기</StyledContentTitle>
-        <div>
-          <StyledContentDescription>이 문제를 풀 대상을 선택해주세요.</StyledContentDescription>
-          <StyledContentDescription>대상에 따라 문제의 성격이 달라져요.</StyledContentDescription>
-        </div>
+        <div>{description}</div>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
         <StyledMenu
           onClick={() => {
-            setTestCategory('forAnyone');
-            setStep(1);
+            setStep(0);
           }}
         >
-          <FriendsIcon size={42} />
-          친구 및 지인
-        </StyledMenu>
-        <StyledMenu
-          onClick={() => {
-            setTestCategory('forCouple');
-            setStep(1);
-          }}
-        >
-          <HeartIcon size={42} />
-          연인
+          문제 출제하기
         </StyledMenu>
       </StyledMenuContainer>
     </>
@@ -68,4 +76,9 @@ const StyledContentTitle = styled(motion.h1)`
 
 const StyledContentDescription = styled(motion.p)`
   font-size: 24px;
+  & > strong {
+    font-weight: bold;
+    color: #ff6b6b;
+    font-size: 32px;
+  }
 `;

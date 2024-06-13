@@ -2,12 +2,13 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { Intro } from './Intro';
+import { CategoryIntro } from './CategoryIntro';
 import { Step } from './Step';
 import { ITestQuestion } from '@/types/utils';
-import { fiveChoiceQuestions, multipleChoiceQuestions, requiredQuestions } from './questionnaireData';
+import { commonQuestions, myInfoQuestions, requiredQuestions } from './questionnaireData';
 import { useAtom, useAtomValue } from 'jotai';
 import { QuestionsAtom, StepAtom, TestCategoryAtom } from '../store/questionnaireStore';
+import { Intro } from './Intro';
 
 // const simulationQuestions = [];
 interface IQuestionnaireProps {
@@ -28,27 +29,52 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
   useEffect(() => {
     if (!testCategory) return;
     if (testCategory === 'forAnyone') {
-      const selectedMultipleChoiceQuestions = multipleChoiceQuestions.map((question) => {
-        const choices = question[1] as string[];
-        const shuffled = choices.sort(() => Math.random() - 0.5);
-        return [question[0], [...shuffled.slice(0, 4), '이 중에 없다']];
-      });
-      const selectedFiveChoiceQuestions = fiveChoiceQuestions.map((question) => {
-        return [question[0], question[1]];
-      });
-      setQuestions([...requiredQuestions, ...selectedMultipleChoiceQuestions, ...selectedFiveChoiceQuestions]);
-    } else {
+      console.log(requiredQuestions.length); // 2
+      console.log(myInfoQuestions.length); // 4
+      console.log(commonQuestions.length); // 13
+
+      const selectedMyInfoQuestions = [...myInfoQuestions]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 2)
+        .map((quest) => {
+          if (quest.choices.length <= 5) {
+            return quest;
+          }
+          return {
+            ...quest,
+            choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+          };
+        });
+      console.log('selectedMyInfoQuestions', selectedMyInfoQuestions);
+
+      const selectedCommonQuestions = [...commonQuestions]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 8)
+        .map((quest) => {
+          if (quest.choices.length <= 5) {
+            return quest;
+          }
+          return {
+            ...quest,
+            choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+          };
+        });
+      console.log('selectedCommonQuestions', selectedCommonQuestions);
+      setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+    } else if (testCategory === 'forCouple') {
     }
   }, [setQuestions, testCategory]);
 
   useEffect(() => {
-    setStep(0);
+    setStep(-2);
   }, [setStep]);
 
+  console.log('questions', questions);
   return (
     <StyledContentWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      {step === 0 && <Intro />}
-      {step > 0 && testCategory && questions.length > 0 && <Step onSubmit={onSubmit} />}
+      {step === -2 && <CategoryIntro />}
+      {step === -1 && <Intro />}
+      {step >= 0 && testCategory && <Step onSubmit={onSubmit} />}
     </StyledContentWrapper>
   );
 };

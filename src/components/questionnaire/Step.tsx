@@ -15,12 +15,18 @@ export const Step = ({ onSubmit }: IStepProps) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [tempAnswers, setTempAnswers] = useState<{ [step: number]: string }>({});
 
+  console.log('questions', questions);
+  console.log('step', step);
+  console.log(questions[step]);
+  const isSubjective = useMemo(() => {
+    return questions[step].choices.length === 0;
+  }, [questions, step]);
   const isValid = useMemo(() => {
-    if (step === 1 && inputValue) {
+    if (isSubjective && inputValue) {
       return true;
     }
     return tempAnswers[step] !== undefined;
-  }, [inputValue, step, tempAnswers]);
+  }, [inputValue, isSubjective, step, tempAnswers]);
 
   const handleGoBack = useCallback(() => {
     setStep((prev) => prev - 1);
@@ -40,9 +46,8 @@ export const Step = ({ onSubmit }: IStepProps) => {
   const handleSubmit = useCallback(() => {
     const result = questions.map((question, index) => {
       return {
-        question: question[0] as string,
-        answers: question[1] as string[],
-        answerKeys: [tempAnswers[index + 1]],
+        questions,
+        answers:tempAnswers
       };
     });
     onSubmit(result);
@@ -51,15 +56,13 @@ export const Step = ({ onSubmit }: IStepProps) => {
     setStep(0);
   }, [onSubmit, questions, setAnswers, setStep, tempAnswers]);
 
-  const isSubjective = useMemo(() => {
-    return questions[step - 1][1].length === 0;
-  }, [questions, step]);
+  // const [quest, choices] = useMemo(() => questions[step - 1] as [string, string[]], [questions, step]);
 
-  const [quest, choices] = useMemo(() => questions[step - 1] as [string, string[]], [questions, step]);
+  const { question, choices } = useMemo(() => questions[step], [questions, step]);
 
   const description = useMemo(() => {
     switch (step) {
-      case 1:
+      case 0:
         return '이름이 부담스럽다면 별명도 좋아요.';
       default:
         return '';
@@ -69,7 +72,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
   return (
     <StyledStepWrapper>
       <StyledContentTitleWrapper>
-        <StyledContentTitle>{`${step}. ${quest}`}</StyledContentTitle>
+        <StyledContentTitle>{`${step + 1}. ${question}`}</StyledContentTitle>
         <StyledContentDescription>{description}</StyledContentDescription>
       </StyledContentTitleWrapper>
       <StyledQuestionContainer>
@@ -109,13 +112,13 @@ export const Step = ({ onSubmit }: IStepProps) => {
         )}
       </StyledQuestionContainer>
       <StyledContentButtonContainer>
-        {step > 0 && <StyledButton onClick={handleGoBack}>이전</StyledButton>}
-        {step > 0 && step < questions.length && (
+        {step >= 0 && <StyledButton onClick={handleGoBack}>이전</StyledButton>}
+        {step >= 0 && step < questions.length - 1 && (
           <StyledButton disabled={!isValid} onClick={handleGoNext}>
             다음
           </StyledButton>
         )}
-        {step === questions.length && <StyledButton onClick={handleSubmit}>출제 완료</StyledButton>}
+        {step === questions.length - 1 && <StyledButton onClick={handleSubmit}>출제 완료</StyledButton>}
       </StyledContentButtonContainer>
     </StyledStepWrapper>
   );

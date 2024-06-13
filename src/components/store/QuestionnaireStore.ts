@@ -1,7 +1,15 @@
 import { atom } from 'jotai';
+import { QuestionType } from '../questionnaire/questionnaireData';
 
 export type TestCategory = 'forAnyone' | 'forCouple';
 export const TestCategoryAtom = atom<TestCategory | null>(null);
+
 export const StepAtom = atom<number>(0);
-export const QuestionsAtom = atom<(string | string[])[][]>([]);
+
+export interface ITest {
+  type: QuestionType;
+  question: string;
+  choices: string[];
+}
+export const QuestionsAtom = atom<ITest[]>([]);
 export const AnswersAtom = atom<(number | string)[]>([]);
