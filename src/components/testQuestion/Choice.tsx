@@ -4,12 +4,12 @@ import React from 'react';
 
 interface IChoiceProps {
   index: number;
-  answer: string;
+  choice: string;
   selected: boolean;
   setSelectedChoiceNumber: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 export const Choice = (props: IChoiceProps) => {
-  const { index, answer, selected, setSelectedChoiceNumber } = props;
+  const { index, choice, selected, setSelectedChoiceNumber } = props;
   return (
     <ChoiceWrapper key={index} selected={selected}>
       <span
@@ -22,7 +22,7 @@ export const Choice = (props: IChoiceProps) => {
           });
         }}
       >
-        {circleNumberMap[index]} {answer}
+        {circleNumberMap[index]} {choice}
       </span>
     </ChoiceWrapper>
   );

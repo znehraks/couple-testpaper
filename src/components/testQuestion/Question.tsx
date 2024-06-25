@@ -17,10 +17,11 @@ export const Question = (props: IQuestionProps) => {
         {index + 1}. {question.question}
       </StyledTestQuestionTitleContainer>
       <StyledTestQuestionAnswerContainer>
-        {question.answers.map((answer, choiceIndex) => (
+        {question.choices.map((choice, choiceIndex) => (
           <Choice
+            key={choiceIndex}
             index={choiceIndex}
-            answer={answer}
+            choice={choice}
             selected={selectedChoiceNumber === choiceIndex}
             setSelectedChoiceNumber={setSelectedChoiceNumber}
           />

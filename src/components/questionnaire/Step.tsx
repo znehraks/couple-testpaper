@@ -54,11 +54,10 @@ export const Step = ({ onSubmit }: IStepProps) => {
         answer: tempAnswers[index],
       };
     });
-    console.log('result', result);
-    // onSubmit(result);
-    // setAnswers([]);
-    // setTempAnswers({});
-    // setCurrentTestQuestionIndex(0);
+    onSubmit(result);
+    setAnswers([]);
+    setTempAnswers({});
+    setCurrentTestQuestionIndex(0);
   }, [onSubmit, questions, setAnswers, setCurrentTestQuestionIndex, tempAnswers]);
 
   const { question, choices } = useMemo(
