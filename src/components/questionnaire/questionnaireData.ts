@@ -1,4 +1,4 @@
-import { ITest } from '../store/questionnaireStore';
+import { ITest } from '../store/QuestionnaireStore';
 import {
   accomodation,
   currentStatus,

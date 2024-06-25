@@ -7,7 +7,7 @@ import { Step } from './Step';
 import { ITestQuestion } from '@/types/utils';
 import { commonQuestions, myInfoQuestions, requiredQuestions } from './questionnaireData';
 import { useAtom, useAtomValue } from 'jotai';
-import { QuestionsAtom, StepAtom, TestCategoryAtom } from '../store/questionnaireStore';
+import { QuestionsAtom, TestCategoryAtom, StepAtom } from '../store/QuestionnaireStore';
 import { Intro } from './Intro';
 
 // const simulationQuestions = [];
@@ -61,20 +61,20 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
         });
       console.log('selectedCommonQuestions', selectedCommonQuestions);
       setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
-    } else if (testCategory === 'forCouple') {
     }
+    // else if (testCategory === 'forCouple') {
+    // }
   }, [setQuestions, testCategory]);
 
   useEffect(() => {
-    setStep(-2);
+    setStep('CATEGORY_INTRO');
   }, [setStep]);
 
-  console.log('questions', questions);
   return (
     <StyledContentWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      {step === -2 && <CategoryIntro />}
-      {step === -1 && <Intro />}
-      {step >= 0 && testCategory && <Step onSubmit={onSubmit} />}
+      {step === 'CATEGORY_INTRO' && <CategoryIntro />}
+      {step === 'INTRO' && <Intro />}
+      {step === 'QUESTIONS' && questions.length && <Step onSubmit={onSubmit} />}
     </StyledContentWrapper>
   );
 };

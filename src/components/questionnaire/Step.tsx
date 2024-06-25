@@ -3,76 +3,82 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { useCallback, useMemo, useState } from 'react';
-import { AnswersAtom, QuestionsAtom, StepAtom } from '../store/questionnaireStore';
+import { css } from '@emotion/react';
+import { AnswersAtom, QuestionsAtom, CurrentTestQuestionIndexAtom, StepAtom } from '../store/QuestionnaireStore';
 
 interface IStepProps {
   onSubmit: (result: ITestQuestion[]) => void;
 }
 export const Step = ({ onSubmit }: IStepProps) => {
-  const [step, setStep] = useAtom(StepAtom);
+  const [currentTestQuestionIndex, setCurrentTestQuestionIndex] = useAtom(CurrentTestQuestionIndexAtom);
+  const [, setStep] = useAtom(StepAtom);
   const [questions] = useAtom(QuestionsAtom);
   const [, setAnswers] = useAtom(AnswersAtom);
   const [inputValue, setInputValue] = useState<string>('');
   const [tempAnswers, setTempAnswers] = useState<{ [step: number]: string }>({});
 
-  console.log('questions', questions);
-  console.log('step', step);
-  console.log(questions[step]);
   const isSubjective = useMemo(() => {
-    return questions[step].choices.length === 0;
-  }, [questions, step]);
+    return questions[currentTestQuestionIndex].choices.length === 0;
+  }, [questions, currentTestQuestionIndex]);
   const isValid = useMemo(() => {
     if (isSubjective && inputValue) {
       return true;
     }
-    return tempAnswers[step] !== undefined;
-  }, [inputValue, isSubjective, step, tempAnswers]);
+    return tempAnswers[currentTestQuestionIndex] !== undefined;
+  }, [inputValue, isSubjective, currentTestQuestionIndex, tempAnswers]);
 
   const handleGoBack = useCallback(() => {
-    setStep((prev) => prev - 1);
-  }, [setStep]);
+    if (currentTestQuestionIndex === 0) {
+      setStep('INTRO');
+      return;
+    }
+    setCurrentTestQuestionIndex((prev) => prev - 1);
+  }, [currentTestQuestionIndex, setCurrentTestQuestionIndex, setStep]);
+
   const handleGoNext = useCallback(() => {
     if (!isValid) {
       return;
     }
-    if (step === 1) {
-      setTempAnswers((prev) => ({ ...prev, [step]: inputValue }));
+    if (currentTestQuestionIndex === 1) {
+      setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: inputValue }));
     } else {
-      setAnswers((prev) => [...prev, tempAnswers[step]]);
+      setAnswers((prev) => [...prev, tempAnswers[currentTestQuestionIndex]]);
     }
-    setStep((prev) => prev + 1);
-  }, [inputValue, isValid, setAnswers, setStep, step, tempAnswers]);
+    setCurrentTestQuestionIndex((prev) => prev + 1);
+  }, [inputValue, isValid, setAnswers, setCurrentTestQuestionIndex, currentTestQuestionIndex, tempAnswers]);
 
   const handleSubmit = useCallback(() => {
     const result = questions.map((question, index) => {
       return {
-        questions,
-        answers:tempAnswers
+        ...question,
+        answer: tempAnswers[index],
       };
     });
-    onSubmit(result);
-    setAnswers([]);
-    setTempAnswers({});
-    setStep(0);
-  }, [onSubmit, questions, setAnswers, setStep, tempAnswers]);
+    console.log('result', result);
+    // onSubmit(result);
+    // setAnswers([]);
+    // setTempAnswers({});
+    // setCurrentTestQuestionIndex(0);
+  }, [onSubmit, questions, setAnswers, setCurrentTestQuestionIndex, tempAnswers]);
 
-  // const [quest, choices] = useMemo(() => questions[step - 1] as [string, string[]], [questions, step]);
-
-  const { question, choices } = useMemo(() => questions[step], [questions, step]);
+  const { question, choices } = useMemo(
+    () => questions[currentTestQuestionIndex],
+    [questions, currentTestQuestionIndex],
+  );
 
   const description = useMemo(() => {
-    switch (step) {
+    switch (currentTestQuestionIndex) {
       case 0:
         return '이름이 부담스럽다면 별명도 좋아요.';
       default:
         return '';
     }
-  }, [step]);
+  }, [currentTestQuestionIndex]);
 
   return (
     <StyledStepWrapper>
       <StyledContentTitleWrapper>
-        <StyledContentTitle>{`${step + 1}. ${question}`}</StyledContentTitle>
+        <StyledContentTitle>{`${currentTestQuestionIndex + 1}. ${question}`}</StyledContentTitle>
         <StyledContentDescription>{description}</StyledContentDescription>
       </StyledContentTitleWrapper>
       <StyledQuestionContainer>
@@ -85,7 +91,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
             onKeyUp={(e) => {
               if (e.key === 'Enter') {
                 setAnswers((prev) => [...prev, inputValue]);
-                setTempAnswers((prev) => ({ ...prev, [step]: inputValue }));
+                setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: inputValue }));
                 setInputValue('');
                 handleGoNext();
               }
@@ -99,10 +105,10 @@ export const Step = ({ onSubmit }: IStepProps) => {
                   id={`choice-${index}`}
                   type="radio"
                   name="choice"
-                  checked={tempAnswers[step] === choice}
+                  checked={tempAnswers[currentTestQuestionIndex] === choice}
                   value={choice}
                   onChange={(e) => {
-                    setTempAnswers((prev) => ({ ...prev, [step]: e.target.value }));
+                    setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: e.target.value }));
                   }}
                 />
                 <label htmlFor={`choice-${index}`}>{choice}</label>
@@ -112,13 +118,15 @@ export const Step = ({ onSubmit }: IStepProps) => {
         )}
       </StyledQuestionContainer>
       <StyledContentButtonContainer>
-        {step >= 0 && <StyledButton onClick={handleGoBack}>이전</StyledButton>}
-        {step >= 0 && step < questions.length - 1 && (
+        {currentTestQuestionIndex >= 0 && <StyledButton onClick={handleGoBack}>이전</StyledButton>}
+        {currentTestQuestionIndex >= 0 && currentTestQuestionIndex < questions.length - 1 && (
           <StyledButton disabled={!isValid} onClick={handleGoNext}>
             다음
           </StyledButton>
         )}
-        {step === questions.length - 1 && <StyledButton onClick={handleSubmit}>출제 완료</StyledButton>}
+        {currentTestQuestionIndex === questions.length - 1 && (
+          <StyledButton onClick={handleSubmit}>출제 완료</StyledButton>
+        )}
       </StyledContentButtonContainer>
     </StyledStepWrapper>
   );
@@ -158,11 +166,16 @@ const StyledButton = styled.button<{ disabled?: boolean }>`
   padding: 4px 8px;
   border-radius: 8px;
   box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  background-color: ${({ disabled }) => (disabled ? 'rgba(0, 0, 0, 0.1)' : '#ffffff')};
+  color: ${({ disabled }) => (disabled ? 'rgba(0, 0, 0, 0.3)' : '#000000')};
+  ${(props) =>
+    !props.disabled &&
+    css`
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    `}
 `;
 
 const StyledQuestionContainer = styled.div`

@@ -36,7 +36,7 @@ export const ParentIcon = ({ size = 16, fill = '#FF7979' }: IIconProps) => {
 
 export const FriendsIcon = ({ size = 16 }: IIconProps) => {
   return (
-    <svg enable-background="new 0 0 91 91" height={size} id="Layer_1" version="1.1" viewBox="0 0 91 91" width={size}>
+    <svg height={size} id="Layer_1" version="1.1" viewBox="0 0 91 91" width={size}>
       <g>
         <g>
           <path

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { StyledMenu, StyledMenuContainer } from '../common/styles';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { StepAtom, TestCategoryAtom } from '../store/questionnaireStore';
+import { StepAtom, TestCategoryAtom } from '../store/QuestionnaireStore';
 import { useMemo } from 'react';
 
 export const Intro = () => {
@@ -47,7 +47,7 @@ export const Intro = () => {
       <StyledMenuContainer>
         <StyledMenu
           onClick={() => {
-            setStep(0);
+            setStep('QUESTIONS');
           }}
         >
           문제 출제하기

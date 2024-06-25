@@ -4,7 +4,8 @@ import { QuestionType } from '../questionnaire/questionnaireData';
 export type TestCategory = 'forAnyone' | 'forCouple';
 export const TestCategoryAtom = atom<TestCategory | null>(null);
 
-export const StepAtom = atom<number>(0);
+export const StepAtom = atom<'CATEGORY_INTRO' | 'INTRO' | 'QUESTIONS'>('CATEGORY_INTRO');
+export const CurrentTestQuestionIndexAtom = atom<number>(0);
 
 export interface ITest {
   type: QuestionType;

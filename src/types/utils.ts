@@ -1,5 +1,5 @@
-export interface ITestQuestion {
-  question: string;
-  answers: string[];
-  answerKeys: string[];
+import { ITest } from '@/components/store/QuestionnaireStore';
+
+export interface ITestQuestion extends ITest {
+  answer: string;
 }

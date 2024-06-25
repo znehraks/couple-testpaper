@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { StyledMenu, StyledMenuContainer } from '../common/styles';
 import { useSetAtom } from 'jotai';
-import { QuestionsAtom, StepAtom, TestCategoryAtom } from '../store/questionnaireStore';
 import { FriendsIcon, HeartIcon } from '../icons/Icon';
 import { useEffect } from 'react';
+import { QuestionsAtom, TestCategoryAtom, StepAtom } from '../store/QuestionnaireStore';
 
 export const CategoryIntro = () => {
   const setStep = useSetAtom(StepAtom);
@@ -29,7 +29,7 @@ export const CategoryIntro = () => {
         <StyledMenu
           onClick={() => {
             setTestCategory('forAnyone');
-            setStep(-1);
+            setStep('INTRO');
           }}
         >
           <FriendsIcon size={42} />
@@ -38,7 +38,7 @@ export const CategoryIntro = () => {
         <StyledMenu
           onClick={() => {
             setTestCategory('forCouple');
-            setStep(-1);
+            setStep('INTRO');
           }}
         >
           <HeartIcon size={42} />
