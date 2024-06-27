@@ -1,13 +1,13 @@
-import { ITestQuestion } from '@/types/utils';
+import { ITestResult } from '@/types/utils';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { css } from '@emotion/react';
 import { AnswersAtom, QuestionsAtom, CurrentTestQuestionIndexAtom, StepAtom } from '../store/QuestionnaireStore';
 
 interface IStepProps {
-  onSubmit: (result: ITestQuestion[]) => void;
+  onSubmit: (result: ITestResult) => void;
 }
 export const Step = ({ onSubmit }: IStepProps) => {
   const [currentTestQuestionIndex, setCurrentTestQuestionIndex] = useAtom(CurrentTestQuestionIndexAtom);
@@ -15,17 +15,21 @@ export const Step = ({ onSubmit }: IStepProps) => {
   const [questions] = useAtom(QuestionsAtom);
   const [, setAnswers] = useAtom(AnswersAtom);
   const [inputValue, setInputValue] = useState<string>('');
+  const [helperText, setHelperText] = useState<string>('');
   const [tempAnswers, setTempAnswers] = useState<{ [step: number]: string }>({});
 
   const isSubjective = useMemo(() => {
     return questions[currentTestQuestionIndex].choices.length === 0;
   }, [questions, currentTestQuestionIndex]);
   const isValid = useMemo(() => {
-    if (isSubjective && inputValue) {
-      return true;
+    if (isSubjective) {
+      if (inputValue && inputValue.length > 0 && inputValue.length <= 8) {
+        return true;
+      }
+      return false;
     }
     return tempAnswers[currentTestQuestionIndex] !== undefined;
-  }, [inputValue, isSubjective, currentTestQuestionIndex, tempAnswers]);
+  }, [isSubjective, inputValue, tempAnswers, currentTestQuestionIndex]);
 
   const handleGoBack = useCallback(() => {
     if (currentTestQuestionIndex === 0) {
@@ -39,7 +43,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
     if (!isValid) {
       return;
     }
-    if (currentTestQuestionIndex === 1) {
+    if (currentTestQuestionIndex === 0) {
       setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: inputValue }));
     } else {
       setAnswers((prev) => [...prev, tempAnswers[currentTestQuestionIndex]]);
@@ -48,13 +52,18 @@ export const Step = ({ onSubmit }: IStepProps) => {
   }, [inputValue, isValid, setAnswers, setCurrentTestQuestionIndex, currentTestQuestionIndex, tempAnswers]);
 
   const handleSubmit = useCallback(() => {
-    const result = questions.map((question, index) => {
+    const testQuestions = questions.map((question, index) => {
       return {
         ...question,
         answer: tempAnswers[index],
       };
     });
-    onSubmit(result);
+
+    onSubmit({
+      testQuestions: testQuestions.slice(2),
+      maker: testQuestions[0].answer,
+      status: testQuestions[1].answer,
+    });
     setAnswers([]);
     setTempAnswers({});
     setCurrentTestQuestionIndex(0);
@@ -65,6 +74,8 @@ export const Step = ({ onSubmit }: IStepProps) => {
     [questions, currentTestQuestionIndex],
   );
 
+  console.log(tempAnswers);
+
   const description = useMemo(() => {
     switch (currentTestQuestionIndex) {
       case 0:
@@ -73,6 +84,12 @@ export const Step = ({ onSubmit }: IStepProps) => {
         return '';
     }
   }, [currentTestQuestionIndex]);
+
+  useEffect(() => {
+    if (inputValue.length <= 8) {
+      setHelperText('');
+    }
+  }, [inputValue.length]);
 
   return (
     <StyledStepWrapper>
@@ -85,7 +102,11 @@ export const Step = ({ onSubmit }: IStepProps) => {
           <StyledInput
             value={inputValue}
             onChange={(e) => {
-              setInputValue(e.target.value);
+              if (inputValue.length >= 8) {
+                setHelperText('이름은 8자 까지 가능해요.');
+                setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: e.target.value.slice(0, 8) }));
+              }
+              setInputValue(e.target.value.slice(0, 8));
             }}
             onKeyUp={(e) => {
               if (e.key === 'Enter') {
@@ -116,6 +137,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
           </StyledChoiceContainer>
         )}
       </StyledQuestionContainer>
+      <StyledHelperText>{helperText}</StyledHelperText>
       <StyledContentButtonContainer>
         {currentTestQuestionIndex >= 0 && <StyledButton onClick={handleGoBack}>이전</StyledButton>}
         {currentTestQuestionIndex >= 0 && currentTestQuestionIndex < questions.length - 1 && (
@@ -136,6 +158,7 @@ const StyledStepWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 32px;
+  position: relative;
 `;
 const StyledContentTitleWrapper = styled.div`
   display: flex;
@@ -152,6 +175,14 @@ const StyledContentTitle = styled(motion.h1)`
 
 const StyledContentDescription = styled(motion.p)`
   font-size: 22px;
+`;
+
+const StyledHelperText = styled(motion.p)`
+  font-size: 20px;
+  color: #e7617c;
+  font-weight: 800;
+  position: absolute;
+  bottom: 46px;
 `;
 
 const StyledContentButtonContainer = styled.div`

@@ -15,10 +15,10 @@ export const Intro = () => {
         return (
           <>
             <StyledContentDescription>
-              나에 관한 간단한 질문 <strong>2</strong>개와
+              나에 관한 간단한 문제 <strong>2</strong>개와
             </StyledContentDescription>
             <StyledContentDescription>
-              연애와 관련된 질문 <strong>8</strong>개를 선택해서 출제해야 해요
+              연애관에 대한 문제 <strong>8</strong>개를 선택해서 출제해야 해요
             </StyledContentDescription>
           </>
         );
@@ -26,10 +26,10 @@ export const Intro = () => {
         return (
           <>
             <StyledContentDescription>
-              나에 관한 간단한 질문 <strong>2</strong>개와
+              나에 관한 간단한 문제 <strong>2</strong>개와
             </StyledContentDescription>
             <StyledContentDescription>
-              연애와 관련된 질문 <strong>8</strong>개를 선택해서 출제해야 해요
+              나와 연인과 관련된 문제 <strong>8</strong>개를 선택해서 출제해야 해요
             </StyledContentDescription>
           </>
         );

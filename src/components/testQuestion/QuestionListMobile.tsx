@@ -1,13 +1,16 @@
 import styled from '@emotion/styled';
-import { ITestQuestion } from '@/types/utils';
 import dayjs from 'dayjs';
 import { Question } from './Question';
+import { ICoupleTestResult, testTypeMap } from '@/types/utils';
 
 type QuestionListProps = {
-  questions: ITestQuestion[];
+  testType: ICoupleTestResult['testType'];
+  testQuestions: ICoupleTestResult['testQuestions'];
+  maker: ICoupleTestResult['maker'];
+  status: ICoupleTestResult['status'];
 };
 
-const QuestionListMobile = ({ questions }: QuestionListProps) => {
+const QuestionListMobile = ({ testQuestions, testType, maker }: QuestionListProps) => {
   // 내가 에 사람 이름을 넣어서 수정
   //  1,2번 문항은 제외하기
   //  다음 페이지로 넘기기 기능 추가
@@ -18,12 +21,12 @@ const QuestionListMobile = ({ questions }: QuestionListProps) => {
         <div>{`${dayjs().get('year') + 1}학년도 연애수학능력시험 문제지`}</div>
         <div>
           <div>제 1교시</div>
-          <div>연애 영역</div>
-          <div>홀수형</div>
+          <div>{testTypeMap[testType]} 영역</div>
+          <div id="test-odd">{maker}형asdfadsads</div>
         </div>
       </StyledTestHeaderWrapper>
       <StyledTestQuestionWrapper>
-        {questions.map((question, index) => (
+        {testQuestions.map((question, index) => (
           <Question key={index} question={question} index={index} />
         ))}
       </StyledTestQuestionWrapper>
@@ -58,7 +61,7 @@ const StyledTestHeaderWrapper = styled.div`
   min-height: fit-content;
   & > div:first-of-type {
     font-family: NanumSquareB;
-    font-size: 20px;
+    font-size: 14px;
     text-align: center;
     word-break: keep-all;
   }
@@ -67,6 +70,7 @@ const StyledTestHeaderWrapper = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     font-size: 10px;
 
     & > div:first-of-type {
@@ -77,8 +81,11 @@ const StyledTestHeaderWrapper = styled.div`
     }
     & > div:nth-of-type(2) {
       font-family: NanumMyeongjoExtraBold;
-      font-size: 36px;
+      font-size: 24px;
       margin-right: 12px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
     & > div:last-of-type {
       font-family: NanumMyeongjoBold;

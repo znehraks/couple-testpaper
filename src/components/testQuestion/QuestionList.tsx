@@ -1,16 +1,22 @@
 import styled from '@emotion/styled';
-import { ITestQuestion } from '@/types/utils';
 import dayjs from 'dayjs';
 import { Question } from './Question';
+import { ICoupleTestResult, testTypeMap } from '@/types/utils';
+import { useAtomValue } from 'jotai';
+import { SelectedAnswersAtom } from '../store/QuestionListStore';
+import { css } from '@emotion/react';
 
 type QuestionListProps = {
-  questions: ITestQuestion[];
+  testType: ICoupleTestResult['testType'];
+  testQuestions: ICoupleTestResult['testQuestions'];
+  maker: ICoupleTestResult['maker'];
+  status: ICoupleTestResult['status'];
 };
-
-const QuestionList = ({ questions }: QuestionListProps) => {
+const QuestionList = ({ testType, maker, testQuestions }: QuestionListProps) => {
   // 내가 에 사람 이름을 넣어서 수정
   //  1,2번 문항은 제외하기
   //  다음 페이지로 넘기기 기능 추가
+  const selectedAnswers = useAtomValue(SelectedAnswersAtom);
 
   return (
     <>
@@ -19,21 +25,24 @@ const QuestionList = ({ questions }: QuestionListProps) => {
           <div>{`${dayjs().get('year') + 1}학년도 연애수학능력시험 문제지`}</div>
           <div>
             <div id="test-time">제 1교시</div>
-            <div>연애 영역</div>
-            <div id="test-odd">홀수형</div>
+            <div>{testTypeMap[testType]} 영역</div>
+            <div id="test-odd">{maker} 유형</div>
           </div>
         </StyledTestHeaderWrapper>
         <StyledTestQuestionWrapper>
           <StyledTestSectionWrapper>
-            {questions.slice(0, Math.round(questions.length / 2)).map((question, index) => (
+            {testQuestions.slice(0, Math.round(testQuestions.length / 2)).map((question, index) => (
               <Question key={index} question={question} index={index} />
             ))}
           </StyledTestSectionWrapper>
           <StyledTestSectionWrapper>
-            {questions.slice(Math.round(questions.length / 2)).map((question, index) => (
+            {testQuestions.slice(Math.round(testQuestions.length / 2)).map((question, index) => (
               <Question key={index + 5} question={question} index={index + 5} />
             ))}
           </StyledTestSectionWrapper>
+          <StyledSubmitBtn disabled={Object.keys(selectedAnswers).length !== testQuestions.length}>
+            제출하기
+          </StyledSubmitBtn>
         </StyledTestQuestionWrapper>
       </StyledTestWrapper>
     </>
@@ -72,6 +81,8 @@ const StyledTestHeaderWrapper = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    margin-top: 18px;
 
     & > div:first-of-type {
       font-family: NanumMyeongjoBold;
@@ -82,7 +93,9 @@ const StyledTestHeaderWrapper = styled.div`
     & > div:nth-of-type(2) {
       font-family: NanumMyeongjoExtraBold;
       font-size: 42px;
-      margin-right: 16px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
     & > div:last-of-type {
       font-family: NanumMyeongjoBold;
@@ -114,4 +127,23 @@ const StyledTestSectionWrapper = styled.div`
     width: 2px;
     background: #000;
   }
+`;
+
+export const StyledSubmitBtn = styled.button<{ disabled: boolean }>`
+  position: absolute;
+  font-size: 24px;
+  padding: 4px 8px;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
+  bottom: 0;
+  right: 0;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  background-color: ${({ disabled }) => (disabled ? 'rgba(0, 0, 0, 0.1)' : '#ffffff')};
+  color: ${({ disabled }) => (disabled ? 'rgba(0, 0, 0, 0.3)' : '#000000')};
+  ${(props) =>
+    !props.disabled &&
+    css`
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    `}
 `;

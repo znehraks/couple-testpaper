@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import Questionnaire from '../../components/questionnaire';
 import { Layout } from '@/components/Layout';
-import { ITestQuestion } from '@/types/utils';
+import { ITestResult } from '@/types/utils';
 import { useRouter } from 'next/router';
 import { addCoupleTest } from '@/services/coupleTests';
 import { useMutation } from '@tanstack/react-query';
@@ -23,7 +23,7 @@ export default function CoupleTestPage() {
   const [, setCompleted] = useState(true);
   const router = useRouter();
   const handleSubmit = useCallback(
-    async (result: ITestQuestion[]) => {
+    async (result: ITestResult) => {
       mutation.mutate(result);
     },
     [mutation],

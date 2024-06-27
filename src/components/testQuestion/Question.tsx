@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { Choice } from './Choice';
 import { ITestQuestion } from '@/types/utils';
-import { useState } from 'react';
+import { useCallback } from 'react';
+import { useAtom } from 'jotai';
+import { SelectedAnswersAtom } from '../store/QuestionListStore';
 
 interface IQuestionProps {
   question: ITestQuestion;
@@ -9,12 +11,36 @@ interface IQuestionProps {
 }
 
 export const Question = (props: IQuestionProps) => {
-  const { question, index } = props;
-  const [selectedChoiceNumber, setSelectedChoiceNumber] = useState<number>();
+  const { question, index: questionIndex } = props;
+  const [selectedAnswers, setSelectedAnswers] = useAtom(SelectedAnswersAtom);
+  const handleClickChoice = useCallback(
+    (questionIndex: number) => (choiceIndex: number) => {
+      setSelectedAnswers((prev) => {
+        const temp = { ...prev };
+        if (prev[questionIndex]?.selectedAnswer.index === choiceIndex) {
+          delete temp[questionIndex];
+          return temp;
+        }
+        return {
+          ...prev,
+          [questionIndex]: {
+            question,
+            selectedAnswer: {
+              text: question.choices[choiceIndex],
+              index: choiceIndex,
+            },
+          },
+        };
+      });
+    },
+    [question, setSelectedAnswers],
+  );
+
+  console.log('selectedAnswers', selectedAnswers);
   return (
-    <StyledTestQuestionBox key={index}>
+    <StyledTestQuestionBox key={questionIndex}>
       <StyledTestQuestionTitleContainer>
-        {index + 1}. {question.question}
+        {questionIndex + 1}. {question.question}
       </StyledTestQuestionTitleContainer>
       <StyledTestQuestionAnswerContainer>
         {question.choices.map((choice, choiceIndex) => (
@@ -22,8 +48,8 @@ export const Question = (props: IQuestionProps) => {
             key={choiceIndex}
             index={choiceIndex}
             choice={choice}
-            selected={selectedChoiceNumber === choiceIndex}
-            setSelectedChoiceNumber={setSelectedChoiceNumber}
+            selected={selectedAnswers[questionIndex]?.selectedAnswer.index === choiceIndex}
+            handleClickChoice={handleClickChoice(questionIndex)}
           />
         ))}
       </StyledTestQuestionAnswerContainer>

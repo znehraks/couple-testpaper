@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { CategoryIntro } from './CategoryIntro';
 import { Step } from './Step';
-import { ITestQuestion } from '@/types/utils';
+import { ITestResult } from '@/types/utils';
 import { commonQuestions, myInfoQuestions, requiredQuestions } from './questionnaireData';
 import { useAtom, useAtomValue } from 'jotai';
 import { QuestionsAtom, TestCategoryAtom, StepAtom } from '../store/QuestionnaireStore';
@@ -12,7 +12,7 @@ import { Intro } from './Intro';
 
 // const simulationQuestions = [];
 interface IQuestionnaireProps {
-  onSubmit: (result: ITestQuestion[]) => void;
+  onSubmit: (result: ITestResult) => void;
 }
 const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
   const [step, setStep] = useAtom(StepAtom);
