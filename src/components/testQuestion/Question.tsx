@@ -36,7 +36,6 @@ export const Question = (props: IQuestionProps) => {
     [question, setSelectedAnswers],
   );
 
-  console.log('selectedAnswers', selectedAnswers);
   return (
     <StyledTestQuestionBox key={questionIndex}>
       <StyledTestQuestionTitleContainer>

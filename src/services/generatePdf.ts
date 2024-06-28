@@ -8,7 +8,8 @@ export const generatePDF = async () => {
   const testTime = document.getElementById('test-time');
   const testOdd = document.getElementById('test-odd');
   const testHeader = document.getElementById('test-header');
-  if (!testTime || !testOdd || !testHeader) return;
+  const testSubmitBtn = document.getElementById('question-list-submit');
+  if (!testTime || !testOdd || !testHeader || !testSubmitBtn) return;
   const originalPaddingBottom = testTime.style.paddingBottom;
   testTime.style.paddingBottom = '16px';
   testOdd.style.paddingBottom = '16px';
@@ -17,6 +18,7 @@ export const generatePDF = async () => {
   // 원래 border 스타일을 저장하고 제거하는 함수
   const originalBorder = element.style.border;
   element.style.border = 'none';
+  testSubmitBtn.style.display = 'none';
 
   // 전체 페이지를 캡처하도록 html2canvas 옵션 설정
   const canvas = await html2canvas(element, {
@@ -35,6 +37,7 @@ export const generatePDF = async () => {
   testTime.style.paddingBottom = originalPaddingBottom;
   testOdd.style.paddingBottom = originalPaddingBottom;
   testHeader.style.minHeight = '120px';
+  testSubmitBtn.style.display = 'block';
 
   const imgData = canvas.toDataURL('image/png');
   const pdf = new jsPDF({
