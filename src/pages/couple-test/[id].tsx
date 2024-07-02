@@ -30,6 +30,9 @@ export default function CoupleTestPage() {
   const [timeLeft, setTimeLeft] = useState(600);
   const [isTimeUp, setIsTimeUp] = useState(false);
 
+  // TODO 타이머 위치를 응가재이유형 위에다가 옮기고,
+  // TODO 모달에서 응시 시작 눌렀을 때, 우측 상단으로 날라가서 박히도록 함
+
   useEffect(() => {
     if (!isTestStarted) return;
     const intervalId = setInterval(() => {
