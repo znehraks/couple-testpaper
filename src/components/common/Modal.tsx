@@ -43,7 +43,7 @@ const StyledModalWrapper = styled.div<{ width: CSSProperties['width']; height: C
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 8px 12px;
+    padding: 12px;
   }
   & > div:first-of-type {
     font-size: 32px;

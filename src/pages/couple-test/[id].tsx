@@ -14,17 +14,43 @@ import { generatePDF } from '@/services/generatePdf';
 import { motion } from 'framer-motion';
 import { Modal } from '@/components/common/Modal';
 import { TimerIcon } from '@/components/icons/Icon';
+import { IsTestStarted } from '@/store/QuestionListStore';
 
 export default function CoupleTestPage() {
   const isMobile = useMobile();
   const [isDownloadBtnVisible, setIsDownloadBtnVisible] = useState(true);
   const [, setIsGeneratingPDF] = useAtom(IsGeneratingPDFAtom);
+  const [isTestStarted, setIsTestStarted] = useAtom(IsTestStarted);
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading, isError } = useQuery<ICoupleTestResult>({
     queryKey: ['coupleTest', id],
     queryFn: () => getCoupleTest(id as string),
   });
+  const [timeLeft, setTimeLeft] = useState(600);
+  const [isTimeUp, setIsTimeUp] = useState(false);
+
+  useEffect(() => {
+    if (!isTestStarted) return;
+    const intervalId = setInterval(() => {
+      setTimeLeft((prevTimeLeft) => {
+        if (prevTimeLeft <= 1) {
+          clearInterval(intervalId);
+          setIsTimeUp(true);
+          return 0;
+        }
+        return prevTimeLeft - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [isTestStarted]);
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+  };
 
   useEffect(() => {
     if (data?.testQuestions.length === 0) {
@@ -67,20 +93,32 @@ export default function CoupleTestPage() {
   // 그 전까지는 눌러도 반응이 안되도록 함
   return (
     <Layout>
-      <Modal
-        header={
-          <StyledModalHeaderWrapper>
-            응시 시작 버튼을 누르면 <strong>10분</strong>간 문제를 풀 수 있습니다.
-          </StyledModalHeaderWrapper>
-        }
-      >
-        <StyledModalContentWrapper>
-          <StyledStartButton>
-            <TimerIcon size={24} fill={'#FF7979'} />
-            응시 시작
-          </StyledStartButton>
-        </StyledModalContentWrapper>
-      </Modal>
+      <h1>Timer: {formatTime(timeLeft)}</h1>
+      {isTimeUp && <p>Time's up!</p>}
+      {!isTestStarted && (
+        <Modal
+          header={
+            <StyledModalHeaderWrapper>
+              <span>
+                응시 시작 버튼을 누르면 <strong>10분</strong>간 문제를 풀 수 있습니다.
+              </span>
+              <span>응시 도중 새로고침을 하면, 처음부터 다시 응시해야 합니다.</span>
+            </StyledModalHeaderWrapper>
+          }
+        >
+          <StyledModalContentWrapper>
+            <StyledStartButton
+              onClick={() => {
+                setIsTestStarted(true);
+              }}
+            >
+              <TimerIcon size={24} fill={'#FF7979'} />
+              응시 시작
+            </StyledStartButton>
+          </StyledModalContentWrapper>
+        </Modal>
+      )}
+
       <StyledPdfButton
         visible={isDownloadBtnVisible}
         onClick={async () => {
@@ -123,10 +161,20 @@ const StyledPdfButton = styled(motion.button)<{ visible: boolean }>`
 `;
 
 const StyledModalHeaderWrapper = styled.div`
-  & > strong {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  gap: 4px;
+  & > span:last-of-type {
+    font-size: 22px;
+  }
+  & > span > strong {
     font-weight: 600;
     color: #ff7979;
-    font-size: 38px;
+    font-size: 32px;
     text-decoration: underline;
   }
 `;
