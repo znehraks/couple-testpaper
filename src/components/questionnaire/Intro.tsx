@@ -1,8 +1,12 @@
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { StyledMenu, StyledMenuContainer } from '../common/styles';
+import {
+  StyledContentDescription,
+  StyledContentTitle,
+  StyledContentTitleWrapper,
+  StyledMenu,
+  StyledMenuContainer,
+} from './styles';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { StepAtom, TestCategoryAtom } from '../store/QuestionnaireStore';
+import { StepAtom, TestCategoryAtom } from '../../store/QuestionnaireStore';
 import { useMemo } from 'react';
 
 export const Intro = () => {
@@ -56,29 +60,3 @@ export const Intro = () => {
     </>
   );
 };
-
-const StyledContentTitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-const StyledContentTitle = styled(motion.h1)`
-  font-size: 58px;
-  text-align: center;
-`;
-
-const StyledContentDescription = styled(motion.p)`
-  font-size: 24px;
-  & > strong {
-    font-weight: bold;
-    color: #ff6b6b;
-    font-size: 32px;
-  }
-`;

@@ -1,14 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect } from 'react';
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import { CategoryIntro } from './CategoryIntro';
 import { Step } from './Step';
 import { ITestResult } from '@/types/utils';
-import { commonQuestions, myInfoQuestions, requiredQuestions } from './questionnaireData';
+import { commonQuestions, myInfoQuestions, requiredQuestions } from '../../data/questionnaireData';
 import { useAtom, useAtomValue } from 'jotai';
-import { QuestionsAtom, TestCategoryAtom, StepAtom } from '../store/QuestionnaireStore';
+import { QuestionsAtom, TestCategoryAtom, StepAtom } from '../../store/QuestionnaireStore';
 import { Intro } from './Intro';
+import { StyledContentWrapper } from './styles';
 
 // const simulationQuestions = [];
 interface IQuestionnaireProps {
@@ -78,13 +77,5 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
     </StyledContentWrapper>
   );
 };
-
-const StyledContentWrapper = styled(motion.div)`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 32px;
-`;
 
 export default Questionnaire;

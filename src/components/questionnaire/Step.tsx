@@ -1,10 +1,17 @@
 import { ITestResult } from '@/types/utils';
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { css } from '@emotion/react';
-import { AnswersAtom, QuestionsAtom, CurrentTestQuestionIndexAtom, StepAtom } from '../store/QuestionnaireStore';
+import { AnswersAtom, QuestionsAtom, CurrentTestQuestionIndexAtom, StepAtom } from '../../store/QuestionnaireStore';
+import {
+  StyledButton,
+  StyledChoiceContainer,
+  StyledContentButtonContainer,
+  StyledHelperText,
+  StyledInput,
+  StyledQuestionContainer,
+  StyledStepWrapper,
+} from './Step.styles';
+import { StyledContentDescription, StyledContentTitle, StyledContentTitleWrapper } from './styles';
 
 interface IStepProps {
   onSubmit: (result: ITestResult) => void;
@@ -152,81 +159,3 @@ export const Step = ({ onSubmit }: IStepProps) => {
     </StyledStepWrapper>
   );
 };
-
-const StyledStepWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
-  position: relative;
-`;
-const StyledContentTitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-`;
-
-const StyledContentTitle = styled(motion.h1)`
-  font-size: 48px;
-  text-align: center;
-  word-break: keep-all;
-`;
-
-const StyledContentDescription = styled(motion.p)`
-  font-size: 22px;
-`;
-
-const StyledHelperText = styled(motion.p)`
-  font-size: 20px;
-  color: #e7617c;
-  font-weight: 800;
-  position: absolute;
-  bottom: 46px;
-`;
-
-const StyledContentButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-`;
-const StyledButton = styled.button<{ disabled?: boolean }>`
-  transition: background-color 0.2s ease-in-out;
-  font-size: 24px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  background-color: ${({ disabled }) => (disabled ? 'rgba(0, 0, 0, 0.1)' : '#ffffff')};
-  color: ${({ disabled }) => (disabled ? 'rgba(0, 0, 0, 0.3)' : '#000000')};
-  ${(props) =>
-    !props.disabled &&
-    css`
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-    `}
-`;
-
-const StyledQuestionContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-`;
-
-const StyledChoiceContainer = styled.div`
-  font-size: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  & > div {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-  }
-`;
-
-const StyledInput = styled.input`
-  padding: 0 12px;
-  font-size: 36px;
-  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
-`;

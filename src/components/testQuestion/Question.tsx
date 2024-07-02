@@ -1,9 +1,13 @@
-import styled from '@emotion/styled';
 import { Choice } from './Choice';
 import { ITestQuestion } from '@/types/utils';
 import { useCallback } from 'react';
 import { useAtom } from 'jotai';
-import { SelectedAnswersAtom } from '../store/QuestionListStore';
+import { SelectedAnswersAtom } from '../../store/QuestionListStore';
+import {
+  StyledTestQuestionAnswerContainer,
+  StyledTestQuestionBox,
+  StyledTestQuestionTitleContainer,
+} from './Question.styles';
 
 interface IQuestionProps {
   question: ITestQuestion;
@@ -55,35 +59,3 @@ export const Question = (props: IQuestionProps) => {
     </StyledTestQuestionBox>
   );
 };
-
-const StyledTestQuestionBox = styled.div`
-  font-family: NanumMyeongjo;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: 20%;
-  * {
-    font-family: NanumMyeongjo;
-  }
-  @media (max-width: 501px) {
-    font-family: NanumMyeongjo;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 48px 0px;
-    * {
-      font-family: NanumMyeongjo;
-    }
-  }
-`;
-
-const StyledTestQuestionTitleContainer = styled.div`
-  word-break: keep-all;
-`;
-
-const StyledTestQuestionAnswerContainer = styled.div`
-  padding-left: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;

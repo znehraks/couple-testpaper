@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
 import { SideAdComponent } from './SideAdComponent';
 import { useMobile } from '@/hooks/useMobile';
 import { UpDownAdComponent } from './UpDownAdComponent';
+import { StyledContentWrapper, StyledWrapper } from './Layout.styles';
 
 interface ILayoutProps extends React.PropsWithChildren {
   children: React.ReactNode;
@@ -26,19 +26,3 @@ export const Layout = ({ children: content }: ILayoutProps) => {
     </StyledWrapper>
   );
 };
-
-const StyledWrapper = styled.div<{ isMobile: boolean }>`
-  display: flex;
-  flex-direction: ${(props) => (props.isMobile ? 'column' : 'row')};
-  padding: 8px;
-  width: 100vw;
-  height: 100vh;
-`;
-const StyledContentWrapper = styled.div<{ isMobile: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  padding: ${(props) => (props.isMobile ? '0' : '0 48px')};
-`;

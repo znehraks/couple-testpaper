@@ -1,10 +1,14 @@
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { StyledMenu, StyledMenuContainer } from '../common/styles';
+import {
+  StyledContentDescription,
+  StyledContentTitle,
+  StyledContentTitleWrapper,
+  StyledMenu,
+  StyledMenuContainer,
+} from './styles';
 import { useSetAtom } from 'jotai';
 import { FriendsIcon, HeartIcon } from '../icons/Icon';
 import { useEffect } from 'react';
-import { QuestionsAtom, TestCategoryAtom, StepAtom } from '../store/QuestionnaireStore';
+import { QuestionsAtom, TestCategoryAtom, StepAtom } from '../../store/QuestionnaireStore';
 
 export const CategoryIntro = () => {
   const setStep = useSetAtom(StepAtom);
@@ -48,24 +52,3 @@ export const CategoryIntro = () => {
     </>
   );
 };
-
-const StyledContentTitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-const StyledContentTitle = styled(motion.h1)`
-  font-size: 58px;
-  text-align: center;
-`;
-
-const StyledContentDescription = styled(motion.p)`
-  font-size: 24px;
-`;

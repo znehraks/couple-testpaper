@@ -1,4 +1,4 @@
-import { ITest } from '@/components/store/QuestionnaireStore';
+import { ITest } from '@/store/QuestionnaireStore';
 
 export interface ITestQuestion extends ITest {
   answer: string;

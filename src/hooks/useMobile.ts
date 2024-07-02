@@ -1,4 +1,4 @@
-import { IsGeneratingPDFAtom } from '@/components/store';
+import { IsGeneratingPDFAtom } from '@/store';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 

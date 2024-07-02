@@ -1,6 +1,6 @@
 import { Layout } from '@/components/Layout';
-import QuestionList from '@/components/testQuestion/QuestionList';
-import QuestionListMobile from '@/components/testQuestion/QuestionListMobile';
+import { QuestionList } from '@/components/testQuestion/QuestionList';
+import { QuestionListMobile } from '@/components/testQuestion/QuestionListMobile';
 import { useMobile } from '@/hooks/useMobile';
 import { getCoupleTest } from '@/services/coupleTests';
 import { ICoupleTestResult } from '@/types/utils';
@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useAtom } from 'jotai';
-import { IsGeneratingPDFAtom } from '@/components/store';
+import { IsGeneratingPDFAtom } from '@/store';
 import { generatePDF } from '@/services/generatePdf';
 import { motion } from 'framer-motion';
 

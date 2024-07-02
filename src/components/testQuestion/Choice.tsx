@@ -1,7 +1,7 @@
-const circleNumberMap = ['①', '②', '③', '④', '⑤'];
-import styled from '@emotion/styled';
 import React, { memo } from 'react';
+import { ChoiceWrapper } from './Choice.styles';
 
+const circleNumberMap = ['①', '②', '③', '④', '⑤'];
 interface IChoiceProps {
   index: number;
   choice: string;
@@ -27,12 +27,3 @@ export const Choice = memo(
     return prevProps.selected === nextProps.selected;
   },
 );
-
-const ChoiceWrapper = styled.div<{ selected: boolean }>`
-  font-weight: ${(props) => (props.selected ? '900' : 'normal')};
-  & > span {
-    user-select: none;
-    cursor: pointer;
-    color: ${(props) => (props.selected ? 'blue' : 'black')};
-  }
-`;

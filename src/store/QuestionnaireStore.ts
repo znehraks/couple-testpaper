@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { QuestionType } from '../questionnaire/questionnaireData';
+import { QuestionType } from '../data/questionnaireData';
 
 export type TestCategory = 'forAnyone' | 'forCouple';
 export const TestCategoryAtom = atom<TestCategory | null>(null);
