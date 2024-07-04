@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Question } from './Question';
 import { ICoupleTestResult, testTypeMap } from '@/types/utils';
 import { useAtomValue } from 'jotai';
-import { SelectedAnswersAtom } from '../../store/QuestionListStore';
+import { FormatTimeLeftAtom, IsTestStartedAtom, SelectedAnswersAtom } from '../../store/QuestionListStore';
 import {
   StyledSubmitBtn,
   StyledTestHeaderWrapper,
@@ -10,6 +10,7 @@ import {
   StyledTestSectionWrapper,
   StyledTestWrapper,
 } from './QuestionList.styles';
+import { TimerIcon } from '../icons/Icon';
 
 type QuestionListProps = {
   testType: ICoupleTestResult['testType'];
@@ -22,13 +23,22 @@ export const QuestionList = ({ testType, maker, testQuestions }: QuestionListPro
   //  1,2번 문항은 제외하기
   //  다음 페이지로 넘기기 기능 추가
   const selectedAnswers = useAtomValue(SelectedAnswersAtom);
+  const formatTimeLeft = useAtomValue(FormatTimeLeftAtom);
+
+  const isTestStarted = useAtomValue(IsTestStartedAtom);
 
   return (
     <>
       <StyledTestWrapper id="pdf-content">
         <StyledTestHeaderWrapper id="test-header">
-          <div>{`${dayjs().get('year') + 1}학년도 연애수학능력시험 문제지`}</div>
-          <div>
+          {isTestStarted && (
+            <div className="test-timer">
+              <TimerIcon size={36} fill={'#FF7979'} />
+              <span>{formatTimeLeft}</span>
+            </div>
+          )}
+          <div className="test-title">{`${dayjs().get('year') + 1}학년도 연애수학능력시험 문제지`}</div>
+          <div className="test-info">
             <div id="test-time">제 1교시</div>
             <div>{testTypeMap[testType]} 영역</div>
             <div id="test-odd">{maker} 유형</div>

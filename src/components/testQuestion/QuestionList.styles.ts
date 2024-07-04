@@ -21,12 +21,24 @@ export const StyledTestHeaderWrapper = styled.div`
   padding-bottom: 16px;
   width: 100%;
   min-height: 120px;
-  & > div:first-of-type {
+  position: relative;
+  & > .test-timer {
+    position: absolute;
+    right: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > span {
+      font-family: NanumMyeongjoBold;
+    }
+  }
+  & > .test-title {
     font-family: NanumSquareB;
     font-size: 20px;
     text-align: center;
   }
-  & > div:last-of-type {
+  & > .test-info {
     display: flex;
     flex-direction: row;
     justify-content: space-between;

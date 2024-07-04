@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { CSSProperties, PropsWithChildren, ReactNode } from 'react';
 import { Backdrop } from './Backdrop';
+import { motion } from 'framer-motion';
 
 interface IModalProps extends PropsWithChildren {
   header?: ReactNode;
@@ -22,7 +23,7 @@ export const Modal = (props: IModalProps) => {
   );
 };
 
-const StyledModalWrapper = styled.div<{ width: CSSProperties['width']; height: CSSProperties['height'] }>`
+const StyledModalWrapper = styled(motion.div)<{ width: CSSProperties['width']; height: CSSProperties['height'] }>`
   display: flex;
   flex-direction: column;
   justify-content: center;

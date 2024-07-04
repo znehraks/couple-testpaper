@@ -1,6 +1,6 @@
 import { Layout } from '@/components/Layout';
-import { StyledMenu, StyledMenuContainer } from '@/components/common/styles';
 import { HeartIcon, ParentIcon } from '@/components/icons/Icon';
+import { StyledMenu, StyledMenuContainer } from '@/components/questionnaire/styles';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';

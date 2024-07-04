@@ -8,30 +8,28 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { IsGeneratingPDFAtom } from '@/store';
 import { generatePDF } from '@/services/generatePdf';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Modal } from '@/components/common/Modal';
 import { TimerIcon } from '@/components/icons/Icon';
-import { IsTestStarted } from '@/store/QuestionListStore';
+import { IsTestStartedAtom, IsTimeUpAtom, TimeLeftAtom } from '@/store/QuestionListStore';
 
 export default function CoupleTestPage() {
   const isMobile = useMobile();
   const [isDownloadBtnVisible, setIsDownloadBtnVisible] = useState(true);
   const [, setIsGeneratingPDF] = useAtom(IsGeneratingPDFAtom);
-  const [isTestStarted, setIsTestStarted] = useAtom(IsTestStarted);
+  const [isTestStarted, setIsTestStarted] = useAtom(IsTestStartedAtom);
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading, isError } = useQuery<ICoupleTestResult>({
     queryKey: ['coupleTest', id],
     queryFn: () => getCoupleTest(id as string),
   });
-  const [timeLeft, setTimeLeft] = useState(600);
-  const [isTimeUp, setIsTimeUp] = useState(false);
-
-  // TODO 타이머 위치를 응가재이유형 위에다가 옮기고,
-  // TODO 모달에서 응시 시작 눌렀을 때, 우측 상단으로 날라가서 박히도록 함
+  const setTimeLeft = useSetAtom(TimeLeftAtom);
+  const [isTimeUp, setIsTimeUp] = useAtom(IsTimeUpAtom);
+  const [isAnimationStarted, setIsAnimationStarted] = useState(false);
 
   useEffect(() => {
     if (!isTestStarted) return;
@@ -47,13 +45,7 @@ export default function CoupleTestPage() {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [isTestStarted]);
-
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-  };
+  }, [isTestStarted, setIsTimeUp, setTimeLeft]);
 
   useEffect(() => {
     if (data?.testQuestions.length === 0) {
@@ -91,54 +83,73 @@ export default function CoupleTestPage() {
   }
   const { testQuestions, testType, maker, status } = data;
 
-  // 시험지를 pdf파일로 만들어서 다운로드 받을 수 있도록 함
-  // 응시 시작을 모달처럼 띄워서 뒤에 백드롭으로 어둡게처리하고, 응시 시작을 누르면 응시 시작되도록 함
-  // 그 전까지는 눌러도 반응이 안되도록 함
   return (
     <Layout>
-      <h1>Timer: {formatTime(timeLeft)}</h1>
-      {isTimeUp && <p>Time's up!</p>}
-      {!isTestStarted && (
-        <Modal
-          header={
-            <StyledModalHeaderWrapper>
-              <span>
-                응시 시작 버튼을 누르면 <strong>10분</strong>간 문제를 풀 수 있습니다.
-              </span>
-              <span>응시 도중 새로고침을 하면, 처음부터 다시 응시해야 합니다.</span>
-            </StyledModalHeaderWrapper>
-          }
-        >
-          <StyledModalContentWrapper>
-            <StyledStartButton
-              onClick={() => {
-                setIsTestStarted(true);
-              }}
+      <AnimatePresence>
+        {isTimeUp && <p>Time's up!</p>}
+        <motion.div>
+          {!isTestStarted && (
+            <Modal
+              header={
+                <StyledModalHeaderWrapper
+                  initial={{ opacity: 1 }}
+                  animate={isAnimationStarted && { opacity: 0 }}
+                  transition={{ duration: 1 }}
+                >
+                  <span>
+                    응시 시작 버튼을 누르면 <strong>10분</strong>간 문제를 풀 수 있습니다.
+                  </span>
+                  <span>응시 도중 새로고침을 하면, 처음부터 다시 응시해야 합니다.</span>
+                </StyledModalHeaderWrapper>
+              }
             >
-              <TimerIcon size={24} fill={'#FF7979'} />
-              응시 시작
-            </StyledStartButton>
-          </StyledModalContentWrapper>
-        </Modal>
-      )}
+              <StyledModalContentWrapper>
+                <StyledStartButton
+                  whileHover={{
+                    x: [-2, 2, -2, 2, -2, 2, -2, 2, -2, 2],
+                    transition: { duration: 0.5, repeat: Infinity, repeatType: 'loop' },
+                  }}
+                  onClick={() => setIsAnimationStarted(true)}
+                >
+                  <motion.div
+                    initial={{ scale: 1 }}
+                    animate={isAnimationStarted ? { scale: 2, x: 400, y: -350 } : {}}
+                    transition={{ duration: 1 }}
+                    onAnimationComplete={() => setIsTestStarted(true)}
+                  >
+                    <TimerIcon size={24} fill={'#FF7979'} />
+                  </motion.div>
+                  <motion.span
+                    initial={{ opacity: 1 }}
+                    animate={isAnimationStarted && { opacity: 0 }}
+                    transition={{ duration: 1 }}
+                  >
+                    응시 시작
+                  </motion.span>
+                </StyledStartButton>
+              </StyledModalContentWrapper>
+            </Modal>
+          )}
+        </motion.div>
 
-      <StyledPdfButton
-        visible={isDownloadBtnVisible}
-        onClick={async () => {
-          setIsGeneratingPDF(true);
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          await generatePDF();
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          setIsGeneratingPDF(false);
-        }}
-      >
-        시험지 다운로드
-      </StyledPdfButton>
-      {isMobile ? (
-        <QuestionListMobile testType={testType} maker={maker} status={status} testQuestions={testQuestions} />
-      ) : (
-        <QuestionList testType={testType} maker={maker} status={status} testQuestions={testQuestions} />
-      )}
+        <StyledPdfButton
+          visible={isDownloadBtnVisible}
+          onClick={async () => {
+            setIsGeneratingPDF(true);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await generatePDF();
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            setIsGeneratingPDF(false);
+          }}
+        >
+          시험지 다운로드
+        </StyledPdfButton>
+        {isMobile ? (
+          <QuestionListMobile testType={testType} maker={maker} status={status} testQuestions={testQuestions} />
+        ) : (
+          <QuestionList testType={testType} maker={maker} status={status} testQuestions={testQuestions} />
+        )}
+      </AnimatePresence>
     </Layout>
   );
 }
@@ -163,7 +174,7 @@ const StyledPdfButton = styled(motion.button)<{ visible: boolean }>`
   }
 `;
 
-const StyledModalHeaderWrapper = styled.div`
+const StyledModalHeaderWrapper = styled(motion.div)`
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -182,7 +193,7 @@ const StyledModalHeaderWrapper = styled.div`
   }
 `;
 
-const StyledModalContentWrapper = styled.div`
+const StyledModalContentWrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -190,7 +201,7 @@ const StyledModalContentWrapper = styled.div`
   height: 100%;
 `;
 
-const StyledStartButton = styled.button`
+const StyledStartButton = styled(motion.button)`
   transition: background 0.2s ease-in-out;
   width: 120px;
   height: 120px;
@@ -203,6 +214,12 @@ const StyledStartButton = styled.button`
   font-size: 32px;
   font-weight: 800;
   color: grey;
+  position: relative;
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
   }
