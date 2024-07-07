@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Question } from './Question';
 import { ICoupleTestResult, testTypeMap } from '@/types/utils';
 import { useAtomValue } from 'jotai';
-import { FormatTimeLeftAtom, IsTestStartedAtom, SelectedAnswersAtom } from '../../store/QuestionListStore';
+import { QuestionListStore } from '../../store/QuestionListStore';
 import {
   StyledSubmitBtn,
   StyledTestHeaderWrapper,
@@ -19,13 +19,9 @@ type QuestionListProps = {
   status: ICoupleTestResult['status'];
 };
 export const QuestionList = ({ testType, maker, testQuestions }: QuestionListProps) => {
-  // 내가 에 사람 이름을 넣어서 수정
-  //  1,2번 문항은 제외하기
-  //  다음 페이지로 넘기기 기능 추가
-  const selectedAnswers = useAtomValue(SelectedAnswersAtom);
-  const formatTimeLeft = useAtomValue(FormatTimeLeftAtom);
-
-  const isTestStarted = useAtomValue(IsTestStartedAtom);
+  const selectedAnswers = useAtomValue(QuestionListStore.SelectedAnswersAtom);
+  const formatTimeLeft = useAtomValue(QuestionListStore.FormatTimeLeftAtom);
+  const isTestStarted = useAtomValue(QuestionListStore.IsTestStartedAtom);
 
   return (
     <>

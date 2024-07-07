@@ -6,12 +6,12 @@ import {
   StyledMenuContainer,
 } from './styles';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { StepAtom, TestCategoryAtom } from '../../store/QuestionnaireStore';
+import { QuestionnaireStore } from '../../store/QuestionnaireStore';
 import { useMemo } from 'react';
 
 export const Intro = () => {
-  const setStep = useSetAtom(StepAtom);
-  const testCategory = useAtomValue(TestCategoryAtom);
+  const setStep = useSetAtom(QuestionnaireStore.StepAtom);
+  const testCategory = useAtomValue(QuestionnaireStore.TestCategoryAtom);
 
   const description = useMemo(() => {
     switch (testCategory) {

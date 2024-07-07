@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const StyledTestWrapper = styled.div`
@@ -6,11 +7,12 @@ export const StyledTestWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 24px 0px 24px;
+  padding: 0px 24px 0 24px;
   width: 100%;
   height: 70vh;
   font-size: 18px;
   overflow: hidden;
+  position: relative;
 `;
 
 export const StyledTestHeaderWrapper = styled.div`
@@ -23,13 +25,27 @@ export const StyledTestHeaderWrapper = styled.div`
   padding-bottom: 8px;
   width: 100%;
   min-height: fit-content;
-  & > div:first-of-type {
+  position: relative;
+  & > .test-timer {
+    position: absolute;
+    right: 4px;
+    top: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > span {
+      font-size: 12px;
+      font-family: NanumMyeongjoBold;
+    }
+  }
+  & > .test-title {
     font-family: NanumSquareB;
     font-size: 14px;
     text-align: center;
     word-break: keep-all;
   }
-  & > div:last-of-type {
+  & > .test-info {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -64,9 +80,29 @@ export const StyledTestQuestionWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 400px;
+  gap: 250px;
   width: 100%;
   min-height: fit-content;
-  font-size: 24px;
+  font-size: 18px;
   overflow-y: auto;
+  margin-bottom: 24px;
+`;
+
+export const StyledSubmitBtn = styled.button<{ disabled: boolean }>`
+  position: absolute;
+  font-size: 24px;
+  padding: 4px 8px;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
+  bottom: 12px;
+  right: 12px;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  background-color: ${({ disabled }) => (disabled ? 'rgba(0, 0, 0, 0.1)' : '#ffffff')};
+  color: ${({ disabled }) => (disabled ? 'rgba(0, 0, 0, 0.3)' : '#000000')};
+  ${(props) =>
+    !props.disabled &&
+    css`
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    `}
 `;

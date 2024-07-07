@@ -2,15 +2,33 @@ import { ITestQuestion } from '@/types/utils';
 import { formatTime } from '@/utils';
 import { atom } from 'jotai';
 
-export const IsTestStartedAtom = atom<boolean>(false);
-export const IsTestEndedAtom = atom<boolean>(false);
+const IsTestStartedAtom = atom<boolean>(false);
+IsTestStartedAtom.debugLabel = 'QuestionList/IsTestStarted';
 
-export const SelectedAnswersAtom = atom<{
+const IsTestEndedAtom = atom<boolean>(false);
+IsTestEndedAtom.debugLabel = 'QuestionList/IsTestEnded';
+
+const SelectedAnswersAtom = atom<{
   [index: number]: { question: ITestQuestion; selectedAnswer: { text: string; index: number } };
 }>({});
+SelectedAnswersAtom.debugLabel = 'QuestionList/SelectedAnswers';
 
-export const TimeLeftAtom = atom<number>(600);
-export const FormatTimeLeftAtom = atom((get) => {
+const TimeLeftAtom = atom<number>(600);
+TimeLeftAtom.debugLabel = 'QuestionList/TimeLeft';
+
+const FormatTimeLeftAtom = atom((get) => {
   return formatTime(get(TimeLeftAtom));
 });
-export const IsTimeUpAtom = atom<boolean>(false);
+FormatTimeLeftAtom.debugLabel = 'QuestionList/FormatTimeLeft';
+
+const IsTimeUpAtom = atom<boolean>(false);
+IsTimeUpAtom.debugLabel = 'QuestionList/IsTimeUp';
+
+export const QuestionListStore = {
+  IsTestStartedAtom,
+  IsTestEndedAtom,
+  SelectedAnswersAtom,
+  TimeLeftAtom,
+  FormatTimeLeftAtom,
+  IsTimeUpAtom,
+};

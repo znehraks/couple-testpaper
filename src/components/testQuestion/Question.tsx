@@ -2,7 +2,7 @@ import { Choice } from './Choice';
 import { ITestQuestion } from '@/types/utils';
 import { useCallback } from 'react';
 import { useAtom } from 'jotai';
-import { SelectedAnswersAtom } from '../../store/QuestionListStore';
+import { QuestionListStore } from '../../store/QuestionListStore';
 import {
   StyledTestQuestionAnswerContainer,
   StyledTestQuestionBox,
@@ -16,7 +16,7 @@ interface IQuestionProps {
 
 export const Question = (props: IQuestionProps) => {
   const { question, index: questionIndex } = props;
-  const [selectedAnswers, setSelectedAnswers] = useAtom(SelectedAnswersAtom);
+  const [selectedAnswers, setSelectedAnswers] = useAtom(QuestionListStore.SelectedAnswersAtom);
   const handleClickChoice = useCallback(
     (questionIndex: number) => (choiceIndex: number) => {
       setSelectedAnswers((prev) => {
