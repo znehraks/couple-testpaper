@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-export const StyledTestWrapper = styled.div`
+export const StyledMobileTestWrapper = styled.div`
   background: #ffffff;
   border: 1px solid #000000;
   display: flex;
@@ -15,7 +15,7 @@ export const StyledTestWrapper = styled.div`
   position: relative;
 `;
 
-export const StyledTestHeaderWrapper = styled.div`
+export const StyledMobileTestHeaderWrapper = styled.div`
   padding-top: 24px;
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@ export const StyledTestHeaderWrapper = styled.div`
   }
 `;
 
-export const StyledTestQuestionWrapper = styled.div`
+export const StyledMobileTestQuestionWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@ export const StyledTestQuestionWrapper = styled.div`
   margin-bottom: 24px;
 `;
 
-export const StyledSubmitBtn = styled.button<{ disabled: boolean }>`
+export const StyledMobileSubmitBtn = styled.button<{ disabled: boolean }>`
   position: absolute;
   font-size: 24px;
   padding: 4px 8px;

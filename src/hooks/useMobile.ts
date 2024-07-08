@@ -2,7 +2,7 @@ import { IsGeneratingPDFAtom } from '@/store';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 
-export const useMobile = () => {
+export const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isGeneratingPDF] = useAtom(IsGeneratingPDFAtom);
   useEffect(() => {

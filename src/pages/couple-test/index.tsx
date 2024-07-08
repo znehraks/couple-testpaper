@@ -1,27 +1,15 @@
-import { useCallback, useState } from 'react';
-import Questionnaire from '../../components/questionnaire';
+import { useCallback } from 'react';
+import Questionnaire from '../../components/writingTest';
 import { Layout } from '@/components/Layout';
 import { ITestResult } from '@/types/utils';
-import { useRouter } from 'next/router';
-import { addCoupleTest } from '@/services/coupleTests';
-import { useMutation } from '@tanstack/react-query';
+import { useAddCoupleTest } from '@/services/useCoupleTests';
+import { useAtomValue } from 'jotai';
+import { WritingTestStore } from '@/store/WritingTestStore';
 
 export default function CoupleTestPage() {
-  const [isAdOn, setIsAdOn] = useState(false);
-  const [completed, setCompleted] = useState(false);
-  const router = useRouter();
-  const mutation = useMutation({
-    mutationFn: addCoupleTest,
-    onSuccess: ({ id }) => {
-      setIsAdOn(true);
-      setCompleted(true);
-      // 바로 이렇게 push하지말고, 광고 시청 후에 push하도록 수정
-      router.push(`/couple-test/${id}`);
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
+  const isAdOn = useAtomValue(WritingTestStore.IsAdOnAtom);
+  const isCompleted = useAtomValue(WritingTestStore.IsCompletedAtom);
+  const mutation = useAddCoupleTest();
   const handleSubmit = useCallback(
     async (result: ITestResult) => {
       mutation.mutate(result);
@@ -32,7 +20,7 @@ export default function CoupleTestPage() {
   if (isAdOn) {
     return <div>보상형 동영상 광고</div>;
   }
-  if (mutation.isPending || completed) {
+  if (mutation.isPending || isCompleted) {
     return null;
   }
   return (

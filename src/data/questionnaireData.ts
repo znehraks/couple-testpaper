@@ -1,4 +1,4 @@
-import { ITest } from '../store/QuestionnaireStore';
+import { ITest } from '../store/WritingTestStore';
 import {
   accomodation,
   currentStatus,
@@ -9,7 +9,7 @@ import {
   schoolDays,
   simulation,
   weekendActivity,
-} from './questionaireChoices';
+} from './questionnaireChoices';
 
 // 답변을 비슷하게 한 사람 매칭 기능
 

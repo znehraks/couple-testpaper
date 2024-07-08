@@ -1,7 +1,7 @@
 import { ITestResult } from '@/types/utils';
 import { useAtom } from 'jotai';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { QuestionnaireStore } from '../../store/QuestionnaireStore';
+import { WritingTestStore } from '../../store/WritingTestStore';
 import {
   StyledButton,
   StyledChoiceContainer,
@@ -18,11 +18,11 @@ interface IStepProps {
 }
 export const Step = ({ onSubmit }: IStepProps) => {
   const [currentTestQuestionIndex, setCurrentTestQuestionIndex] = useAtom(
-    QuestionnaireStore.CurrentTestQuestionIndexAtom,
+    WritingTestStore.CurrentTestQuestionIndexAtom,
   );
-  const [, setStep] = useAtom(QuestionnaireStore.StepAtom);
-  const [questions] = useAtom(QuestionnaireStore.QuestionsAtom);
-  const [, setAnswers] = useAtom(QuestionnaireStore.AnswersAtom);
+  const [, setStep] = useAtom(WritingTestStore.StepAtom);
+  const [questions] = useAtom(WritingTestStore.QuestionsAtom);
+  const [, setAnswers] = useAtom(WritingTestStore.AnswersAtom);
   const [inputValue, setInputValue] = useState<string>('');
   const [helperText, setHelperText] = useState<string>('');
   const [tempAnswers, setTempAnswers] = useState<{ [step: number]: string }>({});

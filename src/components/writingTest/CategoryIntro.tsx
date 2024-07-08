@@ -8,12 +8,12 @@ import {
 import { useSetAtom } from 'jotai';
 import { FriendsIcon, HeartIcon } from '../icons/Icon';
 import { useEffect } from 'react';
-import { QuestionnaireStore } from '../../store/QuestionnaireStore';
+import { WritingTestStore } from '../../store/WritingTestStore';
 
 export const CategoryIntro = () => {
-  const setStep = useSetAtom(QuestionnaireStore.StepAtom);
-  const setTestCategory = useSetAtom(QuestionnaireStore.TestCategoryAtom);
-  const setQuestions = useSetAtom(QuestionnaireStore.QuestionsAtom);
+  const setStep = useSetAtom(WritingTestStore.StepAtom);
+  const setTestCategory = useSetAtom(WritingTestStore.TestCategoryAtom);
+  const setQuestions = useSetAtom(WritingTestStore.QuestionsAtom);
 
   useEffect(() => {
     setTestCategory(null);

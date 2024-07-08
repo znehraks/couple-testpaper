@@ -3,13 +3,13 @@ import { QuestionType } from '../data/questionnaireData';
 
 export type TestCategory = 'forAnyone' | 'forCouple';
 const TestCategoryAtom = atom<TestCategory | null>(null);
-TestCategoryAtom.debugLabel = 'TestCategory';
+TestCategoryAtom.debugLabel = 'WritingTest/TestCategory';
 
 const StepAtom = atom<'CATEGORY_INTRO' | 'INTRO' | 'QUESTIONS'>('CATEGORY_INTRO');
-StepAtom.debugLabel = 'Step';
+StepAtom.debugLabel = 'WritingTest/Step';
 
 const CurrentTestQuestionIndexAtom = atom<number>(0);
-CurrentTestQuestionIndexAtom.debugLabel = 'CurrentTestQuestionIndex';
+CurrentTestQuestionIndexAtom.debugLabel = 'WritingTest/CurrentTestQuestionIndex';
 
 export interface ITest {
   type: QuestionType;
@@ -17,15 +17,23 @@ export interface ITest {
   choices: string[];
 }
 const QuestionsAtom = atom<ITest[]>([]);
-QuestionsAtom.debugLabel = 'Questions';
+QuestionsAtom.debugLabel = 'WritingTest/Questions';
 
 const AnswersAtom = atom<(number | string)[]>([]);
-AnswersAtom.debugLabel = 'Answers';
+AnswersAtom.debugLabel = 'WritingTest/Answers';
 
-export const QuestionnaireStore = {
+const IsAdOnAtom = atom<boolean>(false);
+IsAdOnAtom.debugLabel = 'WritingTest/IsAdOn';
+
+const IsCompletedAtom = atom<boolean>(false);
+IsCompletedAtom.debugLabel = 'WritingTest/IsCompleted';
+
+export const WritingTestStore = {
   TestCategoryAtom,
   StepAtom,
   CurrentTestQuestionIndexAtom,
   QuestionsAtom,
   AnswersAtom,
+  IsAdOnAtom,
+  IsCompletedAtom,
 };

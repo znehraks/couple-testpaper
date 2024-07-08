@@ -5,7 +5,7 @@ import { Step } from './Step';
 import { ITestResult } from '@/types/utils';
 import { commonQuestions, myInfoQuestions, requiredQuestions } from '../../data/questionnaireData';
 import { useAtom, useAtomValue } from 'jotai';
-import { QuestionnaireStore } from '../../store/QuestionnaireStore';
+import { WritingTestStore } from '../../store/WritingTestStore';
 import { Intro } from './Intro';
 import { StyledContentWrapper } from './styles';
 
@@ -14,9 +14,9 @@ interface IQuestionnaireProps {
   onSubmit: (result: ITestResult) => void;
 }
 const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
-  const [step, setStep] = useAtom(QuestionnaireStore.StepAtom);
-  const testCategory = useAtomValue(QuestionnaireStore.TestCategoryAtom);
-  const [questions, setQuestions] = useAtom(QuestionnaireStore.QuestionsAtom);
+  const [step, setStep] = useAtom(WritingTestStore.StepAtom);
+  const testCategory = useAtomValue(WritingTestStore.TestCategoryAtom);
+  const [questions, setQuestions] = useAtom(WritingTestStore.QuestionsAtom);
 
   // 문제 바꾸기 혹은 선지 바꾸기 기능 추가하기
   // 문제를 드래그 앤 드롭으로 선택할 수 있도록 기능 추가?
