@@ -13,7 +13,7 @@ const SelectedAnswersAtom = atom<{
 }>({});
 SelectedAnswersAtom.debugLabel = 'TakingTest/SelectedAnswers';
 
-const TimeLeftAtom = atom<number>(5);
+const TimeLeftAtom = atom<number>(2);
 TimeLeftAtom.debugLabel = 'TakingTest/TimeLeft';
 
 const FormatTimeLeftAtom = atom((get) => {
@@ -24,6 +24,16 @@ FormatTimeLeftAtom.debugLabel = 'TakingTest/FormatTimeLeft';
 const IsTimeUpAtom = atom<boolean>(false);
 IsTimeUpAtom.debugLabel = 'TakingTest/IsTimeUp';
 
+const IsTimesUpModalOpenAtom = atom<boolean>(false);
+IsTimesUpModalOpenAtom.debugLabel = 'TakingTest/IsTimesUpModalOpen';
+
+export enum TimesUpModalStep {
+  INTRO,
+  INPUT,
+  AD,
+}
+const TimesUpModalStepAtom = atom<TimesUpModalStep>(TimesUpModalStep.INTRO);
+
 export const TakingTestStore = {
   IsTestStartedAtom,
   IsTestEndedAtom,
@@ -31,4 +41,6 @@ export const TakingTestStore = {
   TimeLeftAtom,
   FormatTimeLeftAtom,
   IsTimeUpAtom,
+  IsTimesUpModalOpenAtom,
+  TimesUpModalStepAtom,
 };

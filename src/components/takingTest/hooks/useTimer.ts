@@ -1,6 +1,6 @@
 import { useGetCoupleTest } from '@/services/useCoupleTests';
 import { TakingTestStore } from '@/store/TakingTestStore';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -8,8 +8,9 @@ export const useTimer = () => {
   const router = useRouter();
   const { data } = useGetCoupleTest();
   const isTestStarted = useAtomValue(TakingTestStore.IsTestStartedAtom);
-  const setIsTimeUp = useSetAtom(TakingTestStore.IsTimeUpAtom);
+  const [isTimeUp, setIsTimeUp] = useAtom(TakingTestStore.IsTimeUpAtom);
   const setTimeLeft = useSetAtom(TakingTestStore.TimeLeftAtom);
+  const setIsTimesUpModalOpen = useSetAtom(TakingTestStore.IsTimesUpModalOpenAtom);
 
   useEffect(() => {
     if (!isTestStarted) return;
@@ -33,4 +34,8 @@ export const useTimer = () => {
       return;
     }
   }, [router, data?.testQuestions.length]);
+
+  useEffect(() => {
+    if (isTimeUp) setIsTimesUpModalOpen(true);
+  }, [isTimeUp, setIsTimesUpModalOpen]);
 };

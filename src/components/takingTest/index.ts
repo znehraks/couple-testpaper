@@ -3,6 +3,7 @@ import { Question } from './testPaper/Question';
 import { ReadyModal } from './ReadyModal';
 import { TimesUp } from './TimesUp';
 import { TestPaperSection } from './TestPaperSection';
+import { TimesUpModal } from './TimeUpModal';
 
 export const TakingTest = {
   Choice,
@@ -10,4 +11,5 @@ export const TakingTest = {
   ReadyModal,
   TestPaperSection,
   TimesUp,
+  TimesUpModal,
 };

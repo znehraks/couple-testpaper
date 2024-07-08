@@ -7,7 +7,7 @@ import { PDFDownloadButton } from '@/components/PDFDownloadButton';
 import { useTimer } from '@/components/takingTest/hooks/useTimer';
 import { useAppearPDFDownloadButton } from '@/components/takingTest/hooks/useAppearPDFDownloadButton';
 
-export default function CoupleTestPage() {
+export default function CoupleTestTakingPage() {
   const { data, isLoading, isError } = useGetCoupleTest();
   const isTimeUp = useAtomValue(TakingTestStore.IsTimeUpAtom);
   useTimer();
@@ -18,7 +18,7 @@ export default function CoupleTestPage() {
       <TakingTest.ReadyModal />
       <PDFDownloadButton />
       <TakingTest.TestPaperSection />
-      {isTimeUp && <TakingTest.TimesUp />}
+      {isTimeUp && <TakingTest.TimesUpModal />}
     </Layout>
   );
 }
