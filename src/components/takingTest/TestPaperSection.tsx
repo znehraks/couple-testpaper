@@ -1,5 +1,5 @@
 import { useIsMobile } from '@/hooks/useMobile';
-import { TestPaper } from './testPaper';
+import { TestPaper } from './testPaper/TestPaper';
 import { useGetCoupleTest } from '@/services/useCoupleTests';
 
 export const TestPaperSection = () => {
