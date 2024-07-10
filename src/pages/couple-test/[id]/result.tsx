@@ -1,3 +1,3 @@
 export default function CoupleTestResultPage() {
-  return <div>hi</div>;
+  return <div>결과</div>;
 }

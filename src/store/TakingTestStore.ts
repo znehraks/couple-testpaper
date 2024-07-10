@@ -33,6 +33,10 @@ export enum TimesUpModalStep {
   AD,
 }
 const TimesUpModalStepAtom = atom<TimesUpModalStep>(TimesUpModalStep.INTRO);
+TimesUpModalStepAtom.debugLabel = 'TakingTest/TimesUpModalStep';
+
+const IsAllowedSocialLoginAtom = atom<boolean>(true);
+IsAllowedSocialLoginAtom.debugLabel = 'TakingTest/IsAllowedSocialLoginAtom';
 
 export const TakingTestStore = {
   IsTestStartedAtom,
@@ -43,4 +47,5 @@ export const TakingTestStore = {
   IsTimeUpAtom,
   IsTimesUpModalOpenAtom,
   TimesUpModalStepAtom,
+  IsAllowedSocialLoginAtom,
 };
