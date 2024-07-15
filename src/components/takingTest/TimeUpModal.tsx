@@ -12,7 +12,7 @@ export const TimesUpModal = () => {
   const isMobile = useIsMobile();
   const [, setIsTimesUpModalOpen] = useAtom(TakingTestStore.IsTimesUpModalOpenAtom);
   const [timesUpModalStep, setTimesUpModalStep] = useAtom(TakingTestStore.TimesUpModalStepAtom);
-  const [isAllowedSocialLogin, setIsAllowedSocialLogin] = useAtom(TakingTestStore.IsAllowedSocialLoginAtom);
+  //   const [isAllowedSocialLogin, setIsAllowedSocialLogin] = useAtom(TakingTestStore.IsAllowedSocialLoginAtom);
 
   const headerText = useMemo(() => {
     const initial = { y: 20, opacity: 0 };
@@ -31,39 +31,39 @@ export const TimesUpModal = () => {
           </>
         );
       case TimesUpModalStep.INPUT: {
-        if (isAllowedSocialLogin) {
-          return (
-            <>
-              <motion.span initial={initial} animate={animate} transition={transition}>
-                로그인 하기
-              </motion.span>
-              <motion.span initial={initial} animate={animate} transition={{ ...transition, delay: 0.5 }}>
-                로그인이 부담스럽다면,{' '}
-                <motion.strong
-                  initial={{ scale: 0.5 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1 }}
-                  style={{ display: 'inline-block', cursor: 'pointer' }}
-                  onClick={() => {
-                    setIsAllowedSocialLogin(false);
-                  }}
-                >
-                  여기
-                </motion.strong>{' '}
-                를 눌러 나를 확인할 수 있는 별명을 입력해주세요.
-              </motion.span>
-            </>
-          );
-        }
+        // if (isAllowedSocialLogin) {
+        //   return (
+        //     <>
+        //       <motion.span initial={initial} animate={animate} transition={transition}>
+        //         로그인 하기
+        //       </motion.span>
+        //       <motion.span initial={initial} animate={animate} transition={{ ...transition, delay: 0.5 }}>
+        //         로그인이 부담스럽다면,{' '}
+        //         <motion.strong
+        //           initial={{ scale: 0.5 }}
+        //           animate={{ scale: 1.2 }}
+        //           transition={{ duration: 0.5, delay: 1 }}
+        //           style={{ display: 'inline-block', cursor: 'pointer' }}
+        //           onClick={() => {
+        //             setIsAllowedSocialLogin(false);
+        //           }}
+        //         >
+        //           여기
+        //         </motion.strong>
+        //         를 눌러 나를 확인할 수 있는 별명을 입력해주세요.
+        //       </motion.span>
+        //     </>
+        //   );
+        // }
         return (
           <>
             <motion.span initial={initial} animate={animate} transition={transition}>
               이름 입력하기
             </motion.span>
             <motion.span initial={initial} animate={animate} transition={{ ...transition, delay: 0.5 }}>
-              로그인을 하지 않으면, 광고 시청 후 결과를 확인할 수 있어요.
+              나를 확인할 수 있는 별명을 입력해주세요.
             </motion.span>
-            <motion.strong
+            {/* <motion.strong
               initial={initial}
               animate={animate}
               transition={{ ...transition, delay: 1 }}
@@ -73,7 +73,7 @@ export const TimesUpModal = () => {
               }}
             >
               그냥 로그인 할래요
-            </motion.strong>
+            </motion.strong> */}
           </>
         );
       }
@@ -91,7 +91,7 @@ export const TimesUpModal = () => {
       default:
         return <></>;
     }
-  }, [isAllowedSocialLogin, setIsAllowedSocialLogin, timesUpModalStep]);
+  }, [timesUpModalStep]);
 
   const buttonText = useMemo(() => {
     switch (timesUpModalStep) {
@@ -116,15 +116,14 @@ export const TimesUpModal = () => {
   return (
     <Modal
       width={isMobile ? '350px' : undefined}
-      header={
-        <StyledModalHeaderWrapper key={`${timesUpModalStep}${isAllowedSocialLogin}`}>
-          {headerText}
-        </StyledModalHeaderWrapper>
-      }
+      header={<StyledModalHeaderWrapper key={`${timesUpModalStep}`}>{headerText}</StyledModalHeaderWrapper>}
     >
       <StyledModalContentWrapper>
         {timesUpModalStep === TimesUpModalStep.INPUT && (
-          <>{isAllowedSocialLogin ? <>소셜로그인</> : <>아이디 입력 인풋</>}</>
+          <StyledInputContainer>
+            <StyledInput name="nickname" />
+            <StyledSubmitButton>입력완료</StyledSubmitButton>
+          </StyledInputContainer>
         )}
         {timesUpModalStep !== TimesUpModalStep.INPUT && (
           <StyledStartButton
@@ -187,6 +186,32 @@ const StyledModalContentWrapper = styled(motion.div)`
   align-items: center;
   width: 100%;
   height: 100%;
+`;
+const StyledInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: 50%;
+  height: 100%;
+`;
+const StyledInput = styled.input`
+  outline: 1px solid #aaa;
+  padding: 8px 12px;
+  font-size: 28px;
+`;
+const StyledSubmitButton = styled.button`
+  transition: background 0.2s ease-in-out;
+  font-size: 24px;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
+  width: 120px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 `;
 
 const StyledStartButton = styled(motion.button)`

@@ -35,7 +35,8 @@ export enum TimesUpModalStep {
 const TimesUpModalStepAtom = atom<TimesUpModalStep>(TimesUpModalStep.INTRO);
 TimesUpModalStepAtom.debugLabel = 'TakingTest/TimesUpModalStep';
 
-const IsAllowedSocialLoginAtom = atom<boolean>(true);
+// TODO 나중에 소셜로그인 기능 추가 후에 도입하기
+const IsAllowedSocialLoginAtom = atom<boolean>(false);
 IsAllowedSocialLoginAtom.debugLabel = 'TakingTest/IsAllowedSocialLoginAtom';
 
 export const TakingTestStore = {
