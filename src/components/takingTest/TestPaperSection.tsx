@@ -8,6 +8,9 @@ export const TestPaperSection = () => {
   if (isLoading || isError || !data) return null;
   const { testQuestions } = data;
 
+  console.log('data', data);
+  console.log('testQuestions', testQuestions);
+
   if (isMobile) {
     return (
       <TestPaper.MobileLayout>

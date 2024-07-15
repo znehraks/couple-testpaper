@@ -1,8 +1,8 @@
 import { db } from '@/firebaseConfig';
 import { WritingTestStore } from '@/store/WritingTestStore';
-import { ITestResult, ICoupleTestResult } from '@/types/utils';
+import { ITestResult, ICoupleTestResult, IRanking } from '@/types/utils';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/router';
 
@@ -54,7 +54,43 @@ export const useGetCoupleTest = () => {
     {
       queryKey: ['coupleTest', id],
       queryFn: () => getCoupleTest(id as string),
+      staleTime: Infinity,
     },
     queryClient,
   );
 };
+
+export const useAddTakedCoupleTestResult = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const queryClient = useQueryClient();
+  const { data } = useGetCoupleTest();
+
+  if (!data) throw new Error('No data found');
+  if (!id) throw new Error('No id found');
+
+  const addTakedCoupleTestResult = async (newRanking: IRanking) => {
+    const result = {
+      ...data,
+      rankings: data.rankings ? [...data.rankings, newRanking] : [newRanking],
+    };
+    const docRef = doc(db, 'couple-tests', id as string);
+    return updateDoc(docRef, result);
+  };
+
+  return useMutation(
+    {
+      mutationFn: addTakedCoupleTestResult,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['coupleTest', id as string] });
+        router.replace(`/couple-test/${id}/result`);
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    },
+    queryClient,
+  );
+};
+
+export const useGetTakedCoupleTestResults = () => {};

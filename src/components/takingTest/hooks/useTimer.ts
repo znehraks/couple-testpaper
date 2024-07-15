@@ -1,15 +1,17 @@
 import { TakingTestStore } from '@/store/TakingTestStore';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
+import { useMakeResult } from './useMakeResult';
 
 export const useTimer = () => {
   const isTestStarted = useAtomValue(TakingTestStore.IsTestStartedAtom);
+  const isTestEnded = useAtomValue(TakingTestStore.IsTestEndedAtom);
   const [isTimeUp, setIsTimeUp] = useAtom(TakingTestStore.IsTimeUpAtom);
   const setTimeLeft = useSetAtom(TakingTestStore.TimeLeftAtom);
-  const setIsTimesUpModalOpen = useSetAtom(TakingTestStore.IsTimesUpModalOpenAtom);
+  const { makeResult } = useMakeResult();
 
   useEffect(() => {
-    if (!isTestStarted) return;
+    if (!isTestStarted || isTestEnded) return;
     const intervalId = setInterval(() => {
       setTimeLeft((prevTimeLeft) => {
         if (prevTimeLeft <= 1) {
@@ -22,9 +24,9 @@ export const useTimer = () => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [isTestStarted, setIsTimeUp, setTimeLeft]);
+  }, [isTestEnded, isTestStarted, setIsTimeUp, setTimeLeft]);
 
   useEffect(() => {
-    if (isTimeUp) setIsTimesUpModalOpen(true);
-  }, [isTimeUp, setIsTimesUpModalOpen]);
+    if (isTimeUp) makeResult();
+  }, [isTimeUp, makeResult]);
 };

@@ -10,7 +10,7 @@ import { useRedirect } from '@/components/takingTest/hooks/useRedirect';
 
 export default function CoupleTestTakingPage() {
   const { data, isLoading, isError } = useGetCoupleTest();
-  const isTimeUp = useAtomValue(TakingTestStore.IsTimeUpAtom);
+  const isTestEnded = useAtomValue(TakingTestStore.IsTestEndedAtom);
   useTimer();
   useAppearPDFDownloadButton();
   useRedirect({
@@ -24,7 +24,7 @@ export default function CoupleTestTakingPage() {
       <TakingTest.ReadyModal />
       <PDFDownloadButton />
       <TakingTest.TestPaperSection />
-      {isTimeUp && <TakingTest.TimesUpModal />}
+      {isTestEnded && <TakingTest.TimesUpModal />}
     </Layout>
   );
 }

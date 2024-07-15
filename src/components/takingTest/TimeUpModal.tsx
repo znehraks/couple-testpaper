@@ -1,20 +1,40 @@
-import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Modal } from '@/components/common/Modal';
 import { useAtom } from 'jotai';
 import { TakingTestStore, TimesUpModalStep } from '@/store/TakingTestStore';
 import { useIsMobile } from '@/hooks/useMobile';
 import { useCallback, useMemo } from 'react';
-import { useRouter } from 'next/router';
+import { useInput } from './hooks/useInput';
+import { TestResultStore } from '@/store/TestResultStore';
+import {
+  StyledErrorMessage,
+  StyledInput,
+  StyledInputContainer,
+  StyledModalContentWrapper,
+  StyledModalHeaderWrapper,
+  StyledStartButton,
+  StyledSubmitButton,
+} from './TimeUpModal.styles';
+import { useAddTakedCoupleTestResult } from '@/services/useCoupleTests';
 
 export const TimesUpModal = () => {
-  const router = useRouter();
   const isMobile = useIsMobile();
-  const [, setIsTimesUpModalOpen] = useAtom(TakingTestStore.IsTimesUpModalOpenAtom);
   const [timesUpModalStep, setTimesUpModalStep] = useAtom(TakingTestStore.TimesUpModalStepAtom);
-  //   const [isAllowedSocialLogin, setIsAllowedSocialLogin] = useAtom(TakingTestStore.IsAllowedSocialLoginAtom);
+  const {
+    value: nickname,
+    onChange: handleChangeNicknameInput,
+    isDirty: isNicknameInputDirty,
+  } = useInput({ name: 'nickname', initialValue: '' });
 
-  const headerText = useMemo(() => {
+  const [testerResult, setTesterResult] = useAtom(TestResultStore.TesterResultAtom);
+
+  const { mutateAsync } = useAddTakedCoupleTestResult();
+  // const initialize = useCallback(() => {
+  //   setTimesUpModalStep(TimesUpModalStep.INTRO);
+  //   // TODO 시험보느라 더럽혀졌던 state들 초기화
+  // }, [setTimesUpModalStep]);
+
+  const headerContent = useMemo(() => {
     const initial = { y: 20, opacity: 0 };
     const animate = { y: 0, opacity: 1 };
     const transition = { duration: 0.5 };
@@ -31,30 +51,6 @@ export const TimesUpModal = () => {
           </>
         );
       case TimesUpModalStep.INPUT: {
-        // if (isAllowedSocialLogin) {
-        //   return (
-        //     <>
-        //       <motion.span initial={initial} animate={animate} transition={transition}>
-        //         로그인 하기
-        //       </motion.span>
-        //       <motion.span initial={initial} animate={animate} transition={{ ...transition, delay: 0.5 }}>
-        //         로그인이 부담스럽다면,{' '}
-        //         <motion.strong
-        //           initial={{ scale: 0.5 }}
-        //           animate={{ scale: 1.2 }}
-        //           transition={{ duration: 0.5, delay: 1 }}
-        //           style={{ display: 'inline-block', cursor: 'pointer' }}
-        //           onClick={() => {
-        //             setIsAllowedSocialLogin(false);
-        //           }}
-        //         >
-        //           여기
-        //         </motion.strong>
-        //         를 눌러 나를 확인할 수 있는 별명을 입력해주세요.
-        //       </motion.span>
-        //     </>
-        //   );
-        // }
         return (
           <>
             <motion.span initial={initial} animate={animate} transition={transition}>
@@ -63,17 +59,6 @@ export const TimesUpModal = () => {
             <motion.span initial={initial} animate={animate} transition={{ ...transition, delay: 0.5 }}>
               나를 확인할 수 있는 별명을 입력해주세요.
             </motion.span>
-            {/* <motion.strong
-              initial={initial}
-              animate={animate}
-              transition={{ ...transition, delay: 1 }}
-              style={{ display: 'inline-block', cursor: 'pointer' }}
-              onClick={() => {
-                setIsAllowedSocialLogin(true);
-              }}
-            >
-              그냥 로그인 할래요
-            </motion.strong> */}
           </>
         );
       }
@@ -104,25 +89,61 @@ export const TimesUpModal = () => {
     }
   }, [timesUpModalStep]);
 
-  const handleStep = useCallback(() => {
-    if (timesUpModalStep < 2) {
+  const handleStep = useCallback(async () => {
+    if (timesUpModalStep < TimesUpModalStep.AD) {
       setTimesUpModalStep((prev) => prev + 1);
       return;
     }
-    setIsTimesUpModalOpen(false);
-    router.push(`/couple-test/${router.query.id}/result`);
-  }, [router, setIsTimesUpModalOpen, setTimesUpModalStep, timesUpModalStep]);
 
+    if (!testerResult || !testerResult.testerNickname) return;
+    await mutateAsync({
+      testDateTime: testerResult.testDateTime,
+      testerNickname: testerResult.testerNickname,
+      testScore: testerResult.testScore,
+      testSpentTime: testerResult.testSpentTime,
+    });
+
+    // TODO 시험 개별 결과 정보도 저장
+    // TODO initialize하기
+  }, [mutateAsync, setTimesUpModalStep, testerResult, timesUpModalStep]);
+
+  const isNicknameEmpty = useMemo(() => {
+    return nickname.trim().length === 0;
+  }, [nickname]);
+  const isNicknameTooLong = useMemo(() => {
+    return nickname.trim().length > 10;
+  }, [nickname]);
+
+  const disabledNicknameInput = useMemo(() => {
+    return isNicknameEmpty || isNicknameTooLong;
+  }, [isNicknameEmpty, isNicknameTooLong]);
+
+  const handleCompleteNicknameInput = useCallback(() => {
+    if (disabledNicknameInput) return;
+    setTesterResult((prev) => {
+      if (!prev) return prev;
+      return { ...prev, testerNickname: nickname };
+    });
+    setTimesUpModalStep((prev) => prev + 1);
+  }, [disabledNicknameInput, nickname, setTesterResult, setTimesUpModalStep]);
+
+  console.log('testerResult', testerResult);
   return (
     <Modal
       width={isMobile ? '350px' : undefined}
-      header={<StyledModalHeaderWrapper key={`${timesUpModalStep}`}>{headerText}</StyledModalHeaderWrapper>}
+      header={<StyledModalHeaderWrapper key={`${timesUpModalStep}`}>{headerContent}</StyledModalHeaderWrapper>}
     >
       <StyledModalContentWrapper>
         {timesUpModalStep === TimesUpModalStep.INPUT && (
           <StyledInputContainer>
-            <StyledInput name="nickname" />
-            <StyledSubmitButton>입력완료</StyledSubmitButton>
+            <StyledInput name="nickname" value={nickname} onChange={handleChangeNicknameInput} />
+            <StyledErrorMessage>
+              {isNicknameInputDirty && isNicknameEmpty && '이름을 입력해주세요.'}
+              {isNicknameTooLong && '이름은 10자 이내로 입력해주세요.'}
+            </StyledErrorMessage>
+            <StyledSubmitButton disabled={disabledNicknameInput} onClick={handleCompleteNicknameInput}>
+              입력완료
+            </StyledSubmitButton>
           </StyledInputContainer>
         )}
         {timesUpModalStep !== TimesUpModalStep.INPUT && (
@@ -140,101 +161,3 @@ export const TimesUpModal = () => {
     </Modal>
   );
 };
-
-const StyledModalHeaderWrapper = styled(motion.div)`
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 42px;
-  gap: 4px;
-  & > span:not(:first-of-type) {
-    font-size: 22px;
-  }
-  strong {
-    font-weight: 600;
-    color: #ff7979;
-    font-size: 22px;
-    text-decoration: underline;
-  }
-  & > span > strong {
-    strong {
-      font-size: 32px;
-    }
-  }
-  @media (max-width: 500px) {
-    font-size: 24px;
-    & > span:not(:first-of-type) {
-      font-size: 16px;
-    }
-    strong {
-      font-weight: 600;
-      color: #ff7979;
-      font-size: 16px;
-      text-decoration: underline;
-    }
-    & > span > strong {
-      font-size: 24px;
-    }
-  }
-`;
-
-const StyledModalContentWrapper = styled(motion.div)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-const StyledInputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  width: 50%;
-  height: 100%;
-`;
-const StyledInput = styled.input`
-  outline: 1px solid #aaa;
-  padding: 8px 12px;
-  font-size: 28px;
-`;
-const StyledSubmitButton = styled.button`
-  transition: background 0.2s ease-in-out;
-  font-size: 24px;
-  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
-  width: 120px;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 8px;
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-`;
-
-const StyledStartButton = styled(motion.button)`
-  transition: background 0.2s ease-in-out;
-  width: 120px;
-  height: 120px;
-  border-radius: 12px;
-  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 32px;
-  font-weight: 800;
-  color: grey;
-  position: relative;
-  cursor: pointer;
-  & > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-`;

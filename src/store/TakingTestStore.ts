@@ -1,4 +1,4 @@
-import { ITestQuestion } from '@/types/utils';
+import { ISelectedAnswersKeyMap } from '@/types/utils';
 import { formatTime } from '@/utils';
 import { atom } from 'jotai';
 
@@ -8,12 +8,10 @@ IsTestStartedAtom.debugLabel = 'TakingTest/IsTestStarted';
 const IsTestEndedAtom = atom<boolean>(false);
 IsTestEndedAtom.debugLabel = 'TakingTest/IsTestEnded';
 
-const SelectedAnswersAtom = atom<{
-  [index: number]: { question: ITestQuestion; selectedAnswer: { text: string; index: number } };
-}>({});
+const SelectedAnswersAtom = atom<ISelectedAnswersKeyMap>({});
 SelectedAnswersAtom.debugLabel = 'TakingTest/SelectedAnswers';
 
-const TimeLeftAtom = atom<number>(2);
+const TimeLeftAtom = atom<number>(30);
 TimeLeftAtom.debugLabel = 'TakingTest/TimeLeft';
 
 const FormatTimeLeftAtom = atom((get) => {
@@ -23,9 +21,6 @@ FormatTimeLeftAtom.debugLabel = 'TakingTest/FormatTimeLeft';
 
 const IsTimeUpAtom = atom<boolean>(false);
 IsTimeUpAtom.debugLabel = 'TakingTest/IsTimeUp';
-
-const IsTimesUpModalOpenAtom = atom<boolean>(false);
-IsTimesUpModalOpenAtom.debugLabel = 'TakingTest/IsTimesUpModalOpen';
 
 export enum TimesUpModalStep {
   INTRO,
@@ -46,7 +41,6 @@ export const TakingTestStore = {
   TimeLeftAtom,
   FormatTimeLeftAtom,
   IsTimeUpAtom,
-  IsTimesUpModalOpenAtom,
   TimesUpModalStepAtom,
   IsAllowedSocialLoginAtom,
 };
