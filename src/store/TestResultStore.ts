@@ -7,7 +7,6 @@ TesterNicknameInputAtom.debugLabel = 'TestResult/TesterNicknameInput';
 export interface ITesterResult {
   testId: string;
   testerNickname?: string;
-  testScore: number;
   testDateTime: string;
   testSpentTime: number;
   testAnswers: ISelectedAnswer[];

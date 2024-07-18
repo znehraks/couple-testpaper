@@ -144,7 +144,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
           </StyledChoiceContainer>
         )}
       </StyledQuestionContainer>
-      <StyledHelperText>{helperText}</StyledHelperText>
+      {currentTestQuestionIndex === 0 && <StyledHelperText>{helperText}</StyledHelperText>}
       <StyledContentButtonContainer>
         {currentTestQuestionIndex >= 0 && <StyledButton onClick={handleGoBack}>이전</StyledButton>}
         {currentTestQuestionIndex >= 0 && currentTestQuestionIndex < questions.length - 1 && (

@@ -1,5 +1,9 @@
 import { ITest } from '@/store/WritingTestStore';
 
+export enum TestType {
+  romance = 'romance',
+  parent = 'parent',
+}
 export interface ITestWithAnswer extends ITest {
   answer: string;
 }
@@ -17,12 +21,12 @@ export interface ITestWithAnswerResult {
 
 export interface IRanking {
   testerNickname: string;
-  testScore: number;
+  testScore?: number;
   testDateTime: string;
   testSpentTime: number;
 }
 export interface IAddCoupleTestSheetPayload extends ITestResult {
-  testType: 'couple';
+  testType: TestType;
   createdAt: string;
   entireDocumentId: string;
 }
@@ -31,7 +35,7 @@ export interface IAddCoupleTestSheetResponse extends IAddCoupleTestSheetPayload 
   id: string;
 }
 export interface IAddCoupleTestEntirePayload extends ITestWithAnswerResult {
-  testType: 'couple';
+  testType: TestType;
   createdAt: string;
   rankings?: IRanking[];
 }
@@ -41,7 +45,7 @@ export interface IAddCoupleTestEntireResponse extends IAddCoupleTestEntirePayloa
 }
 
 export const testTypeMap = {
-  couple: '연애',
+  romance: '연애',
   parent: '부모님',
 };
 

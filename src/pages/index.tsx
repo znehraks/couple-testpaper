@@ -14,7 +14,7 @@ export default function Home() {
         <StyledMenuContainer>
           <StyledMenu
             onClick={() => {
-              router.push('/couple-test');
+              router.push('/making/romance-test');
             }}
           >
             <HeartIcon size={42} />
@@ -22,7 +22,7 @@ export default function Home() {
           </StyledMenu>
           <StyledMenu
             onClick={() => {
-              router.push('/couple-test');
+              router.push('/making/parent-test');
             }}
           >
             <ParentIcon size={42} />

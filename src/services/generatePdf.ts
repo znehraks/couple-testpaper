@@ -62,5 +62,5 @@ export const generatePDF = async () => {
   const imgY = (pdfHeight - imgNewHeight) / 2; // 중앙 정렬을 위한 Y 위치
 
   pdf.addImage(imgData, 'PNG', imgX, imgY, imgNewWidth, imgNewHeight);
-  pdf.save('couple_test.pdf');
+  pdf.save('test.pdf');
 };

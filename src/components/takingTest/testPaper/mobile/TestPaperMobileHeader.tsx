@@ -1,15 +1,15 @@
 import { useAtomValue } from 'jotai';
 import { TakingTestStore } from '@/store/TakingTestStore';
-import { useGetCoupleTestSheet } from '@/services/useCoupleTests';
+import { useGetTestSheet } from '@/services/useTests';
 import { TimerIcon } from '@/components/icons/Icon';
 import dayjs from 'dayjs';
-import { testTypeMap } from '@/types/utils';
+import { TestType, testTypeMap } from '@/types/utils';
 import { StyledMobileTestHeaderWrapper } from './TestPaperMobileLayout.styles';
 
 export const TestPaperMobileHeader = () => {
   const formatTimeLeft = useAtomValue(TakingTestStore.FormatTimeLeftAtom);
   const isTestStarted = useAtomValue(TakingTestStore.IsTestStartedAtom);
-  const { data, isLoading, isError } = useGetCoupleTestSheet();
+  const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.romance });
   if (isLoading || isError || !data) return null;
 
   const { testType, maker } = data;

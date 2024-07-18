@@ -1,10 +1,11 @@
 import { useIsMobile } from '@/hooks/useMobile';
 import { TestPaper } from './testPaper/TestPaper';
-import { useGetCoupleTestSheet } from '@/services/useCoupleTests';
+import { useGetTestSheet } from '@/services/useTests';
+import { TestType } from '@/types/utils';
 
 export const TestPaperSection = () => {
   const isMobile = useIsMobile();
-  const { data, isLoading, isError } = useGetCoupleTestSheet();
+  const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.romance });
   if (isLoading || isError || !data) return null;
   const { testQuestions } = data;
 

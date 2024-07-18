@@ -1,15 +1,15 @@
 import { useCallback } from 'react';
 import Questionnaire from '../../components/writingTest';
 import { Layout } from '@/components/Layout';
-import { ITestWithAnswerResult } from '@/types/utils';
-import { useAddCoupleTest } from '@/services/useCoupleTests';
+import { ITestWithAnswerResult, TestType } from '@/types/utils';
+import { useAddTest } from '@/services/useTests';
 import { useAtomValue } from 'jotai';
 import { WritingTestStore } from '@/store/WritingTestStore';
 
 export default function CoupleTestPage() {
   const isAdOn = useAtomValue(WritingTestStore.IsAdOnAtom);
   const isCompleted = useAtomValue(WritingTestStore.IsCompletedAtom);
-  const mutation = useAddCoupleTest();
+  const mutation = useAddTest({ testType: TestType.romance });
   const handleSubmit = useCallback(
     async (result: ITestWithAnswerResult) => {
       mutation.mutate(result);

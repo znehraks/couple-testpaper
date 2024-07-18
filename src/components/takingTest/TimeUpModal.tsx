@@ -15,11 +15,12 @@ import {
   StyledStartButton,
   StyledSubmitButton,
 } from './TimeUpModal.styles';
-import { useAddTakedCoupleTestResult, useGetCoupleTestSheet } from '@/services/useCoupleTests';
+import { useAddTakedTestResult, useGetTestSheet } from '@/services/useTests';
+import { TestType } from '@/types/utils';
 
 export const TimesUpModal = () => {
   const isMobile = useIsMobile();
-  const { data } = useGetCoupleTestSheet();
+  const { data } = useGetTestSheet({ testType: TestType.romance });
   const [timesUpModalStep, setTimesUpModalStep] = useAtom(TakingTestStore.TimesUpModalStepAtom);
   const {
     value: nickname,
@@ -29,7 +30,7 @@ export const TimesUpModal = () => {
 
   const [testerResult, setTesterResult] = useAtom(TestResultStore.TesterResultAtom);
 
-  const { mutateAsync } = useAddTakedCoupleTestResult();
+  const { mutateAsync } = useAddTakedTestResult({ testType: TestType.romance });
   // const initialize = useCallback(() => {
   //   setTimesUpModalStep(TimesUpModalStep.INTRO);
   //   // TODO 시험보느라 더럽혀졌던 state들 초기화
@@ -102,14 +103,13 @@ export const TimesUpModal = () => {
       newRanking: {
         testDateTime: testerResult.testDateTime,
         testerNickname: testerResult.testerNickname,
-        testScore: testerResult.testScore,
         testSpentTime: testerResult.testSpentTime,
       },
     });
 
     // TODO 시험 개별 결과 정보도 저장
     // TODO initialize하기
-  }, [mutateAsync, setTimesUpModalStep, testerResult, timesUpModalStep]);
+  }, [data?.entireDocumentId, mutateAsync, setTimesUpModalStep, testerResult, timesUpModalStep]);
 
   const isNicknameEmpty = useMemo(() => {
     return nickname.trim().length === 0;
@@ -131,7 +131,6 @@ export const TimesUpModal = () => {
     setTimesUpModalStep((prev) => prev + 1);
   }, [disabledNicknameInput, nickname, setTesterResult, setTimesUpModalStep]);
 
-  console.log('testerResult', testerResult);
   return (
     <Modal
       width={isMobile ? '350px' : undefined}
