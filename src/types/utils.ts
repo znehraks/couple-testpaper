@@ -1,13 +1,18 @@
 import { ITest } from '@/store/WritingTestStore';
 
-export interface ITestQuestion extends ITest {
+export interface ITestWithAnswer extends ITest {
   answer: string;
 }
 
 export interface ITestResult {
   maker: string;
   status: string;
-  testQuestions: ITestQuestion[];
+  testQuestions: ITest[];
+}
+export interface ITestWithAnswerResult {
+  maker: string;
+  status: string;
+  testQuestionWithAnswers: ITestWithAnswer[];
 }
 
 export interface IRanking {
@@ -16,11 +21,23 @@ export interface IRanking {
   testDateTime: string;
   testSpentTime: number;
 }
+export interface IAddCoupleTestSheetPayload extends ITestResult {
+  testType: 'couple';
+  createdAt: string;
+  entireDocumentId: string;
+}
 
-export interface ICoupleTestResult extends ITestResult {
+export interface IAddCoupleTestSheetResponse extends IAddCoupleTestSheetPayload {
+  id: string;
+}
+export interface IAddCoupleTestEntirePayload extends ITestWithAnswerResult {
   testType: 'couple';
   createdAt: string;
   rankings?: IRanking[];
+}
+
+export interface IAddCoupleTestEntireResponse extends IAddCoupleTestEntirePayload {
+  id: string;
 }
 
 export const testTypeMap = {
@@ -33,5 +50,5 @@ export interface ISelectedAnswer {
   index: number;
 }
 export interface ISelectedAnswersKeyMap {
-  [index: number]: { question: ITestQuestion; selectedAnswer: ISelectedAnswer };
+  [index: number]: { question: ITest; selectedAnswer: ISelectedAnswer };
 }

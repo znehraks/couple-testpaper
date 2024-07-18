@@ -15,10 +15,11 @@ import {
   StyledStartButton,
   StyledSubmitButton,
 } from './TimeUpModal.styles';
-import { useAddTakedCoupleTestResult } from '@/services/useCoupleTests';
+import { useAddTakedCoupleTestResult, useGetCoupleTestSheet } from '@/services/useCoupleTests';
 
 export const TimesUpModal = () => {
   const isMobile = useIsMobile();
+  const { data } = useGetCoupleTestSheet();
   const [timesUpModalStep, setTimesUpModalStep] = useAtom(TakingTestStore.TimesUpModalStepAtom);
   const {
     value: nickname,
@@ -97,10 +98,13 @@ export const TimesUpModal = () => {
 
     if (!testerResult || !testerResult.testerNickname) return;
     await mutateAsync({
-      testDateTime: testerResult.testDateTime,
-      testerNickname: testerResult.testerNickname,
-      testScore: testerResult.testScore,
-      testSpentTime: testerResult.testSpentTime,
+      entireDocumentId: data?.entireDocumentId,
+      newRanking: {
+        testDateTime: testerResult.testDateTime,
+        testerNickname: testerResult.testerNickname,
+        testScore: testerResult.testScore,
+        testSpentTime: testerResult.testSpentTime,
+      },
     });
 
     // TODO 시험 개별 결과 정보도 저장

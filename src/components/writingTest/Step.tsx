@@ -1,4 +1,4 @@
-import { ITestResult } from '@/types/utils';
+import { ITestWithAnswerResult } from '@/types/utils';
 import { useAtom } from 'jotai';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { WritingTestStore } from '../../store/WritingTestStore';
@@ -14,7 +14,7 @@ import {
 import { StyledContentDescription, StyledContentTitle, StyledContentTitleWrapper } from './styles';
 
 interface IStepProps {
-  onSubmit: (result: ITestResult) => void;
+  onSubmit: (result: ITestWithAnswerResult) => void;
 }
 export const Step = ({ onSubmit }: IStepProps) => {
   const [currentTestQuestionIndex, setCurrentTestQuestionIndex] = useAtom(
@@ -61,7 +61,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
   }, [inputValue, isValid, setAnswers, setCurrentTestQuestionIndex, currentTestQuestionIndex, tempAnswers]);
 
   const handleSubmit = useCallback(() => {
-    const testQuestions = questions.map((question, index) => {
+    const _testQuestionWithAnswers = questions.map((question, index) => {
       return {
         ...question,
         answer: tempAnswers[index],
@@ -69,9 +69,9 @@ export const Step = ({ onSubmit }: IStepProps) => {
     });
 
     onSubmit({
-      testQuestions: testQuestions.slice(2),
-      maker: testQuestions[0].answer,
-      status: testQuestions[1].answer,
+      testQuestionWithAnswers: _testQuestionWithAnswers.slice(2),
+      maker: _testQuestionWithAnswers[0].answer,
+      status: _testQuestionWithAnswers[1].answer,
     });
     setAnswers([]);
     setTempAnswers({});
@@ -82,8 +82,6 @@ export const Step = ({ onSubmit }: IStepProps) => {
     () => questions[currentTestQuestionIndex],
     [questions, currentTestQuestionIndex],
   );
-
-  console.log(tempAnswers);
 
   const description = useMemo(() => {
     switch (currentTestQuestionIndex) {

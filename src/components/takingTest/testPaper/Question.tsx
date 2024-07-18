@@ -1,4 +1,3 @@
-import { ITestQuestion } from '@/types/utils';
 import { useCallback } from 'react';
 import { useAtom } from 'jotai';
 import { TakingTestStore } from '../../../store/TakingTestStore';
@@ -9,9 +8,10 @@ import {
   StyledTestQuestionBox,
   StyledTestQuestionTitleContainer,
 } from './Question.styles';
+import { ITest } from '@/store/WritingTestStore';
 
 interface IQuestionProps {
-  question: ITestQuestion;
+  question: ITest;
   index: number;
 }
 

@@ -1,22 +1,43 @@
 import { db } from '@/firebaseConfig';
 import { WritingTestStore } from '@/store/WritingTestStore';
-import { ITestResult, ICoupleTestResult, IRanking } from '@/types/utils';
+import {
+  ITestWithAnswerResult,
+  IAddCoupleTestEntirePayload,
+  IRanking,
+  IAddCoupleTestSheetPayload,
+  IAddCoupleTestEntireResponse,
+} from '@/types/utils';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/router';
 
 export const useAddCoupleTest = () => {
-  const addCoupleTest = async (result: ITestResult) => {
-    const payload: ICoupleTestResult = {
+  const addCoupleTest = async (result: ITestWithAnswerResult) => {
+    const entirePayload: IAddCoupleTestEntirePayload = {
       testType: 'couple',
-      testQuestions: result.testQuestions,
+      testQuestionWithAnswers: result.testQuestionWithAnswers,
       maker: result.maker,
       status: result.status,
       createdAt: new Date()?.toLocaleDateString(),
     };
-    return addDoc(collection(db, 'couple-tests'), payload);
+    const { id: entireDocumentId } = await addDoc(collection(db, 'couple-tests'), entirePayload);
+    const testSheetPayload: IAddCoupleTestSheetPayload = {
+      testType: 'couple',
+      maker: result.maker,
+      status: result.status,
+      createdAt: new Date()?.toLocaleDateString(),
+      testQuestions: result.testQuestionWithAnswers.map((question) => ({
+        question: question.question,
+        choices: question.choices,
+        type: question.type,
+      })),
+      entireDocumentId,
+    };
+
+    return addDoc(collection(db, 'couple-tests-sheet'), testSheetPayload);
   };
+
   const queryClient = useQueryClient();
   const router = useRouter();
   const setIsAdOn = useSetAtom(WritingTestStore.IsAdOnAtom);
@@ -38,11 +59,35 @@ export const useAddCoupleTest = () => {
   );
 };
 
-export const useGetCoupleTest = () => {
-  const getCoupleTest = async (docId: string): Promise<ICoupleTestResult> => {
+export const useGetCoupleTestEntire = () => {
+  const { data } = useGetCoupleTestSheet();
+  const queryClient = useQueryClient();
+
+  const getCoupleTestEntire = async (docId?: string): Promise<IAddCoupleTestEntireResponse> => {
+    if (!docId) throw new Error('No docId found');
     const docRef = doc(db, 'couple-tests', docId);
     const docSnap = await getDoc(docRef);
-    const data = docSnap.data() as ICoupleTestResult;
+    const data = docSnap.data() as IAddCoupleTestEntireResponse;
+    if (!data) throw new Error('No data found');
+    return data;
+  };
+  return useQuery<IAddCoupleTestEntireResponse>(
+    {
+      queryKey: ['coupleTest', data?.entireDocumentId],
+      queryFn: () => getCoupleTestEntire(data?.entireDocumentId),
+      enabled: !!data?.entireDocumentId,
+    },
+    queryClient,
+  );
+};
+
+export const useGetCoupleTestSheet = () => {
+  const getCoupleTestSheet = async (docId: string): Promise<IAddCoupleTestSheetPayload> => {
+    const docRef = doc(db, 'couple-tests-sheet', docId);
+    const docSnap = await getDoc(docRef);
+    docSnap.id;
+    const data = docSnap.data() as IAddCoupleTestSheetPayload;
+
     if (!data) throw new Error('No data found');
     return data;
   };
@@ -50,10 +95,10 @@ export const useGetCoupleTest = () => {
   const { id } = router.query;
   const queryClient = useQueryClient();
 
-  return useQuery<ICoupleTestResult>(
+  return useQuery<IAddCoupleTestSheetPayload>(
     {
       queryKey: ['coupleTest', id],
-      queryFn: () => getCoupleTest(id as string),
+      queryFn: () => getCoupleTestSheet(id as string),
       staleTime: Infinity,
     },
     queryClient,
@@ -62,19 +107,24 @@ export const useGetCoupleTest = () => {
 
 export const useAddTakedCoupleTestResult = () => {
   const router = useRouter();
-  const { id } = router.query;
   const queryClient = useQueryClient();
-  const { data } = useGetCoupleTest();
+  const { data } = useGetCoupleTestEntire();
 
   if (!data) throw new Error('No data found');
-  if (!id) throw new Error('No id found');
 
-  const addTakedCoupleTestResult = async (newRanking: IRanking) => {
+  const addTakedCoupleTestResult = async ({
+    entireDocumentId,
+    newRanking,
+  }: {
+    entireDocumentId: string | undefined;
+    newRanking: IRanking;
+  }) => {
+    if (!entireDocumentId) throw new Error('No entireDocumentId found');
     const result = {
       ...data,
       rankings: data.rankings ? [...data.rankings, newRanking] : [newRanking],
     };
-    const docRef = doc(db, 'couple-tests', id as string);
+    const docRef = doc(db, 'couple-tests', entireDocumentId);
     return updateDoc(docRef, result);
   };
 
@@ -82,8 +132,8 @@ export const useAddTakedCoupleTestResult = () => {
     {
       mutationFn: addTakedCoupleTestResult,
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['coupleTest', id as string] });
-        router.replace(`/couple-test/${id}/result`);
+        queryClient.invalidateQueries({ queryKey: ['coupleTest', data.id as string] });
+        router.replace(`/couple-test/${data.id}/result`);
       },
       onError: (error) => {
         console.error(error);

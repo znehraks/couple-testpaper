@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { CategoryIntro } from './CategoryIntro';
 import { Step } from './Step';
-import { ITestResult } from '@/types/utils';
+import { ITestWithAnswerResult } from '@/types/utils';
 import { commonQuestions, myInfoQuestions, requiredQuestions } from '../../data/questionnaireData';
 import { useAtom, useAtomValue } from 'jotai';
 import { WritingTestStore } from '../../store/WritingTestStore';
@@ -11,7 +11,7 @@ import { StyledContentWrapper } from './styles';
 
 // const simulationQuestions = [];
 interface IQuestionnaireProps {
-  onSubmit: (result: ITestResult) => void;
+  onSubmit: (result: ITestWithAnswerResult) => void;
 }
 const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
   const [step, setStep] = useAtom(WritingTestStore.StepAtom);
@@ -28,9 +28,9 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
   useEffect(() => {
     if (!testCategory) return;
     if (testCategory === 'forAnyone') {
-      console.log(requiredQuestions.length); // 2
-      console.log(myInfoQuestions.length); // 4
-      console.log(commonQuestions.length); // 13
+      // console.log(requiredQuestions.length); // 2
+      // console.log(myInfoQuestions.length); // 4
+      // console.log(commonQuestions.length); // 13
 
       const selectedMyInfoQuestions = [...myInfoQuestions]
         .sort(() => Math.random() - 0.5)
@@ -44,7 +44,7 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
             choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
           };
         });
-      console.log('selectedMyInfoQuestions', selectedMyInfoQuestions);
+      // console.log('selectedMyInfoQuestions', selectedMyInfoQuestions);
 
       const selectedCommonQuestions = [...commonQuestions]
         .sort(() => Math.random() - 0.5)
@@ -58,7 +58,7 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
             choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
           };
         });
-      console.log('selectedCommonQuestions', selectedCommonQuestions);
+      // console.log('selectedCommonQuestions', selectedCommonQuestions);
       setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
     }
     // else if (testCategory === 'forCouple') {

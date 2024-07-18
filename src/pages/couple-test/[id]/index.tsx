@@ -1,5 +1,5 @@
 import { Layout } from '@/components/Layout';
-import { useGetCoupleTest } from '@/services/useCoupleTests';
+import { useGetCoupleTestSheet } from '@/services/useCoupleTests';
 import { useAtomValue } from 'jotai';
 import { TakingTestStore } from '@/store/TakingTestStore';
 import { TakingTest } from '@/components/takingTest/TakingTest';
@@ -9,7 +9,7 @@ import { useAppearPDFDownloadButton } from '@/components/takingTest/hooks/useApp
 import { useRedirect } from '@/components/takingTest/hooks/useRedirect';
 
 export default function CoupleTestTakingPage() {
-  const { data, isLoading, isError } = useGetCoupleTest();
+  const { data, isLoading, isError } = useGetCoupleTestSheet();
   const isTestEnded = useAtomValue(TakingTestStore.IsTestEndedAtom);
   useTimer();
   useAppearPDFDownloadButton();

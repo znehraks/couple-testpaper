@@ -2,14 +2,14 @@ import { TimerIcon } from '@/components/icons/Icon';
 import { StyledTestHeaderWrapper } from './TestPaperLayout.styles';
 import { useAtomValue } from 'jotai';
 import { TakingTestStore } from '@/store/TakingTestStore';
-import { useGetCoupleTest } from '@/services/useCoupleTests';
+import { useGetCoupleTestSheet } from '@/services/useCoupleTests';
 import { testTypeMap } from '@/types/utils';
 import dayjs from 'dayjs';
 
 export const TestPaperHeader = () => {
   const formatTimeLeft = useAtomValue(TakingTestStore.FormatTimeLeftAtom);
   const isTestStarted = useAtomValue(TakingTestStore.IsTestStartedAtom);
-  const { data, isLoading, isError } = useGetCoupleTest();
+  const { data, isLoading, isError } = useGetCoupleTestSheet();
   if (isLoading || isError || !data) return null;
 
   const { testType, maker } = data;

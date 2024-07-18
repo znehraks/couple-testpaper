@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import Questionnaire from '../../components/writingTest';
 import { Layout } from '@/components/Layout';
-import { ITestResult } from '@/types/utils';
+import { ITestWithAnswerResult } from '@/types/utils';
 import { useAddCoupleTest } from '@/services/useCoupleTests';
 import { useAtomValue } from 'jotai';
 import { WritingTestStore } from '@/store/WritingTestStore';
@@ -11,7 +11,7 @@ export default function CoupleTestPage() {
   const isCompleted = useAtomValue(WritingTestStore.IsCompletedAtom);
   const mutation = useAddCoupleTest();
   const handleSubmit = useCallback(
-    async (result: ITestResult) => {
+    async (result: ITestWithAnswerResult) => {
       mutation.mutate(result);
     },
     [mutation],

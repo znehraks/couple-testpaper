@@ -1,4 +1,4 @@
-import { useGetCoupleTest } from '@/services/useCoupleTests';
+import { useGetCoupleTestEntire } from '@/services/useCoupleTests';
 import { TakingTestStore } from '@/store/TakingTestStore';
 import { TestResultStore } from '@/store/TestResultStore';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -11,17 +11,17 @@ export const useMakeResult = () => {
   const selectedAnswers = useAtomValue(TakingTestStore.SelectedAnswersAtom);
   const timeLeft = useAtomValue(TakingTestStore.TimeLeftAtom);
   const setTesterResult = useSetAtom(TestResultStore.TesterResultAtom);
-  const { data } = useGetCoupleTest();
+  const { data } = useGetCoupleTestEntire();
 
   const testScore = useMemo(
     () =>
-      data?.testQuestions.reduce((acc, question, index) => {
+      data?.testQuestionWithAnswers.reduce((acc, question, index) => {
         if (question.answer === selectedAnswers[index]?.selectedAnswer.text) {
           return acc + 10;
         }
         return acc;
       }, 0) ?? 0,
-    [data?.testQuestions, selectedAnswers],
+    [data?.testQuestionWithAnswers, selectedAnswers],
   );
   const makeResult = useCallback(() => {
     setIsTestEnded(true);

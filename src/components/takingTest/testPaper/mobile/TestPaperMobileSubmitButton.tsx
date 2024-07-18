@@ -1,16 +1,16 @@
 import { useAtomValue } from 'jotai';
 import { StyledMobileSubmitBtn } from './TestPaperMobileLayout.styles';
 import { TakingTestStore } from '@/store/TakingTestStore';
-import { useGetCoupleTest } from '@/services/useCoupleTests';
+import { useGetCoupleTestSheet } from '@/services/useCoupleTests';
 import { useMakeResult } from '../../hooks/useMakeResult';
 
 export const TestPaperMobileSubmitButton = () => {
   const selectedAnswers = useAtomValue(TakingTestStore.SelectedAnswersAtom);
   const { makeResult } = useMakeResult();
-  const { data, isLoading, isError } = useGetCoupleTest();
+  const { data, isLoading, isError } = useGetCoupleTestSheet();
   if (isLoading || isError || !data) return null;
 
-  const { testQuestions } = data;
+  const { testQuestions: testQuestions } = data;
 
   return (
     <StyledMobileSubmitBtn
