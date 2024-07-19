@@ -3,6 +3,8 @@ interface IIconProps {
   fill?: string;
 }
 
+// Flatart
+// Creative Commons (Attribution 3.0 Unported)
 export const HeartIcon = ({ size = 16, fill = '#FF7979' }: IIconProps) => {
   return (
     <svg width={size} height={size} version="1.1" viewBox="0 0 512 512" fill={fill}>
@@ -16,6 +18,8 @@ export const HeartIcon = ({ size = 16, fill = '#FF7979' }: IIconProps) => {
   );
 };
 
+// Rafiico Creative Studio Co., Ltd.
+// Creative Commons (Attribution 3.0 Unported)
 export const ParentIcon = ({ size = 16, fill = '#FF7979' }: IIconProps) => {
   return (
     <svg width={size} height={size} fill={fill} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -34,6 +38,9 @@ export const ParentIcon = ({ size = 16, fill = '#FF7979' }: IIconProps) => {
   );
 };
 
+// BomSymbols
+// Free for commercial use (Include link to authors website)
+// https://www.iconfinder.com/korawan_m
 export const FriendsIcon = ({ size = 16 }: IIconProps) => {
   return (
     <svg height={size} id="Layer_1" version="1.1" viewBox="0 0 91 91" width={size}>
@@ -93,6 +100,8 @@ export const FriendsIcon = ({ size = 16 }: IIconProps) => {
   );
 };
 
+// Timothy Miller
+// Creative Commons (Attribution-Share Alike 3.0 Unported)
 export const TimerIcon = ({ size = 16, fill }: IIconProps) => {
   return (
     <svg width={size} height={size} id="Layer_1" version="1.1" viewBox="0 0 32 32">
@@ -100,6 +109,16 @@ export const TimerIcon = ({ size = 16, fill }: IIconProps) => {
         fill={fill}
         d="M16,10c-1.104,0-2,0.896-2,2v5.2l-1.408,1.407C12.092,19.107,12,19.578,12,20c0,1.104,0.896,2,2,2  c0.578,0,1.04-0.241,1.392-0.592l2.071-2.07C17.76,19.041,18,18.578,18,18v-6C18,10.896,17.104,10,16,10z M16,4  C8.268,4,2,10.268,2,18c0,3.151,1.054,6.05,2.811,8.39l-2.23,2.23C2.193,29.006,2,29.469,2,30c0,1.188,1.016,2,2,2  c0.516,0,0.986-0.186,1.38-0.58l2.23-2.23C9.95,30.946,12.849,32,16,32s6.05-1.054,8.39-2.811l2.23,2.23  C27.014,31.814,27.484,32,28,32c0.984,0,2-0.813,2-2c0-0.531-0.193-0.994-0.58-1.38l-2.23-2.23C28.946,24.05,30,21.151,30,18  C30,10.268,23.732,4,16,4z M16,28c-5.522,0-10-4.478-10-10S10.478,8,16,8s10,4.478,10,10S21.522,28,16,28z M26,0  c-2.13,0-3.996,1.113-5.061,2.786c3.933,1.275,7.199,4.025,9.139,7.606C31.258,9.297,32,7.736,32,6C32,2.687,29.313,0,26,0z   M11.061,2.786C9.996,1.113,8.13,0,6,0C2.687,0,0,2.687,0,6c0,1.736,0.742,3.297,1.922,4.393C3.861,6.812,7.128,4.062,11.061,2.786z"
       />
+    </svg>
+  );
+};
+
+// Font Awesome
+// Attribution 4.0 International (CC BY 4.0)
+export const TrophyIcon = ({ size = 16, fill }: IIconProps) => {
+  return (
+    <svg width={size} height={size} fill={fill} viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+      <path d="M572.1 82.38C569.5 71.59 559.8 64 548.7 64h-100.8c.2422-12.45 .1078-23.7-.1559-33.02C447.3 13.63 433.2 0 415.8 0H160.2C142.8 0 128.7 13.63 128.2 30.98C127.1 40.3 127.8 51.55 128.1 64H27.26C16.16 64 6.537 71.59 3.912 82.38C3.1 85.78-15.71 167.2 37.07 245.9c37.44 55.82 100.6 95.03 187.5 117.4c18.7 4.805 31.41 22.06 31.41 41.37C256 428.5 236.5 448 212.6 448H208c-26.51 0-47.99 21.49-47.99 48c0 8.836 7.163 16 15.1 16h223.1c8.836 0 15.1-7.164 15.1-16c0-26.51-21.48-48-47.99-48h-4.644c-23.86 0-43.36-19.5-43.36-43.35c0-19.31 12.71-36.57 31.41-41.37c86.96-22.34 150.1-61.55 187.5-117.4C591.7 167.2 572.9 85.78 572.1 82.38zM77.41 219.8C49.47 178.6 47.01 135.7 48.38 112h80.39c5.359 59.62 20.35 131.1 57.67 189.1C137.4 281.6 100.9 254.4 77.41 219.8zM498.6 219.8c-23.44 34.6-59.94 61.75-109 81.22C426.9 243.1 441.9 171.6 447.2 112h80.39C528.1 135.7 526.5 178.7 498.6 219.8z" />
     </svg>
   );
 };

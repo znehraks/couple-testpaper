@@ -6,7 +6,7 @@ import { useAddTest } from '@/services/useTests';
 import { useAtomValue } from 'jotai';
 import { WritingTestStore } from '@/store/WritingTestStore';
 
-export default function CoupleTestPage() {
+export default function RomanceTestMakingPage() {
   const isAdOn = useAtomValue(WritingTestStore.IsAdOnAtom);
   const isCompleted = useAtomValue(WritingTestStore.IsCompletedAtom);
   const mutation = useAddTest({ testType: TestType.romance });

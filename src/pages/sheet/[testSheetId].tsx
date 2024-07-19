@@ -9,7 +9,7 @@ import { useAppearPDFDownloadButton } from '@/components/takingTest/hooks/useApp
 import { useRedirect } from '@/components/takingTest/hooks/useRedirect';
 import { TestType } from '@/types/utils';
 
-export default function CoupleTestTakingPage() {
+export default function TestSheetPage() {
   const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.romance });
   const isTestEnded = useAtomValue(TakingTestStore.IsTestEndedAtom);
   useTimer();
