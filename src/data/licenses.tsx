@@ -56,4 +56,16 @@ export const licenses = {
       </a>
     </>
   ),
+  magnifierIcon: (
+    <>
+      Magnifier Icon by{' '}
+      <a href="https://www.iconfinder.com/kreasikanvas" target="_blank">
+        Kreasi Kanvas
+      </a>
+      -{' '}
+      <a href="Free for commercial use" target="_blank">
+        Free for commercial use
+      </a>
+    </>
+  ),
 };

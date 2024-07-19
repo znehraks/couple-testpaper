@@ -8,6 +8,8 @@ import { useTimer } from '@/components/takingTest/hooks/useTimer';
 import { useAppearPDFDownloadButton } from '@/components/takingTest/hooks/useAppearPDFDownloadButton';
 import { useRedirect } from '@/components/takingTest/hooks/useRedirect';
 import { TestType } from '@/types/utils';
+import { useLicenses } from '@/hooks/useLicenses';
+import { useEffect } from 'react';
 
 export default function TestSheetPage() {
   const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.romance });
@@ -18,6 +20,12 @@ export default function TestSheetPage() {
     redirectCondition: data?.testQuestions.length === 0,
     redirectPath: '/romance-test',
   });
+  const { sanitizeLicenseNames } = useLicenses(['timerIcon']);
+  useEffect(() => {
+    return () => {
+      sanitizeLicenseNames();
+    };
+  }, [sanitizeLicenseNames]);
 
   if (isLoading || isError || !data) return null;
   return (

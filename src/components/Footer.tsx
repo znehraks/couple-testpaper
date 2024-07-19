@@ -17,10 +17,15 @@ export const Footer = () => {
 
 const StyledFooterWrapper = styled.div`
   position: fixed;
-  bottom: 0;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
   & > div {
+    font-family: notoSans;
+    font-size: 12px;
+    & > * {
+      font-family: notoSans;
+    }
     display: block;
   }
 `;
