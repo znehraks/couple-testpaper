@@ -6,6 +6,7 @@ import { useLicenses } from '@/hooks/useLicenses';
 import { useEffect, useMemo, useState } from 'react';
 import { MagnifierIcon, TrophyIcon } from '@/components/icons/Icon';
 import { useInput } from '@/components/takingTest/hooks/useInput';
+import { orderBy } from 'lodash-es';
 
 export default function TestResultPage() {
   const { data } = useGetTestEntire({ testType: TestType.romance });
@@ -20,7 +21,11 @@ export default function TestResultPage() {
 
   const sortedRankings = useMemo(() => {
     if (!data?.rankings) return [];
-    return data.rankings?.sort((a, b) => (b[currentSortIndex] ?? 0) - (a[currentSortIndex] ?? 0));
+    const sortOrder =
+      currentSortIndex === 'testScore' ? ['testScore', 'testSpentTime'] : ['testSpentTime', 'testScore'];
+    const sortMethod: ('desc' | 'asc')[] = currentSortIndex === 'testScore' ? ['desc', 'asc'] : ['asc', 'desc'];
+
+    return orderBy(data.rankings, sortOrder, sortMethod);
   }, [currentSortIndex, data?.rankings]);
 
   const top3Rankings = useMemo(() => sortedRankings.slice(0, 3), [sortedRankings]);
@@ -49,42 +54,47 @@ export default function TestResultPage() {
           </StyledSearchInputContainer>
         </StyledTestResultHeaderWrapper>
         <StyledTestResultBodyWrapper>
-          <StyledTestResultBodyTitleWrapper>성적통지서</StyledTestResultBodyTitleWrapper>
+          <StyledTestResultBodyTitleWrapper>성적표</StyledTestResultBodyTitleWrapper>
           <StyledTestResultBodyTop3Wrapper>
             {top3Rankings.map((ranking, index) => (
               <div>
-                <div>{ranking.testDateTime}</div>
-                <div>{ranking.testScore}</div>
-                <div>{ranking.testSpentTime}</div>
-                <div>{ranking.testerNickname}</div>
-                <TrophyIcon
-                  size={28}
-                  fill={(() => {
-                    switch (index) {
-                      case 1:
-                        return 'gold';
-                      case 0:
-                        return 'silver';
-                      case 2:
-                        return '#CD7F32';
-                    }
-                  })()}
-                />
+                <div>
+                  <TrophyIcon
+                    size={72}
+                    fill={(() => {
+                      switch (index) {
+                        case 0:
+                          return 'gold';
+                        case 1:
+                          return 'silver';
+                        case 2:
+                          return '#CD7F32';
+                      }
+                    })()}
+                  />
+                  <div>{index + 1}</div>
+                </div>
+                <div>
+                  {index + 1}등. {ranking.testerNickname}
+                </div>
+                <div>{ranking.testScore}점</div>
               </div>
             ))}
           </StyledTestResultBodyTop3Wrapper>
           <StyledTestResultBodyBelow3Wrapper>
-            {otherRankings.map((ranking) => (
-              <>
-                <div>{ranking.testDateTime}</div>
-
-                <div>{ranking.testScore}</div>
-
-                <div>{ranking.testSpentTime}</div>
-
+            <div>
+              <div>순위</div>
+              <div>닉네임</div>
+              <div>점수</div>
+              <div>소요시간</div>
+            </div>
+            {otherRankings.map((ranking, index) => (
+              <div>
+                <div>{index + 4}등</div>
                 <div>{ranking.testerNickname}</div>
-                <br />
-              </>
+                <div>{ranking.testScore}</div>
+                <div>{ranking.testSpentTime}</div>
+              </div>
             ))}
           </StyledTestResultBodyBelow3Wrapper>
         </StyledTestResultBodyWrapper>
@@ -156,21 +166,86 @@ const StyledTestResultBodyTop3Wrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   gap: 24px;
-  background-color: beige;
+  background-color: aliceblue;
   position: relative;
-  flex: 2;
+  flex: 1;
   & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 24px;
     height: 60%;
+    cursor: pointer;
+    user-select: none;
+    transition: box-shadow 0.2s ease-in-out;
+    /* 트로피, 등수 */
+    & > div:first-of-type {
+      font-size: 60px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      position: relative;
+      & > div:last-of-type {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-45%, -75%);
+        min-width: fit-content;
+      }
+    }
+    /* 닉네임 */
+    & > div:nth-of-type(2) {
+      font-size: 36px;
+      font-weight: 700;
+    }
+    /* 점수 */
+    & > div:nth-of-type(3) {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+    }
   }
+  /* 1위 */
   & > div:first-of-type {
-  }
-  & > div:nth-of-type(2) {
     margin-bottom: 100px;
+    order: 2;
   }
+  /* 2위 */
+  & > div:nth-of-type(2) {
+    order: 1;
+  }
+  /* 3위 */
   & > div:last-of-type {
+    order: 3;
   }
 `;
 const StyledTestResultBodyBelow3Wrapper = styled.div`
   flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 32px;
+  & > div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid grey;
+    & > div:first-of-type {
+      width: 30%;
+    }
+    & > div:nth-of-type(2) {
+      width: 40%;
+    }
+    & > div:nth-of-type(3) {
+      width: 15%;
+    }
+    & > div:last-of-type {
+      width: 15%;
+    }
+  }
 `;
