@@ -83,11 +83,43 @@ export default function TestResultPage() {
           </StyledTestResultBodyTop3Wrapper>
           <StyledTestResultBodyBelow3Wrapper>
             <div>
-              <div>순위</div>
-              <div>닉네임</div>
-              <div>점수</div>
-              <div>소요시간</div>
+              <div>
+                <strong>순위</strong>
+              </div>
+              <div>
+                <strong>닉네임</strong>
+              </div>
+              <div>
+                <strong>점수</strong>
+              </div>
+              <div>
+                <strong>소요시간</strong>
+              </div>
             </div>
+            {otherRankings.map((ranking, index) => (
+              <div>
+                <div>{index + 4}등</div>
+                <div>{ranking.testerNickname}</div>
+                <div>{ranking.testScore}</div>
+                <div>{ranking.testSpentTime}</div>
+              </div>
+            ))}{' '}
+            {otherRankings.map((ranking, index) => (
+              <div>
+                <div>{index + 4}등</div>
+                <div>{ranking.testerNickname}</div>
+                <div>{ranking.testScore}</div>
+                <div>{ranking.testSpentTime}</div>
+              </div>
+            ))}{' '}
+            {otherRankings.map((ranking, index) => (
+              <div>
+                <div>{index + 4}등</div>
+                <div>{ranking.testerNickname}</div>
+                <div>{ranking.testScore}</div>
+                <div>{ranking.testSpentTime}</div>
+              </div>
+            ))}{' '}
             {otherRankings.map((ranking, index) => (
               <div>
                 <div>{index + 4}등</div>
@@ -111,6 +143,7 @@ const StyledTestResultWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  padding-bottom: 64px;
 `;
 
 const StyledTestResultHeaderWrapper = styled.div`
@@ -229,6 +262,8 @@ const StyledTestResultBodyBelow3Wrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   font-size: 32px;
+  max-height: 40%;
+  overflow: auto;
   & > div {
     padding: 4px 12px;
     width: 100%;
@@ -250,5 +285,11 @@ const StyledTestResultBodyBelow3Wrapper = styled.div`
     & > div:last-of-type {
       width: 15%;
     }
+  }
+  & > div:first-of-type {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #ffffff;
   }
 `;
