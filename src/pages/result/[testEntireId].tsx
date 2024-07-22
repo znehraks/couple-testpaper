@@ -160,22 +160,19 @@ const StyledTestResultBodyTitleWrapper = styled.div`
   align-items: center;
 `;
 const StyledTestResultBodyTop3Wrapper = styled.div`
+  flex: 1;
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
   gap: 24px;
   background-color: aliceblue;
   position: relative;
-  flex: 1;
   & > div {
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    height: 60%;
+
     cursor: pointer;
     user-select: none;
     transition: box-shadow 0.2s ease-in-out;
@@ -207,16 +204,21 @@ const StyledTestResultBodyTop3Wrapper = styled.div`
   }
   /* 1위 */
   & > div:first-of-type {
-    margin-bottom: 100px;
-    order: 2;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
   }
   /* 2위 */
   & > div:nth-of-type(2) {
-    order: 1;
+    top: 35%;
+    left: 25%;
+    transform: translateX(-50%);
   }
   /* 3위 */
   & > div:last-of-type {
-    order: 3;
+    top: 35%;
+    left: 75%;
+    transform: translateX(-50%);
   }
 `;
 const StyledTestResultBodyBelow3Wrapper = styled.div`
@@ -228,6 +230,7 @@ const StyledTestResultBodyBelow3Wrapper = styled.div`
   align-items: center;
   font-size: 32px;
   & > div {
+    padding: 4px 12px;
     width: 100%;
     display: flex;
     flex-direction: row;
