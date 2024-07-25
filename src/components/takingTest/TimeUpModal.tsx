@@ -115,7 +115,7 @@ export const TimesUpModal = () => {
     return nickname.trim().length === 0;
   }, [nickname]);
   const isNicknameTooLong = useMemo(() => {
-    return nickname.trim().length > 10;
+    return nickname.trim().length > 8;
   }, [nickname]);
 
   const disabledNicknameInput = useMemo(() => {
@@ -142,7 +142,7 @@ export const TimesUpModal = () => {
             <StyledInput name="nickname" value={nickname} onChange={handleChangeNicknameInput} />
             <StyledErrorMessage>
               {isNicknameInputDirty && isNicknameEmpty && '이름을 입력해주세요.'}
-              {isNicknameTooLong && '이름은 10자 이내로 입력해주세요.'}
+              {isNicknameTooLong && '이름은 8자 이내로 입력해주세요.'}
             </StyledErrorMessage>
             <StyledSubmitButton disabled={disabledNicknameInput} onClick={handleCompleteNicknameInput}>
               입력완료

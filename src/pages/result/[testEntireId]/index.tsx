@@ -4,15 +4,16 @@ import { TestType } from '@/types/utils';
 import { Layout } from '@/components/Layout';
 import { useLicenses } from '@/hooks/useLicenses';
 import { useEffect, useMemo, useState } from 'react';
-import { MagnifierIcon, TrophyIcon } from '@/components/icons/Icon';
-import { useInput } from '@/components/takingTest/hooks/useInput';
+import { TrophyIcon } from '@/components/icons/Icon';
 import { orderBy } from 'lodash-es';
+import { useRouter } from 'next/router';
 
 export default function TestResultPage() {
+  const router = useRouter();
   const { data } = useGetTestEntire({ testType: TestType.romance });
   const { sanitizeLicenseNames } = useLicenses(['trophyIcon', 'magnifierIcon']);
-  const { isFocused, ...inputProps } = useInput({ name: 'search', initialValue: '' });
-  const [currentSortIndex] = useState<'testScore' | 'testSpentTime'>('testScore');
+  //   const { isFocused, ...inputProps } = useInput({ name: 'search', initialValue: '' });
+  const [currentSortIndex, setCurrentSortIndex] = useState<'testScore' | 'testSpentTime'>('testScore');
   useEffect(() => {
     return () => {
       sanitizeLicenseNames();
@@ -46,18 +47,31 @@ export default function TestResultPage() {
     <Layout>
       <StyledTestResultWrapper>
         <StyledTestResultHeaderWrapper>
-          <StyledSearchInputContainer isFocused={isFocused}>
+          {/* <StyledSearchInputContainer isFocused={isFocused}>
             <div>
               <MagnifierIcon size={20} />
             </div>
             <StyledSearchInput {...inputProps} placeholder="검색어를 입력하세요." />
-          </StyledSearchInputContainer>
+          </StyledSearchInputContainer> */}
         </StyledTestResultHeaderWrapper>
         <StyledTestResultBodyWrapper>
-          <StyledTestResultBodyTitleWrapper>성적표</StyledTestResultBodyTitleWrapper>
+          <StyledTestResultBodyTitleWrapper>
+            순위표
+            <div
+              onClick={() => {
+                setCurrentSortIndex((prev) => (prev === 'testScore' ? 'testSpentTime' : 'testScore'));
+              }}
+            >
+              {currentSortIndex === 'testScore' ? '빨리 푼 순으로 보기' : '시험 점수 순으로 보기'}
+            </div>
+          </StyledTestResultBodyTitleWrapper>
           <StyledTestResultBodyTop3Wrapper>
             {top3Rankings.map((ranking, index) => (
-              <div>
+              <div
+                onClick={() => {
+                  router.push(`${router.asPath}/${encodeURIComponent(ranking.testerNickname)}`);
+                }}
+              >
                 <div>
                   <TrophyIcon
                     size={72}
@@ -77,57 +91,45 @@ export default function TestResultPage() {
                 <div>
                   {index + 1}등. {ranking.testerNickname}
                 </div>
-                <div>{ranking.testScore}점</div>
+                {currentSortIndex === 'testScore' ? (
+                  <div>
+                    <span>{ranking.testScore}점</span> / <span>{ranking.testSpentTime}초</span>
+                  </div>
+                ) : (
+                  <div>
+                    <span>{ranking.testSpentTime}초</span> / <span>{ranking.testScore}점</span>
+                  </div>
+                )}
               </div>
             ))}
           </StyledTestResultBodyTop3Wrapper>
           <StyledTestResultBodyBelow3Wrapper>
-            <div>
-              <div>
-                <strong>순위</strong>
-              </div>
-              <div>
-                <strong>닉네임</strong>
-              </div>
-              <div>
-                <strong>점수</strong>
-              </div>
-              <div>
-                <strong>소요시간</strong>
-              </div>
-            </div>
-            {otherRankings.map((ranking, index) => (
-              <div>
-                <div>{index + 4}등</div>
-                <div>{ranking.testerNickname}</div>
-                <div>{ranking.testScore}</div>
-                <div>{ranking.testSpentTime}</div>
-              </div>
-            ))}{' '}
-            {otherRankings.map((ranking, index) => (
-              <div>
-                <div>{index + 4}등</div>
-                <div>{ranking.testerNickname}</div>
-                <div>{ranking.testScore}</div>
-                <div>{ranking.testSpentTime}</div>
-              </div>
-            ))}{' '}
-            {otherRankings.map((ranking, index) => (
-              <div>
-                <div>{index + 4}등</div>
-                <div>{ranking.testerNickname}</div>
-                <div>{ranking.testScore}</div>
-                <div>{ranking.testSpentTime}</div>
-              </div>
-            ))}{' '}
-            {otherRankings.map((ranking, index) => (
-              <div>
-                <div>{index + 4}등</div>
-                <div>{ranking.testerNickname}</div>
-                <div>{ranking.testScore}</div>
-                <div>{ranking.testSpentTime}</div>
-              </div>
-            ))}
+            {otherRankings.length ? (
+              <>
+                <div>
+                  <div>
+                    <strong>순위</strong>
+                  </div>
+                  <div>
+                    <strong>닉네임</strong>
+                  </div>
+                  <div>
+                    <strong>점수</strong>
+                  </div>
+                  <div>
+                    <strong>소요시간</strong>
+                  </div>
+                </div>
+                {otherRankings.map((ranking, index) => (
+                  <div>
+                    <div>{index + 4}등</div>
+                    <div>{ranking.testerNickname}</div>
+                    <div>{ranking.testScore}</div>
+                    <div>{ranking.testSpentTime}</div>
+                  </div>
+                ))}
+              </>
+            ) : null}
           </StyledTestResultBodyBelow3Wrapper>
         </StyledTestResultBodyWrapper>
       </StyledTestResultWrapper>
@@ -136,9 +138,8 @@ export default function TestResultPage() {
 }
 
 const StyledTestResultWrapper = styled.div`
-  width: 100%;
+  width: 768px;
   height: 100%;
-  min-width: 768px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -155,25 +156,25 @@ const StyledTestResultHeaderWrapper = styled.div`
   padding: 8px 12px;
 `;
 
-const StyledSearchInputContainer = styled.div<{ isFocused: boolean }>`
-  position: relative;
-  width: 180px;
-  height: 100%;
-  transition: opacity 0.2s ease-in-out;
-  opacity: ${({ isFocused }) => (isFocused ? 1 : 0.3)};
-  & > div:first-of-type {
-    position: absolute;
-    bottom: 0;
-    transform: translateY(-50%);
-  }
-`;
+// const StyledSearchInputContainer = styled.div<{ isFocused: boolean }>`
+//   position: relative;
+//   width: 180px;
+//   height: 100%;
+//   transition: opacity 0.2s ease-in-out;
+//   opacity: ${({ isFocused }) => (isFocused ? 1 : 0.3)};
+//   & > div:first-of-type {
+//     position: absolute;
+//     bottom: 0;
+//     transform: translateY(-50%);
+//   }
+// `;
 
-const StyledSearchInput = styled.input`
-  width: 100%;
-  font-size: 28px;
-  border-bottom: 1px solid grey;
-  padding-left: 24px;
-`;
+// const StyledSearchInput = styled.input`
+//   width: 100%;
+//   font-size: 28px;
+//   border-bottom: 1px solid grey;
+//   padding-left: 24px;
+// `;
 
 const StyledTestResultBodyWrapper = styled.div`
   width: 100%;
@@ -191,6 +192,14 @@ const StyledTestResultBodyTitleWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  & > div:last-of-type {
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 24px;
+  }
 `;
 const StyledTestResultBodyTop3Wrapper = styled.div`
   flex: 1;
@@ -198,6 +207,7 @@ const StyledTestResultBodyTop3Wrapper = styled.div`
   gap: 24px;
   background-color: aliceblue;
   position: relative;
+  border-radius: 12px;
   & > div {
     position: absolute;
     display: flex;
@@ -230,9 +240,13 @@ const StyledTestResultBodyTop3Wrapper = styled.div`
     }
     /* 점수 */
     & > div:nth-of-type(3) {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 600;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
+      & > span:first-of-type {
+        font-weight: 700;
+        font-size: 30px;
+      }
     }
   }
   /* 1위 */
@@ -248,7 +262,7 @@ const StyledTestResultBodyTop3Wrapper = styled.div`
     transform: translateX(-50%);
   }
   /* 3위 */
-  & > div:last-of-type {
+  & > div:nth-of-type(3) {
     top: 35%;
     left: 75%;
     transform: translateX(-50%);
@@ -262,7 +276,7 @@ const StyledTestResultBodyBelow3Wrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   font-size: 32px;
-  max-height: 40%;
+  max-height: 50%;
   overflow: auto;
   & > div {
     padding: 4px 12px;
@@ -291,5 +305,11 @@ const StyledTestResultBodyBelow3Wrapper = styled.div`
     top: 0;
     z-index: 1;
     background-color: #ffffff;
+  }
+  & > div:not(:first-of-type) {
+    cursor: pointer;
+    &:hover {
+      background-color: aliceblue;
+    }
   }
 `;
