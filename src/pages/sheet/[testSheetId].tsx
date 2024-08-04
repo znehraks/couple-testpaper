@@ -32,8 +32,8 @@ export default function TestSheetPage() {
     <Layout>
       <TakingTest.ReadyModal />
       <PDFDownloadButton />
-      <TakingTest.TestPaperSection />
-      {isTestEnded && <TakingTest.TimesUpModal />}
+      <TakingTest.TestPaperSection testSheetData={data} />
+      {isTestEnded && <TakingTest.TimesUpModal data={data} />}
     </Layout>
   );
 }

@@ -1,23 +1,20 @@
+import { TimerIcon } from '@/components/icons/Icon';
+import { StyledTestHeaderWrapper } from './TestPaperLayout.styles';
 import { useAtomValue } from 'jotai';
 import { TakingTestStore } from '@/store/TakingTestStore';
-import { useGetTestSheet } from '@/services/useTests';
-import { TimerIcon } from '@/components/icons/Icon';
-import dayjs from 'dayjs';
 import { TestType, testTypeMap } from '@/types/utils';
-import { StyledMobileTestHeaderWrapper } from './TestPaperMobileLayout.styles';
+import dayjs from 'dayjs';
 
-export const TestPaperMobileHeader = () => {
+export const TestPaperHeader = ({ headerInfo }: { headerInfo: { testType: TestType; maker: string } }) => {
   const formatTimeLeft = useAtomValue(TakingTestStore.FormatTimeLeftAtom);
   const isTestStarted = useAtomValue(TakingTestStore.IsTestStartedAtom);
-  const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.romance });
-  if (isLoading || isError || !data) return null;
 
-  const { testType, maker } = data;
+  const { testType, maker } = headerInfo;
   return (
-    <StyledMobileTestHeaderWrapper id="test-header">
+    <StyledTestHeaderWrapper id="test-header">
       {isTestStarted && (
         <div className="test-timer">
-          <TimerIcon size={18} fill={'#FF7979'} />
+          <TimerIcon size={36} fill={'#FF7979'} />
           <span>{formatTimeLeft}</span>
         </div>
       )}
@@ -25,8 +22,8 @@ export const TestPaperMobileHeader = () => {
       <div className="test-info">
         <div id="test-time">제 1교시</div>
         <div>{testTypeMap[testType]} 영역</div>
-        <div id="test-odd">{maker}</div>
+        <div id="test-odd">{maker} 유형</div>
       </div>
-    </StyledMobileTestHeaderWrapper>
+    </StyledTestHeaderWrapper>
   );
 };

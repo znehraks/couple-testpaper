@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useAtom } from 'jotai';
-import { TakingTestStore } from '../../../store/TakingTestStore';
+import { TakingTestStore } from '../../store/TakingTestStore';
 
 import { Choice } from './Choice';
 import {
@@ -8,7 +8,7 @@ import {
   StyledTestQuestionBox,
   StyledTestQuestionTitleContainer,
 } from './Question.styles';
-import { ITest } from '@/store/WritingTestStore';
+import { ITest } from '@/types/utils';
 
 interface IQuestionProps {
   question: ITest;

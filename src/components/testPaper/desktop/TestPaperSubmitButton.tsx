@@ -1,17 +1,12 @@
 import { useAtomValue } from 'jotai';
 import { StyledSubmitBtn } from './TestPaperLayout.styles';
 import { TakingTestStore } from '@/store/TakingTestStore';
-import { useGetTestSheet } from '@/services/useTests';
-import { useMakeResult } from '../../hooks/useMakeResult';
-import { TestType } from '@/types/utils';
+import { useMakeResult } from '../../takingTest/hooks/useMakeResult';
+import { ITest } from '@/types/utils';
 
-export const TestPaperSubmitButton = () => {
+export const TestPaperSubmitButton = ({ testQuestions }: { testQuestions: ITest[] }) => {
   const selectedAnswers = useAtomValue(TakingTestStore.SelectedAnswersAtom);
-  const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.romance });
   const { makeResult } = useMakeResult();
-  if (isLoading || isError || !data) return null;
-
-  const { testQuestions } = data;
 
   return (
     <StyledSubmitBtn

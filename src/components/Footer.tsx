@@ -9,7 +9,7 @@ export const Footer = () => {
   return (
     <StyledFooterWrapper>
       {currentLicenses.map((currentLicense) => (
-        <div>{licenses[currentLicense]}</div>
+        <div key={currentLicense}>{licenses[currentLicense]}</div>
       ))}
     </StyledFooterWrapper>
   );

@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { QuestionType } from '../data/questionnaireData';
+import { ITest } from '@/types/utils';
 
 export type TestCategory = 'forAnyone' | 'forCouple';
 const TestCategoryAtom = atom<TestCategory | null>(null);
@@ -11,11 +11,6 @@ StepAtom.debugLabel = 'WritingTest/Step';
 const CurrentTestQuestionIndexAtom = atom<number>(0);
 CurrentTestQuestionIndexAtom.debugLabel = 'WritingTest/CurrentTestQuestionIndex';
 
-export interface ITest {
-  type: QuestionType;
-  question: string;
-  choices: string[];
-}
 const QuestionsAtom = atom<ITest[]>([]);
 QuestionsAtom.debugLabel = 'WritingTest/Questions';
 

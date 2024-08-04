@@ -1,4 +1,4 @@
-import { ITest } from '../store/WritingTestStore';
+import { ITest } from '@/types/utils';
 import {
   accomodation,
   currentStatus,

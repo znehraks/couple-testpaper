@@ -15,12 +15,11 @@ import {
   StyledStartButton,
   StyledSubmitButton,
 } from './TimeUpModal.styles';
-import { useAddTakedTestResult, useGetTestSheet } from '@/services/useTests';
-import { TestType } from '@/types/utils';
+import { useAddTakedTestResult } from '@/services/useTests';
+import { ITestSheet, TestType } from '@/types/utils';
 
-export const TimesUpModal = () => {
+export const TimesUpModal = ({ data }: { data: ITestSheet }) => {
   const isMobile = useIsMobile();
-  const { data } = useGetTestSheet({ testType: TestType.romance });
   const [timesUpModalStep, setTimesUpModalStep] = useAtom(TakingTestStore.TimesUpModalStepAtom);
   const {
     value: nickname,

@@ -1,7 +1,10 @@
-import { Layout } from '@/components/Layout';
-import { useRouter } from 'next/router';
+import { useGetTestEntire } from '@/services/useTests';
+import { TestType } from '@/types/utils';
 
 export default function TestResultDetailPage() {
-  const router = useRouter();
-  return <Layout>결과{router.query.name}</Layout>;
+  const { data } = useGetTestEntire({ testType: TestType.romance });
+  console.log('data', data);
+  if (!data) return null;
+  // return <Layout>결과{router.query.name}</Layout>;
+  return null;
 }

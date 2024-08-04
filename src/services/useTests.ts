@@ -3,11 +3,12 @@ import { TakingTestStore } from '@/store/TakingTestStore';
 import { WritingTestStore } from '@/store/WritingTestStore';
 import {
   ITestWithAnswerResult,
-  IAddCoupleTestEntirePayload,
+  IAddCoupleTestEntireQuery,
   IRanking,
-  IAddCoupleTestSheetPayload,
-  IAddCoupleTestEntireResponse,
+  IAddCoupleTestSheetQuery,
+  IEntireTest,
   TestType,
+  ITestSheet,
 } from '@/types/utils';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -23,15 +24,15 @@ export const useAddTest = ({ testType }: { testType: TestType }) => {
 
   const addTest = useCallback(
     async (result: ITestWithAnswerResult) => {
-      const entirePayload: IAddCoupleTestEntirePayload = {
+      const entireQuery: IAddCoupleTestEntireQuery = {
         testType,
         testQuestionWithAnswers: result.testQuestionWithAnswers,
         maker: result.maker,
         status: result.status,
         createdAt: new Date()?.toLocaleDateString(),
       };
-      const { id: entireDocumentId } = await addDoc(collection(db, 'romance-test'), entirePayload);
-      const testSheetPayload: IAddCoupleTestSheetPayload = {
+      const { id: entireDocumentId } = await addDoc(collection(db, 'romance-test'), entireQuery);
+      const testSheetPayload: IAddCoupleTestSheetQuery = {
         testType,
         maker: result.maker,
         status: result.status,
@@ -72,18 +73,18 @@ export const useGetTestEntire = ({ testType }: { testType: TestType }) => {
   const queryClient = useQueryClient();
 
   const getTestEntire = useCallback(
-    async (docId?: string): Promise<IAddCoupleTestEntireResponse> => {
+    async (docId?: string): Promise<IEntireTest> => {
       if (!docId) throw new Error('No docId found');
       const docRef = doc(db, `${testType}-test`, docId);
       const docSnap = await getDoc(docRef);
-      const data = docSnap.data() as IAddCoupleTestEntireResponse;
+      const data = docSnap.data() as IEntireTest;
       if (!data) throw new Error('No data found');
       return data;
     },
     [testType],
   );
 
-  return useQuery<IAddCoupleTestEntireResponse>(
+  return useQuery<IEntireTest>(
     {
       queryKey: ['romanceTestEntire', data?.entireDocumentId ?? router.query.testEntireId],
       queryFn: () => getTestEntire(data?.entireDocumentId ?? (router.query.testEntireId as string)),
@@ -100,19 +101,18 @@ export const useGetTestSheet = ({ testType }: { testType: TestType }) => {
   const queryClient = useQueryClient();
 
   const getTestSheet = useCallback(
-    async (docId: string): Promise<IAddCoupleTestSheetPayload> => {
+    async (docId: string): Promise<ITestSheet> => {
       const docRef = doc(db, `${testType}-test-sheet`, docId);
       const docSnap = await getDoc(docRef);
-      docSnap.id;
-      const data = docSnap.data() as IAddCoupleTestSheetPayload;
+      const data = docSnap.data() as ITestSheet;
 
       if (!data) throw new Error('No data found');
-      return data;
+      return { ...data, id: docSnap.id };
     },
     [testType],
   );
 
-  return useQuery<IAddCoupleTestSheetPayload>(
+  return useQuery<ITestSheet>(
     {
       queryKey: ['romanceTestSheet', testSheetId],
       queryFn: () => getTestSheet(testSheetId as string),
