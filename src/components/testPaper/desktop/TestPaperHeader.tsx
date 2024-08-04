@@ -1,17 +1,27 @@
 import { TimerIcon } from '@/components/icons/Icon';
-import { StyledTestHeaderWrapper } from './TestPaperLayout.styles';
+import { StyledTestHeaderWrapper, StyledTestScoreContainer } from './TestPaperLayout.styles';
 import { useAtomValue } from 'jotai';
 import { TakingTestStore } from '@/store/TakingTestStore';
 import { TestType, testTypeMap } from '@/types/utils';
 import dayjs from 'dayjs';
+import Image from 'next/image';
 
-export const TestPaperHeader = ({ headerInfo }: { headerInfo: { testType: TestType; maker: string } }) => {
+export const TestPaperHeader = ({
+  headerInfo,
+  score,
+}: {
+  headerInfo: { testType: TestType; maker: string };
+  score?: number;
+}) => {
   const formatTimeLeft = useAtomValue(TakingTestStore.FormatTimeLeftAtom);
   const isTestStarted = useAtomValue(TakingTestStore.IsTestStartedAtom);
 
   const { testType, maker } = headerInfo;
   return (
     <StyledTestHeaderWrapper id="test-header">
+      <StyledTestScoreContainer>
+        <Image src={`/${score}.png`} alt="score" layout="fill" objectFit="cover" />
+      </StyledTestScoreContainer>
       {isTestStarted && (
         <div className="test-timer">
           <TimerIcon size={36} fill={'#FF7979'} />

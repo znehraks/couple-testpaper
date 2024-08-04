@@ -97,12 +97,14 @@ export const TimesUpModal = ({ data }: { data: ITestSheet }) => {
     }
 
     if (!testerResult || !testerResult.testerNickname) return;
+
     await mutateAsync({
       entireDocumentId: data?.entireDocumentId,
       newRanking: {
         testDateTime: testerResult.testDateTime,
         testerNickname: testerResult.testerNickname,
         testSpentTime: testerResult.testSpentTime,
+        testerAnswers: testerResult.testAnswers,
       },
     });
 

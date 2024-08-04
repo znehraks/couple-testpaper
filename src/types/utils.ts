@@ -94,6 +94,11 @@ export interface IRanking {
    * 응시하는데에 걸린 시간
    */
   testSpentTime: number;
+
+  /**
+   * 응시자 답
+   */
+  testerAnswers: ISelectedAnswer[];
 }
 
 /**

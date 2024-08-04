@@ -68,6 +68,14 @@ export const StyledTestHeaderWrapper = styled.div`
   }
 `;
 
+export const StyledTestScoreContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+`;
+
 export const StyledTestQuestionWrapper = styled.div`
   display: flex;
   flex-direction: row;

@@ -23,6 +23,16 @@ export const StyledTestQuestionBox = styled.div`
 
 export const StyledTestQuestionTitleContainer = styled.div`
   word-break: keep-all;
+  position: relative;
+  & > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -30%);
+    width: 100px;
+    height: 100px;
+    opacity: 0.8;
+  }
 `;
 
 export const StyledTestQuestionAnswerContainer = styled.div`

@@ -5,7 +5,13 @@ import dayjs from 'dayjs';
 import { TestType, testTypeMap } from '@/types/utils';
 import { StyledMobileTestHeaderWrapper } from './TestPaperMobileLayout.styles';
 
-export const TestPaperMobileHeader = ({ headerInfo }: { headerInfo: { testType: TestType; maker: string } }) => {
+export const TestPaperMobileHeader = ({
+  headerInfo,
+  score,
+}: {
+  headerInfo: { testType: TestType; maker: string };
+  score?: number;
+}) => {
   const formatTimeLeft = useAtomValue(TakingTestStore.FormatTimeLeftAtom);
   const isTestStarted = useAtomValue(TakingTestStore.IsTestStartedAtom);
 
@@ -20,6 +26,7 @@ export const TestPaperMobileHeader = ({ headerInfo }: { headerInfo: { testType: 
       )}
       <div className="test-title">{`${dayjs().get('year') + 1}학년도 연애수학능력시험 문제지`}</div>
       <div className="test-info">
+        {score}
         <div id="test-time">제 1교시</div>
         <div>{testTypeMap[testType]} 영역</div>
         <div id="test-odd">{maker}</div>

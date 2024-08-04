@@ -6,7 +6,7 @@ interface IChoiceProps {
   index: number;
   choice: string;
   selected: boolean;
-  handleClickChoice: (choiceIndex: number) => void;
+  handleClickChoice?: (choiceIndex: number) => void;
 }
 export const Choice = memo(
   (props: IChoiceProps) => {
@@ -15,7 +15,7 @@ export const Choice = memo(
       <ChoiceWrapper key={index} selected={selected}>
         <span
           onClick={() => {
-            handleClickChoice(index);
+            handleClickChoice?.(index);
           }}
         >
           {circleNumberMap[index]} {choice}
