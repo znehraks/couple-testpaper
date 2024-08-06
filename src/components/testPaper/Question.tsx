@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useAtom } from 'jotai';
 import { TakingTestStore } from '../../store/TakingTestStore';
 
@@ -48,7 +48,7 @@ export const Question = (props: IQuestionProps) => {
   // 원래 답은 갖고있되, 표시해주진말고, 사용자가 입력한 answer도(ranking 등에) 갖고있어야함
   return (
     <StyledTestQuestionBox key={questionIndex}>
-      <StyledTestQuestionTitleContainer>
+      <StyledTestQuestionTitleContainer onDragStart={(e) => e.preventDefault()}>
         {isCorrect !== undefined && (
           <div>
             <Image src={isCorrect ? '/correct.png' : '/wrong.png'} alt="correct" layout="fill" objectFit="cover" />

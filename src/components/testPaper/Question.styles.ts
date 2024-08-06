@@ -24,6 +24,7 @@ export const StyledTestQuestionBox = styled.div`
 export const StyledTestQuestionTitleContainer = styled.div`
   word-break: keep-all;
   position: relative;
+  user-select: none;
   & > div {
     position: absolute;
     top: 0;
