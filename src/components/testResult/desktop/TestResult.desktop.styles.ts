@@ -8,6 +8,22 @@ export const StyledTestResultWrapper = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   padding-bottom: 64px;
+  position: relative;
+`;
+
+export const StyledHelpText = styled.div<{ visible: boolean }>`
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  opacity: ${({ visible }) => (visible ? 1 : 0)};
+  transition: opacity 0.2s ease-in-out;
+  z-index: 2;
+  background-color: white;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+  padding: 4px 8px;
 `;
 
 export const StyledTestResultHeaderWrapper = styled.div`
@@ -68,6 +84,7 @@ export const StyledTestResultBodyTop3Wrapper = styled.div`
   flex: 1;
   width: 100%;
   gap: 24px;
+  min-height: 300px;
   background-color: aliceblue;
   position: relative;
   border-radius: 12px;

@@ -67,6 +67,12 @@ export const StyledTestHeaderWrapper = styled.div`
     }
   }
 `;
+export const StyledGoBackBtn = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+`;
 
 export const StyledTestScoreContainer = styled.div`
   position: absolute;

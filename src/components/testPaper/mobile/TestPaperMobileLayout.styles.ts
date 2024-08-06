@@ -86,6 +86,7 @@ export const StyledMobileTestQuestionWrapper = styled.div`
   font-size: 18px;
   overflow-y: auto;
   margin-bottom: 24px;
+  padding: 0 12px;
 `;
 
 export const StyledMobileSubmitBtn = styled.button<{ disabled: boolean }>`

@@ -7,6 +7,7 @@ import { TrophyIcon } from '@/components/icons/Icon';
 import { orderBy } from 'lodash-es';
 import { useRouter } from 'next/router';
 import {
+  StyledHelpText,
   StyledTestResultBodyBelow3Wrapper,
   StyledTestResultBodyTitleWrapper,
   StyledTestResultBodyTop3Wrapper,
@@ -40,6 +41,15 @@ export default function TestResultPage() {
 
   const otherRankings = useMemo(() => sortedRankings.slice(3), [sortedRankings]);
 
+  const [helpTextVisible, setHelpTextVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHelpTextVisible(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
   if (!data) return null;
   // TODO 점수순위
   // 1위는 그 올림픽 시상식처럼 가운데, 2위는 왼쪽, 3위는 오른쪽으로 보여주기
@@ -53,6 +63,7 @@ export default function TestResultPage() {
   return (
     <Layout>
       <StyledTestResultWrapper>
+        <StyledHelpText visible={helpTextVisible}>각 응시자를 누르면 답안지를 확인할 수 있어요.</StyledHelpText>
         <StyledTestResultHeaderWrapper>
           {/* <StyledSearchInputContainer isFocused={isFocused}>
             <div>
@@ -63,7 +74,7 @@ export default function TestResultPage() {
         </StyledTestResultHeaderWrapper>
         <StyledTestResultBodyWrapper>
           <StyledTestResultBodyTitleWrapper>
-            순위표
+            <div>순위표</div>
             <div
               onClick={() => {
                 setCurrentSortIndex((prev) => (prev === 'testScore' ? 'testSpentTime' : 'testScore'));

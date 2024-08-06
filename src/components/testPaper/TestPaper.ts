@@ -6,7 +6,7 @@ import { StyledTestQuestionWrapper, StyledTestSectionWrapper } from './desktop/T
 import { TestPaperMobileLayout } from './mobile/TestPaperMobileLayout';
 import { TestPaperSubmitButton } from './desktop/TestPaperSubmitButton';
 import { TestPaperMobileHeader } from './mobile/TestPaperMobileHeader';
-import { StyledMobileTestHeaderWrapper } from './mobile/TestPaperMobileLayout.styles';
+import { StyledMobileTestQuestionWrapper } from './mobile/TestPaperMobileLayout.styles';
 import { TestPaperMobileSubmitButton } from './mobile/TestPaperMobileSubmitButton';
 
 export const TestPaper = {
@@ -19,6 +19,6 @@ export const TestPaper = {
   SubmitButton: TestPaperSubmitButton,
   MobileLayout: TestPaperMobileLayout,
   MobileHeader: TestPaperMobileHeader,
-  MobileQuestionLayout: StyledMobileTestHeaderWrapper,
+  MobileQuestionLayout: StyledMobileTestQuestionWrapper,
   MobileSubmitButton: TestPaperMobileSubmitButton,
 };
