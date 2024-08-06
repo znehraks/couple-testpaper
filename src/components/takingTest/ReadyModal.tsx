@@ -4,12 +4,12 @@ import { Modal } from '@/components/common/Modal';
 import { TimerIcon } from '@/components/icons/Icon';
 import { useMemo, useState } from 'react';
 import { useAtom } from 'jotai';
-import { TakingTestStore } from '@/store/TakingTestStore';
+import { TakingTestStatus, TakingTestStore } from '@/store/TakingTestStore';
 import { useIsMobile } from '@/hooks/useMobile';
 
 export const ReadyModal = () => {
   const isMobile = useIsMobile();
-  const [isTestStarted, setIsTestStarted] = useAtom(TakingTestStore.IsTestStartedAtom);
+  const [takingTestStatus, setTakingTestStatus] = useAtom(TakingTestStore.TakingTestStatusAtom);
   const [isAnimationStarted, setIsAnimationStarted] = useState(false);
   const alarmClockMoveOffset = useMemo(() => {
     if (isMobile) {
@@ -18,7 +18,7 @@ export const ReadyModal = () => {
     return { scale: 2, x: 400, y: -350 };
   }, [isMobile]);
 
-  if (isTestStarted) return null;
+  if (takingTestStatus !== TakingTestStatus.READY) return null;
   return (
     <Modal
       width={isMobile ? '350px' : undefined}
@@ -47,7 +47,9 @@ export const ReadyModal = () => {
             initial={{ scale: 1 }}
             animate={isAnimationStarted ? alarmClockMoveOffset : {}}
             transition={{ duration: 1 }}
-            onAnimationComplete={() => setIsTestStarted(true)}
+            onAnimationComplete={() => {
+              setTakingTestStatus(TakingTestStatus.ING);
+            }}
           >
             <TimerIcon size={24} fill={'#FF7979'} />
           </motion.div>

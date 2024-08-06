@@ -2,11 +2,13 @@ import { ISelectedAnswersKeyMap } from '@/types/utils';
 import { formatTime } from '@/utils';
 import { atom } from 'jotai';
 
-const IsTestStartedAtom = atom<boolean>(false);
-IsTestStartedAtom.debugLabel = 'TakingTest/IsTestStarted';
-
-const IsTestEndedAtom = atom<boolean>(false);
-IsTestEndedAtom.debugLabel = 'TakingTest/IsTestEnded';
+export enum TakingTestStatus {
+  READY = 'READY',
+  ING = 'ING',
+  FINISH = 'FINISH',
+}
+const TakingTestStatusAtom = atom<TakingTestStatus>(TakingTestStatus.READY);
+TakingTestStatusAtom.debugLabel = 'TakingTest/TakingTestStatusAtom';
 
 const SelectedAnswersAtom = atom<ISelectedAnswersKeyMap>({});
 SelectedAnswersAtom.debugLabel = 'TakingTest/SelectedAnswers';
@@ -35,8 +37,7 @@ const IsAllowedSocialLoginAtom = atom<boolean>(false);
 IsAllowedSocialLoginAtom.debugLabel = 'TakingTest/IsAllowedSocialLoginAtom';
 
 export const TakingTestStore = {
-  IsTestStartedAtom,
-  IsTestEndedAtom,
+  TakingTestStatusAtom,
   SelectedAnswersAtom,
   TimeLeftAtom,
   FormatTimeLeftAtom,

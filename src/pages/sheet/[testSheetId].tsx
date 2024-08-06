@@ -1,7 +1,7 @@
 import { Layout } from '@/components/Layout';
 import { useGetTestSheet } from '@/services/useTests';
 import { useAtomValue } from 'jotai';
-import { TakingTestStore } from '@/store/TakingTestStore';
+import { TakingTestStatus, TakingTestStore } from '@/store/TakingTestStore';
 import { TakingTest } from '@/components/takingTest/TakingTest';
 import { PDFDownloadButton } from '@/components/PDFDownloadButton';
 import { useTimer } from '@/components/takingTest/hooks/useTimer';
@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 
 export default function TestSheetPage() {
   const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.romance });
-  const isTestEnded = useAtomValue(TakingTestStore.IsTestEndedAtom);
+  const takingTestStatus = useAtomValue(TakingTestStore.TakingTestStatusAtom);
   useTimer();
   useAppearPDFDownloadButton();
   useRedirect({
@@ -33,7 +33,7 @@ export default function TestSheetPage() {
       <TakingTest.ReadyModal />
       <PDFDownloadButton />
       <TakingTest.TestPaperSection testSheetData={data} />
-      {isTestEnded && <TakingTest.TimesUpModal data={data} />}
+      {takingTestStatus === TakingTestStatus.FINISH && <TakingTest.TimesUpModal data={data} />}
     </Layout>
   );
 }
