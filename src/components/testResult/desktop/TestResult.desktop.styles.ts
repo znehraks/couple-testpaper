@@ -13,7 +13,7 @@ export const StyledTestResultWrapper = styled.div`
 
 export const StyledHelpText = styled.div<{ visible: boolean }>`
   position: absolute;
-  top: 10%;
+  top: 5%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 32px;

@@ -32,7 +32,7 @@ export const TestPaperHeader = ({
             <GoBackIcon size={42} fill="#555555" />
           </StyledGoBackBtn>
           <StyledTestScoreContainer>
-            <Image src={`/${score}.png`} alt="score" layout="fill" objectFit="cover" />
+            <Image src={`/${score}.png`} alt="score" layout="fill" objectFit="contain" />
           </StyledTestScoreContainer>
         </>
       )}
