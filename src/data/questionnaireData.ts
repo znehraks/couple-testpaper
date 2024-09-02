@@ -41,12 +41,12 @@ export const requiredQuestions: ITest[] = [
 export const myInfoQuestions: ITest[] = [
   {
     type: QuestionType.MY_INFO,
-    question: '내가 가장 좋아하는 영화는?',
-    choices: movies,
+    question: '이 중 내 취향에 제일 가까운 영화는?',
+    choices: [...movies.sort(() => Math.random() - 0.5).slice(0, 4), '이 중에 없다'],
   },
   {
     type: QuestionType.MY_INFO,
-    question: '나에게 연예시뮬레이션 예능(하트O그널, 나는O로, 솔로O옥 등...)이란?',
+    question: '연예시뮬레이션(하트O그널, 나는O로, 솔로O옥 등...)은?',
     choices: simulation,
   },
   {
@@ -64,13 +64,14 @@ export const myInfoQuestions: ITest[] = [
 export const commonQuestions: ITest[] = [
   {
     type: QuestionType.COMMON,
-    question: '오늘은 소개팅 당일 날, 내가 예약할 식당은?',
+    question: '소개팅이 잡혔다. 내가 정한 약속 장소는?',
     choices: restaurant,
   },
   {
     type: QuestionType.COMMON,
-    question: '연인과 술집에 왔다. 내가 시킬 안주는?',
-    choices: drinkFood,
+
+    question: '나의 최애 안주는?',
+    choices: [...drinkFood.sort(() => Math.random() - 0.5).slice(0, 4), '이 중에 없다'],
   },
   {
     type: QuestionType.COMMON,
@@ -89,7 +90,7 @@ export const commonQuestions: ITest[] = [
   },
   {
     type: QuestionType.COMMON,
-    question: '나는 연애를 끝낼 때',
+    question: '나는 연애를 끝낼 때 주로?',
     choices: [
       '과감하게 내가 찬다',
       '과감하진 않아도 먼저 찬다',
@@ -133,13 +134,13 @@ export const commonQuestions: ITest[] = [
   },
   {
     type: QuestionType.COMMON,
-    question: '다음 중 내가 상대에게 가장 감동할 때는?',
+    question: '다음 중 상대방이 가장 매력적으로 보이는 순간은?',
     choices: [
       '닭다리 두 개를 다 양보해줄 때',
-      '말하기 전에 기분을 알아 차릴 때',
-      '화나게 한 사람을 같이 욕해줄 때',
+      '보고 싶다고 하면 바로 달려와줄 때',
+      '부탁하지 않아도 넷플X스 계정을 공유해줄 때',
       '자려고 누웠는데, 불을 대신 꺼줄 때',
-      '그냥 가만히 둘 때',
+      '화났을 때 눈치 껏 가만히 둘 때',
     ],
   },
   {

@@ -19,10 +19,13 @@ export const Intro = () => {
         return (
           <>
             <StyledContentDescription>
+              <strong>친구 혹은 지인</strong>에게
+            </StyledContentDescription>
+            <StyledContentDescription>
               나에 관한 간단한 문제 <strong>2</strong>개와
             </StyledContentDescription>
             <StyledContentDescription>
-              연애관에 대한 문제 <strong>8</strong>개를 선택해서 출제해야 해요
+              나와 상대방과 관련된 문제 <strong>8</strong>개를 선택해서 출제해야 해요
             </StyledContentDescription>
           </>
         );

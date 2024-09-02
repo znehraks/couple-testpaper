@@ -220,7 +220,13 @@ export const movies = [
   '인크레더블',
 ];
 
-export const restaurant = ['한식당', '중식당', '일식당', '양식당', '기타'];
+export const restaurant = [
+  '회사 앞 카페',
+  '적당한 소음이 있는 맥주집',
+  '왁지지껄 시끄러운 요리주점',
+  '분위기 있는 파스타집',
+  '든든한 국밥집',
+];
 
 export const drinkFood = [
   '삼겹살',
