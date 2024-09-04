@@ -27,7 +27,7 @@ export const CategoryIntro = () => {
   return (
     <>
       <StyledContentTitleWrapper>
-        <StyledContentTitle>응시자 고르기</StyledContentTitle>
+        <StyledContentTitle>응시자 유형 고르기</StyledContentTitle>
         <div>
           <StyledContentDescription>이 문제를 풀 대상을 선택해주세요.</StyledContentDescription>
           <StyledContentDescription>대상에 따라 문제의 성격이 달라져요.</StyledContentDescription>

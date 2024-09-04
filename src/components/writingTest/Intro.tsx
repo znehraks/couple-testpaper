@@ -47,7 +47,7 @@ export const Intro = () => {
   return (
     <>
       <StyledContentTitleWrapper>
-        <StyledContentTitle>연애고사 출제하기</StyledContentTitle>
+        <StyledContentTitle>출제 준비</StyledContentTitle>
         <div>{description}</div>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>

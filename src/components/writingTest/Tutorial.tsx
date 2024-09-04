@@ -30,16 +30,16 @@ export const Tutorial = () => {
         <StyledContentTitle>시험 출제 방법</StyledContentTitle>
         <StyledTutorialDescriptionContainer>
           <StyledContentDescription>
-            1. 먼저, 내가 만들 시험지를 풀 <strong>응시자 유형</strong>을 선택해요.
+            1. 내가 만들 시험지를 풀 <strong>응시자 유형을 선택</strong>해요.
           </StyledContentDescription>
           <StyledContentDescription>
-            2. 주어진 <strong>문제에 대한 답을 선택</strong>해요.
+            2. 주어진 문제에 대한 <strong>답을 선택</strong>해요.
           </StyledContentDescription>
           <StyledContentDescription>
-            3. 시험지를 <strong>출력하거나 링크를 복사</strong>해요.
+            3. 시험지 <strong>링크를 복사</strong>해요.
           </StyledContentDescription>
           <StyledContentDescription>
-            4. 응시자에게 <strong>시험지 링크 혹은 출력 된 시험지를 전달</strong>하면 끝.
+            4. 응시자에게 <strong>시험지 링크를 전달</strong>하면 끝.
           </StyledContentDescription>
         </StyledTutorialDescriptionContainer>
       </StyledContentTitleWrapper>
