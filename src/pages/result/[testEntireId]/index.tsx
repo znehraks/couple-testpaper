@@ -140,7 +140,12 @@ export default function TestResultPage() {
                   </div>
                 </div>
                 {otherRankings.map((ranking, index) => (
-                  <div key={index + 4}>
+                  <div
+                    key={index + 4}
+                    onClick={() => {
+                      router.push(`${router.asPath}/${encodeURIComponent(ranking.testerNickname)}`);
+                    }}
+                  >
                     <div>{index + 4}등</div>
                     <div>{ranking.testerNickname}</div>
                     <div>{ranking.testScore}</div>

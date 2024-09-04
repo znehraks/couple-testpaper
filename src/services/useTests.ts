@@ -18,9 +18,10 @@ import { useCallback, useMemo } from 'react';
 
 export const useAddTest = ({ testType }: { testType: TestType }) => {
   const queryClient = useQueryClient();
-  const router = useRouter();
+  const setStep = useSetAtom(WritingTestStore.StepAtom);
   const setIsAdOn = useSetAtom(WritingTestStore.IsAdOnAtom);
-  const setIsCompleted = useSetAtom(WritingTestStore.IsCompletedAtom);
+  const setTempTestSheetId = useSetAtom(WritingTestStore.TempTestSheetIdAtom);
+  // const setIsCompleted = useSetAtom(WritingTestStore.IsCompletedAtom);
 
   const addTest = useCallback(
     async (result: ITestWithAnswerResult) => {
@@ -55,9 +56,11 @@ export const useAddTest = ({ testType }: { testType: TestType }) => {
       mutationFn: addTest,
       onSuccess: ({ id }) => {
         setIsAdOn(true);
-        setIsCompleted(true);
+        setStep('COMPLETE');
+        setTempTestSheetId(id);
+        // setIsCompleted(true);
         // 바로 이렇게 push하지말고, 광고 시청 후에 push하도록 수정
-        router.push(`/sheet/${id}`);
+        // router.push(`/sheet/${id}`);
       },
       onError: (error) => {
         console.error(error);

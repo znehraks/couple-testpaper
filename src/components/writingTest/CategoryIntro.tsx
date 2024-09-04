@@ -27,7 +27,7 @@ export const CategoryIntro = () => {
   return (
     <>
       <StyledContentTitleWrapper>
-        <StyledContentTitle>연애고사 출제하기</StyledContentTitle>
+        <StyledContentTitle>응시자 고르기</StyledContentTitle>
         <div>
           <StyledContentDescription>이 문제를 풀 대상을 선택해주세요.</StyledContentDescription>
           <StyledContentDescription>대상에 따라 문제의 성격이 달라져요.</StyledContentDescription>
@@ -41,7 +41,7 @@ export const CategoryIntro = () => {
           }}
         >
           <FriendsIcon size={42} />
-          친구 및 지인
+          친구
         </StyledMenu>
         <StyledMenu
           onClick={() => {

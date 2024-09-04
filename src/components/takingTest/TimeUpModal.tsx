@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Modal } from '@/components/common/Modal';
 import { useAtom } from 'jotai';
-import { TakingTestStore, TimesUpModalStep } from '@/store/TakingTestStore';
+import { TakingTestStore, TEST_TIME, TimesUpModalStep } from '@/store/TakingTestStore';
 import { useIsMobile } from '@/hooks/useMobile';
 import { useCallback, useMemo } from 'react';
 import { useInput } from './hooks/useInput';
@@ -103,7 +103,7 @@ export const TimesUpModal = ({ data }: { data: ITestSheet }) => {
       newRanking: {
         testDateTime: testerResult.testDateTime,
         testerNickname: testerResult.testerNickname,
-        testSpentTime: testerResult.testSpentTime,
+        testSpentTime: TEST_TIME - testerResult.testSpentTime,
         testerAnswers: testerResult.testAnswers,
       },
     });

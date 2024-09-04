@@ -7,13 +7,13 @@ export const generatePDF = async () => {
 
   const testTime = document.getElementById('test-time');
   const testOdd = document.getElementById('test-odd');
-  const testHeader = document.getElementById('test-header');
+  const testTimer = document.querySelector('.test-timer') as HTMLDivElement;
   const testSubmitBtn = document.getElementById('question-list-submit');
-  if (!testTime || !testOdd || !testHeader || !testSubmitBtn) return;
+  if (!testTime || !testOdd || !testSubmitBtn || !testTimer) return;
   const originalPaddingBottom = testTime.style.paddingBottom;
-  testTime.style.paddingBottom = '16px';
-  testOdd.style.paddingBottom = '16px';
-  testHeader.style.minHeight = '140px';
+  testTime.style.paddingBottom = '8px';
+  testOdd.style.paddingBottom = '8px';
+  testTimer.style.display = 'none';
 
   // 원래 border 스타일을 저장하고 제거하는 함수
   const originalBorder = element.style.border;
@@ -36,8 +36,8 @@ export const generatePDF = async () => {
   element.style.border = originalBorder;
   testTime.style.paddingBottom = originalPaddingBottom;
   testOdd.style.paddingBottom = originalPaddingBottom;
-  testHeader.style.minHeight = '120px';
   testSubmitBtn.style.display = 'block';
+  testTimer.style.display = 'flex';
 
   const imgData = canvas.toDataURL('image/png');
   const pdf = new jsPDF({

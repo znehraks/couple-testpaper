@@ -2,6 +2,7 @@ import { ISelectedAnswersKeyMap } from '@/types/utils';
 import { formatTime } from '@/utils';
 import { atom } from 'jotai';
 
+export const TEST_TIME = 600;
 export enum TakingTestStatus {
   READY = 'READY',
   ING = 'ING',
@@ -13,7 +14,7 @@ TakingTestStatusAtom.debugLabel = 'TakingTest/TakingTestStatusAtom';
 const SelectedAnswersAtom = atom<ISelectedAnswersKeyMap>({});
 SelectedAnswersAtom.debugLabel = 'TakingTest/SelectedAnswers';
 
-const TimeLeftAtom = atom<number>(30);
+const TimeLeftAtom = atom<number>(TEST_TIME);
 TimeLeftAtom.debugLabel = 'TakingTest/TimeLeft';
 
 const FormatTimeLeftAtom = atom((get) => {

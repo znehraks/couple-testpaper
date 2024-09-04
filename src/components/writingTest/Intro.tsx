@@ -18,25 +18,24 @@ export const Intro = () => {
       case 'forAnyone':
         return (
           <>
+            <StyledContentDescription>친구들이 풀 수 있는 문제를 출제해요.</StyledContentDescription>
             <StyledContentDescription>
-              <strong>친구 혹은 지인</strong>에게
+              나에 관한 간단한 문항 <strong>2</strong>개와
             </StyledContentDescription>
             <StyledContentDescription>
-              나에 관한 간단한 문제 <strong>2</strong>개와
-            </StyledContentDescription>
-            <StyledContentDescription>
-              나와 상대방과 관련된 문제 <strong>8</strong>개를 선택해서 출제해야 해요
+              연인과 관련된 문항 <strong>8</strong>개를 선택해서 출제해야 해요
             </StyledContentDescription>
           </>
         );
       case 'forCouple':
         return (
           <>
+            <StyledContentDescription>연인과 나만이 풀 수 있는 문제를 출제해요.</StyledContentDescription>
             <StyledContentDescription>
-              나에 관한 간단한 문제 <strong>2</strong>개와
+              나에 관한 간단한 문항 <strong>2</strong>개와
             </StyledContentDescription>
             <StyledContentDescription>
-              나와 연인과 관련된 문제 <strong>8</strong>개를 선택해서 출제해야 해요
+              나와 연인과 관련된 문항 <strong>8</strong>개를 선택해서 출제해야 해요
             </StyledContentDescription>
           </>
         );

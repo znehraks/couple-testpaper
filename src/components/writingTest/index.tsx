@@ -8,13 +8,15 @@ import { useAtom, useAtomValue } from 'jotai';
 import { WritingTestStore } from '../../store/WritingTestStore';
 import { Intro } from './Intro';
 import { StyledContentWrapper } from './styles';
+import { Tutorial } from './Tutorial';
+import { Complete } from './Complete';
 
 // const simulationQuestions = [];
 interface IQuestionnaireProps {
   onSubmit: (result: ITestWithAnswerResult) => void;
 }
 const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
-  const [step, setStep] = useAtom(WritingTestStore.StepAtom);
+  const step = useAtomValue(WritingTestStore.StepAtom);
   const testCategory = useAtomValue(WritingTestStore.TestCategoryAtom);
   const [questions, setQuestions] = useAtom(WritingTestStore.QuestionsAtom);
 
@@ -65,15 +67,15 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
     // }
   }, [setQuestions, testCategory]);
 
-  useEffect(() => {
-    setStep('CATEGORY_INTRO');
-  }, [setStep]);
+  console.log('step', step);
 
   return (
     <StyledContentWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      {step === 'TUTORIAL' && <Tutorial />}
       {step === 'CATEGORY_INTRO' && <CategoryIntro />}
       {step === 'INTRO' && <Intro />}
       {step === 'QUESTIONS' && questions.length && <Step onSubmit={onSubmit} />}
+      {step === 'COMPLETE' && <Complete />}
     </StyledContentWrapper>
   );
 };

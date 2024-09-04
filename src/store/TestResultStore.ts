@@ -14,7 +14,6 @@ export interface ITesterResult {
 const TesterResultAtom = atom<ITesterResult | null>(null);
 TesterResultAtom.debugLabel = 'TestResult/TesterResult';
 
-
 export const TestResultStore = {
   TesterNicknameInputAtom,
   TesterResultAtom,
