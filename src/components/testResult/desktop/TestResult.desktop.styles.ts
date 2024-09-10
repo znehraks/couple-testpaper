@@ -9,6 +9,9 @@ export const StyledTestResultWrapper = styled.div`
   align-items: flex-start;
   padding-bottom: 64px;
   position: relative;
+  @media (max-width: 501px) {
+    width: 100%;
+  }
 `;
 
 export const StyledHelpText = styled.div<{ visible: boolean }>`
@@ -24,6 +27,11 @@ export const StyledHelpText = styled.div<{ visible: boolean }>`
   border: 1px solid #dedede;
   border-radius: 8px;
   padding: 4px 8px;
+  white-space: nowrap;
+
+  @media (max-width: 501px) {
+    font-size: 24px;
+  }
 `;
 
 export const StyledTestResultHeaderWrapper = styled.div`
@@ -147,6 +155,69 @@ export const StyledTestResultBodyTop3Wrapper = styled.div`
     left: 75%;
     transform: translateX(-50%);
   }
+
+  @media (max-width: 501px) {
+    min-height: 200px;
+    & > div {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+
+      cursor: pointer;
+      user-select: none;
+      transition: box-shadow 0.2s ease-in-out;
+      /* 트로피, 등수 */
+      & > div:first-of-type {
+        font-size: 48px;
+        font-weight: 600;
+        letter-spacing: 4px;
+        position: relative;
+        & > div:last-of-type {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-45%, -75%);
+          min-width: fit-content;
+        }
+      }
+      /* 닉네임 */
+      & > div:nth-of-type(2) {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      /* 점수 */
+      & > div:nth-of-type(3) {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        & > span:first-of-type {
+          font-weight: 700;
+          font-size: 28px;
+        }
+      }
+    }
+    /* 1위 */
+    & > div:first-of-type {
+      top: 0%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    /* 2위 */
+    & > div:nth-of-type(2) {
+      top: 20%;
+      left: 25%;
+      transform: translateX(-50%);
+    }
+    /* 3위 */
+    & > div:nth-of-type(3) {
+      top: 20%;
+      left: 75%;
+      transform: translateX(-50%);
+    }
+  }
 `;
 export const StyledTestResultBodyBelow3Wrapper = styled.div`
   flex: 1;
@@ -191,5 +262,8 @@ export const StyledTestResultBodyBelow3Wrapper = styled.div`
     &:hover {
       background-color: aliceblue;
     }
+  }
+  @media (max-width: 501px) {
+    font-size: 20px;
   }
 `;

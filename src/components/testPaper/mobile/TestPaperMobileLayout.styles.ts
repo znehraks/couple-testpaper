@@ -7,7 +7,7 @@ export const StyledMobileTestWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 24px 0 24px;
+  padding: 0px 16px;
   width: 100%;
   height: 70vh;
   font-size: 18px;
@@ -75,6 +75,13 @@ export const StyledMobileTestHeaderWrapper = styled.div`
     }
   }
 `;
+export const StyledMobileTestScoreContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 0;
+  width: 65px;
+  height: 65px;
+`;
 
 export const StyledMobileTestQuestionWrapper = styled.div`
   position: relative;
@@ -86,7 +93,7 @@ export const StyledMobileTestQuestionWrapper = styled.div`
   font-size: 18px;
   overflow-y: auto;
   margin-bottom: 24px;
-  padding: 0 12px;
+  padding: 0 20px;
 `;
 
 export const StyledMobileSubmitBtn = styled.button<{ disabled: boolean }>`

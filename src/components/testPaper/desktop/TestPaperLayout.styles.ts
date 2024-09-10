@@ -69,7 +69,7 @@ export const StyledTestHeaderWrapper = styled.div`
 `;
 export const StyledGoBackBtn = styled.button`
   position: absolute;
-  top: 0;
+  top: 10px;
   left: 0;
   cursor: pointer;
 `;

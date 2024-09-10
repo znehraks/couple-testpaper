@@ -34,6 +34,13 @@ export const StyledTestQuestionTitleContainer = styled.div`
     height: 100px;
     opacity: 0.8;
   }
+  @media (max-width: 501px) {
+    & > div {
+      width: 80px;
+      height: 80px;
+      transform: translate(-30%, -30%);
+    }
+  }
 `;
 
 export const StyledTestQuestionAnswerContainer = styled.div`
