@@ -15,7 +15,7 @@ export const Tutorial = () => {
   const setStep = useSetAtom(WritingTestStore.StepAtom);
   const setTestCategory = useSetAtom(WritingTestStore.TestCategoryAtom);
   const setQuestions = useSetAtom(WritingTestStore.QuestionsAtom);
-  const { sanitizeLicenseNames } = useLicenses(['friendsIcon', 'heartIcon']);
+  const { sanitizeLicenseNames } = useLicenses(['friendsIcon']);
   useEffect(() => {
     setTestCategory(null);
     setQuestions([]);

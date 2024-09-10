@@ -1,16 +1,16 @@
 export const licenses = {
-  heartIcon: (
-    <>
-      Heart Icon by{' '}
-      <a href="https://www.iconfinder.com/Flatart" target="_blank">
-        Flatart
-      </a>
-      -{' '}
-      <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">
-        Creative Commons (Attribution 3.0 Unported)
-      </a>
-    </>
-  ),
+  // heartIcon: (
+  //   <>
+  //     Heart Icon by{' '}
+  //     <a href="https://www.iconfinder.com/Flatart" target="_blank">
+  //       Flatart
+  //     </a>
+  //     -{' '}
+  //     <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">
+  //       Creative Commons (Attribution 3.0 Unported)
+  //     </a>
+  //   </>
+  // ),
   parentIcon: (
     <>
       Elder Man Icon by{' '}
@@ -44,28 +44,16 @@ export const licenses = {
       </a>
     </>
   ),
-  trophyIcon: (
-    <>
-      Trophy Icon by{' '}
-      <a href="https://www.iconfinder.com/font-awesome" target="_blank">
-        Font Awesome
-      </a>
-      -{' '}
-      <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
-        Attribution 4.0 International (CC BY 4.0)
-      </a>
-    </>
-  ),
-  magnifierIcon: (
-    <>
-      Magnifier Icon by{' '}
-      <a href="https://www.iconfinder.com/kreasikanvas" target="_blank">
-        Kreasi Kanvas
-      </a>
-      -{' '}
-      <a href="Free for commercial use" target="_blank">
-        Free for commercial use
-      </a>
-    </>
-  ),
+  // magnifierIcon: (
+  //   <>
+  //     Magnifier Icon by{' '}
+  //     <a href="https://www.iconfinder.com/kreasikanvas" target="_blank">
+  //       Kreasi Kanvas
+  //     </a>
+  //     -{' '}
+  //     <a href="Free for commercial use" target="_blank">
+  //       Free for commercial use
+  //     </a>
+  //   </>
+  // ),
 };

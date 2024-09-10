@@ -1,7 +1,6 @@
 import { useGetTestEntire } from '@/services/useTests';
 import { TestType } from '@/types/utils';
 import { Layout } from '@/components/Layout';
-import { useLicenses } from '@/hooks/useLicenses';
 import { useEffect, useMemo, useState } from 'react';
 import { TrophyIcon } from '@/components/icons/Icon';
 import { orderBy } from 'lodash-es';
@@ -19,14 +18,8 @@ import {
 export default function TestResultPage() {
   const router = useRouter();
   const { data } = useGetTestEntire({ testType: TestType.romance });
-  const { sanitizeLicenseNames } = useLicenses(['trophyIcon', 'magnifierIcon']);
   //   const { isFocused, ...inputProps } = useInput({ name: 'search', initialValue: '' });
   const [currentSortIndex, setCurrentSortIndex] = useState<'testScore' | 'testSpentTime'>('testScore');
-  useEffect(() => {
-    return () => {
-      sanitizeLicenseNames();
-    };
-  }, [sanitizeLicenseNames]);
 
   const sortedRankings = useMemo(() => {
     if (!data?.rankings) return [];
