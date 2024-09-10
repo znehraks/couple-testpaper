@@ -15,7 +15,7 @@ export const StyledModalHeaderWrapper = styled(motion.div)`
   }
   strong {
     font-weight: 600;
-    color: #ff7979;
+    color: #ff9999;
     font-size: 22px;
     text-decoration: underline;
   }
@@ -31,7 +31,7 @@ export const StyledModalHeaderWrapper = styled(motion.div)`
     }
     strong {
       font-weight: 600;
-      color: #ff7979;
+      color: #ff9999;
       font-size: 16px;
       text-decoration: underline;
     }
@@ -68,7 +68,7 @@ export const StyledErrorMessage = styled.span`
   position: absolute;
   bottom: 64px;
   font-size: 22px;
-  color: #ff7979;
+  color: #ff9999;
   font-weight: 800;
 `;
 

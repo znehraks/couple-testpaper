@@ -38,7 +38,7 @@ export const TestPaperHeader = ({
       )}
       {!isResultSheet && takingTestStatus === TakingTestStatus.ING && (
         <div className="test-timer">
-          <TimerIcon size={36} fill={'#FF7979'} />
+          <TimerIcon size={36} fill={'#FF9999'} />
           <span>{formatTimeLeft}</span>
         </div>
       )}

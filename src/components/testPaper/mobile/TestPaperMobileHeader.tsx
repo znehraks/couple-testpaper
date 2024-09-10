@@ -20,7 +20,7 @@ export const TestPaperMobileHeader = ({
     <StyledMobileTestHeaderWrapper id="test-header">
       {!score && takingTestStatus === TakingTestStatus.ING && (
         <div className="test-timer">
-          <TimerIcon size={18} fill={'#FF7979'} />
+          <TimerIcon size={18} fill={'#FF9999'} />
           <span>{formatTimeLeft}</span>
         </div>
       )}

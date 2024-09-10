@@ -40,7 +40,7 @@ export const Complete = () => {
       <StyledContentTitleWrapper>
         <StyledContentTitle>출제 완료</StyledContentTitle>
         <div>
-          <StyledContentDescription>이제 응시자에게 시험지를 공유할 시간이에요.</StyledContentDescription>
+          <StyledContentDescription>버튼을 눌러 링크를 복사하고, 응시자에게 공유해요.</StyledContentDescription>
         </div>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
