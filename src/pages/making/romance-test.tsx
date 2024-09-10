@@ -17,7 +17,7 @@ export default function RomanceTestMakingPage() {
     },
     [mutation],
   );
-  useLicenses(['heartIcon', 'friendsIcon']);
+  useLicenses(['friendsIcon']);
 
   // if (isAdOn) {
   //   return <div>보상형 동영상 광고</div>;
@@ -28,7 +28,7 @@ export default function RomanceTestMakingPage() {
   ) {
     return null;
   }
-  
+
   return (
     <Layout>
       {/* {isAdOn && <div>보상형 동영상 광고</div>} */}
