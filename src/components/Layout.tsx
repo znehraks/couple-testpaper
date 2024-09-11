@@ -1,6 +1,4 @@
-import { SideAdComponent } from './SideAdComponent';
 import { useIsMobile } from '@/hooks/useMobile';
-import { UpDownAdComponent } from './UpDownAdComponent';
 import { StyledContentWrapper, StyledWrapper } from './Layout.styles';
 import { Footer } from './Footer';
 
@@ -15,12 +13,12 @@ export const Layout = ({ children: content }: ILayoutProps) => {
       {isMobile ? (
         <>
           {/* <UpDownAdComponent /> */}
-          <UpDownAdComponent side="down" />
+          {/* <UpDownAdComponent side="down" /> */}
         </>
       ) : (
         <>
-          <SideAdComponent />
-          <SideAdComponent side="right" />
+          {/* <SideAdComponent />
+          <SideAdComponent side="right" /> */}
         </>
       )}
       <StyledContentWrapper isMobile={isMobile}>{content}</StyledContentWrapper>

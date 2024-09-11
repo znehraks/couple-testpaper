@@ -32,6 +32,11 @@ export default function Document() {
         <link rel="preload" href="/NanumMyeongjo.otf" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="preload" href="/NanumMyeongBold.otf" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="preload" href="/NanumMyeongExtraBold.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730783665107254"
+          crossOrigin="anonymous"
+        ></script>
       </Head>
       <Main />
       <NextScript />

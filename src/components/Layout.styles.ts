@@ -13,5 +13,6 @@ export const StyledContentWrapper = styled.div<{ isMobile: boolean }>`
   align-items: center;
   gap: 8px;
   flex: 1;
+
   padding: ${(props) => (props.isMobile ? '0' : '0 48px')};
 `;
