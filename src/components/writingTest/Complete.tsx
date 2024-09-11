@@ -1,5 +1,8 @@
+import React, { useEffect, useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import ClipboardJS from 'clipboard';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { WritingTestStore } from '../../store/WritingTestStore';
 import {
   StyledContentDescription,
   StyledContentTitle,
@@ -7,35 +10,20 @@ import {
   StyledMenu,
   StyledMenuContainer,
 } from './styles';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { WritingTestStore } from '../../store/WritingTestStore';
-import { useCallback, useEffect, useState } from 'react';
 
 export const Complete = () => {
   const tempTestSheetId = useAtomValue(WritingTestStore.TempTestSheetIdAtom);
   const setStep = useSetAtom(WritingTestStore.StepAtom);
-
   const [copySuccessAlertVisible, setCopySuccessAlertVisible] = useState(false);
+  const clipboardRef = useRef(null);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (copySuccessAlertVisible) {
-      timer = setTimeout(() => {
-        setCopySuccessAlertVisible(false);
-      }, 3000);
-    }
-    return () => clearTimeout(timer);
-  }, [copySuccessAlertVisible]);
-
-  const handleCopyLink = useCallback(() => {
+    let clipboard: ClipboardJS;
     if (typeof window !== 'undefined') {
       const baseURL = new URL(window.location.href).origin;
       const copyText = `${baseURL}/sheet/${tempTestSheetId}`;
 
-      const copyButtonRef = document.querySelector('.copy-btn');
-      if (!copyButtonRef) return;
-
-      const clipboard = new ClipboardJS(copyButtonRef, {
+      clipboard = new ClipboardJS('.copy-btn', {
         text: () => copyText,
       });
 
@@ -47,7 +35,23 @@ export const Complete = () => {
         console.error('Failed to copy text');
       });
     }
+
+    return () => {
+      if (clipboard) {
+        clipboard.destroy();
+      }
+    };
   }, [tempTestSheetId]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (copySuccessAlertVisible) {
+      timer = setTimeout(() => {
+        setCopySuccessAlertVisible(false);
+      }, 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [copySuccessAlertVisible]);
 
   return (
     <>
@@ -59,7 +63,7 @@ export const Complete = () => {
         </div>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
-        <StyledMenu className="copy-btn" onClick={handleCopyLink}>
+        <StyledMenu className="copy-btn" ref={clipboardRef}>
           시험지 링크 복사
         </StyledMenu>
       </StyledMenuContainer>
@@ -82,7 +86,7 @@ const StyledCopySuccessAlert = styled.div`
   font-size: 28px;
   color: #555555;
   @media (max-width: 501px) {
-    top: 20%;
+    top: 20px;
   }
 `;
 
