@@ -67,8 +67,6 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
     // }
   }, [setQuestions, testCategory]);
 
-  console.log('step', step);
-
   return (
     <StyledContentWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       {step === 'TUTORIAL' && <Tutorial />}

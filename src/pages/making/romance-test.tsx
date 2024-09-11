@@ -6,6 +6,7 @@ import { useAddTest } from '@/services/useTests';
 // import { useAtomValue } from 'jotai';
 // import { WritingTestStore } from '@/store/WritingTestStore';
 import { useLicenses } from '@/hooks/useLicenses';
+import { Spinner } from '@/components/common/Spinner';
 
 export default function RomanceTestMakingPage() {
   // const isAdOn = useAtomValue(WritingTestStore.IsAdOnAtom);
@@ -26,7 +27,7 @@ export default function RomanceTestMakingPage() {
     mutation.isPending
     // || isCompleted
   ) {
-    return null;
+    return <Spinner />;
   }
 
   return (

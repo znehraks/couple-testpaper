@@ -10,6 +10,7 @@ import { useRedirect } from '@/components/takingTest/hooks/useRedirect';
 import { TestType } from '@/types/utils';
 import { useLicenses } from '@/hooks/useLicenses';
 import { useEffect } from 'react';
+import { Spinner } from '@/components/common/Spinner';
 
 export default function TestSheetPage() {
   const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.romance });
@@ -27,7 +28,8 @@ export default function TestSheetPage() {
     };
   }, [sanitizeLicenseNames]);
 
-  if (isLoading || isError || !data) return null;
+  if (isLoading || isError || !data) return <Spinner />;
+
   return (
     <Layout>
       <TakingTest.ReadyModal />

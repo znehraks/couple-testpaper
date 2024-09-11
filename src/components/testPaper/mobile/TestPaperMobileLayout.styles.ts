@@ -9,7 +9,7 @@ export const StyledMobileTestWrapper = styled.div`
   align-items: center;
   padding: 0px 16px;
   width: 100%;
-  height: 70vh;
+  height: 70dvh;
   font-size: 18px;
   overflow: hidden;
   position: relative;
