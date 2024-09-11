@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import ClipboardJS from 'clipboard';
 import {
   StyledContentDescription,
   StyledContentTitle,
@@ -29,8 +30,22 @@ export const Complete = () => {
   const handleCopyLink = useCallback(() => {
     if (typeof window !== 'undefined') {
       const baseURL = new URL(window.location.href).origin;
-      navigator.clipboard.writeText(`${baseURL}/sheet/${tempTestSheetId}`);
-      setCopySuccessAlertVisible(true);
+      const copyText = `${baseURL}/sheet/${tempTestSheetId}`;
+
+      const copyButtonRef = document.querySelector('.copy-btn');
+      if (!copyButtonRef) return;
+
+      const clipboard = new ClipboardJS(copyButtonRef, {
+        text: () => copyText,
+      });
+
+      clipboard.on('success', () => {
+        setCopySuccessAlertVisible(true);
+      });
+
+      clipboard.on('error', () => {
+        console.error('Failed to copy text');
+      });
     }
   }, [tempTestSheetId]);
 
@@ -44,7 +59,9 @@ export const Complete = () => {
         </div>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
-        <StyledMenu onClick={handleCopyLink}>시험지 링크 복사</StyledMenu>
+        <StyledMenu className="copy-btn" onClick={handleCopyLink}>
+          시험지 링크 복사
+        </StyledMenu>
       </StyledMenuContainer>
       <StyledGoToFirstStepButton
         onClick={() => {
@@ -64,6 +81,9 @@ const StyledCopySuccessAlert = styled.div`
   transform: translateX(-50%);
   font-size: 28px;
   color: #555555;
+  @media (max-width: 501px) {
+    top: 20%;
+  }
 `;
 
 const StyledGoToFirstStepButton = styled.span`

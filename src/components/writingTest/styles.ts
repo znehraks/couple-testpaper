@@ -47,10 +47,15 @@ export const StyledContentTitleWrapper = styled.div`
   }
 `;
 
-export const StyledContentTitle = styled(motion.h1)`
+export const StyledContentTitle = styled(motion.h1)<{
+  mobileFontSize?: number;
+}>`
   font-size: 48px;
   text-align: center;
   word-break: keep-all;
+  @media (max-width: 501px) {
+    font-size: ${({ mobileFontSize }) => (mobileFontSize ? mobileFontSize : 28)}px;
+  }
 `;
 
 export const StyledContentDescription = styled(motion.p)`
@@ -59,5 +64,11 @@ export const StyledContentDescription = styled(motion.p)`
     font-weight: bold;
     color: #ff6b6b;
     font-size: 32px;
+  }
+  @media (max-width: 501px) {
+    font-size: 20px;
+    & > strong {
+      font-size: 24px;
+    }
   }
 `;

@@ -43,7 +43,7 @@ export const StyledButton = styled.button<{ disabled?: boolean }>`
 
 export const StyledQuestionContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 `;
 
 export const StyledChoiceContainer = styled.div`
@@ -54,7 +54,14 @@ export const StyledChoiceContainer = styled.div`
   & > div {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 8px;
+  }
+  @media (max-width: 501px) {
+    font-size: 24px;
+    & > div > input {
+      margin-top: 6px;
+    }
   }
 `;
 
@@ -62,4 +69,7 @@ export const StyledInput = styled.input`
   padding: 0 12px;
   font-size: 36px;
   box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
+  @media (max-width: 501px) {
+    width: 60%;
+  }
 `;

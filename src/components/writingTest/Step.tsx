@@ -101,7 +101,9 @@ export const Step = ({ onSubmit }: IStepProps) => {
   return (
     <StyledStepWrapper>
       <StyledContentTitleWrapper>
-        <StyledContentTitle>{`${currentTestQuestionIndex + 1}. ${question}`}</StyledContentTitle>
+        <StyledContentTitle
+          mobileFontSize={question.length > 10 ? 24 : 28}
+        >{`${currentTestQuestionIndex + 1}. ${question}`}</StyledContentTitle>
         <StyledContentDescription>{description}</StyledContentDescription>
       </StyledContentTitleWrapper>
       <StyledQuestionContainer>

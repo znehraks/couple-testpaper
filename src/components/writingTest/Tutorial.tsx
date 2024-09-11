@@ -61,6 +61,5 @@ const StyledTutorialDescriptionContainer = styled.div`
   flex-direction: column;
   & > p {
     width: 100%;
-    font-size: 28px;
   }
 `;

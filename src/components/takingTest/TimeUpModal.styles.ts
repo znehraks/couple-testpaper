@@ -39,6 +39,9 @@ export const StyledModalHeaderWrapper = styled(motion.div)`
       font-size: 24px;
     }
   }
+  @media (max-width: 501px) {
+    font-size: 36px;
+  }
 `;
 
 export const StyledModalContentWrapper = styled(motion.div)`
@@ -54,11 +57,12 @@ export const StyledInputContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 28px;
-  width: 50%;
+  width: 60%;
   height: 100%;
   position: relative;
 `;
 export const StyledInput = styled.input`
+  width: 100%;
   outline: 1px solid #aaa;
   padding: 8px 12px;
   font-size: 28px;

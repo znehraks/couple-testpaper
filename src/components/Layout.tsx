@@ -14,7 +14,7 @@ export const Layout = ({ children: content }: ILayoutProps) => {
     <StyledWrapper isMobile={isMobile}>
       {isMobile ? (
         <>
-          <UpDownAdComponent />
+          {/* <UpDownAdComponent /> */}
           <UpDownAdComponent side="down" />
         </>
       ) : (
