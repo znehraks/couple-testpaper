@@ -1,14 +1,12 @@
 import { Layout } from '@/components/Layout';
 import { HeartIcon, ParentIcon } from '@/components/icons/Icon';
 import { StyledMenu, StyledMenuContainer } from '@/components/writingTest/styles';
-import { useLicenses } from '@/hooks/useLicenses';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 
 export default function Home() {
   const router = useRouter();
-  useLicenses(['parentIcon']);
 
   return (
     <Layout>
