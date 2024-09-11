@@ -5,7 +5,6 @@ import { ITestWithAnswerResult, TestType } from '@/types/utils';
 import { useAddTest } from '@/services/useTests';
 // import { useAtomValue } from 'jotai';
 // import { WritingTestStore } from '@/store/WritingTestStore';
-import { useLicenses } from '@/hooks/useLicenses';
 import { Spinner } from '@/components/common/Spinner';
 
 export default function RomanceTestMakingPage() {
@@ -18,7 +17,6 @@ export default function RomanceTestMakingPage() {
     },
     [mutation],
   );
-  useLicenses(['friendsIcon']);
 
   // if (isAdOn) {
   //   return <div>보상형 동영상 광고</div>;

@@ -11,27 +11,27 @@ export const licenses = {
   //     </a>
   //   </>
   // ),
-  parentIcon: (
-    <>
-      Elder Man Icon by{' '}
-      <a href="https://www.iconfinder.com/rafiico-creative" target="_blank">
-        Rafiico Creative Studio Co., Ltd.
-      </a>
-      -{' '}
-      <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">
-        Creative Commons (Attribution 3.0 Unported)
-      </a>
-    </>
-  ),
-  friendsIcon: (
-    <>
-      Group Icon by{' '}
-      <a href=" https://www.iconfinder.com/korawan_m" target="_blank">
-        BomSymbols .
-      </a>
-      - Free for commercial use (Include link to authors website)
-    </>
-  ),
+  // parentIcon: (
+  //   <>
+  //     Elder Man Icon by{' '}
+  //     <a href="https://www.iconfinder.com/rafiico-creative" target="_blank">
+  //       Rafiico Creative Studio Co., Ltd.
+  //     </a>
+  //     -{' '}
+  //     <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">
+  //       Creative Commons (Attribution 3.0 Unported)
+  //     </a>
+  //   </>
+  // ),
+  // friendsIcon: (
+  //   <>
+  //     Group Icon by{' '}
+  //     <a href=" https://www.iconfinder.com/korawan_m" target="_blank">
+  //       BomSymbols .
+  //     </a>
+  //     - Free for commercial use (Include link to authors website)
+  //   </>
+  // ),
   timerIcon: (
     <>
       Clock Icon by{' '}

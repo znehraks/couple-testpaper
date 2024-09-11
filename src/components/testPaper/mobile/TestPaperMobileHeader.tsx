@@ -39,7 +39,7 @@ export const TestPaperMobileHeader = ({
       )}
       {!score && takingTestStatus === TakingTestStatus.ING && (
         <div className="test-timer">
-          <TimerIcon size={18} fill={'#FF9999'} />
+          <TimerIcon size={20} fill={'#FF9999'} />
           <span>{formatTimeLeft}</span>
         </div>
       )}

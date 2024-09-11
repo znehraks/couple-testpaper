@@ -9,20 +9,15 @@ import { useSetAtom } from 'jotai';
 import { FriendsIcon, HeartIcon } from '../icons/Icon';
 import { useEffect } from 'react';
 import { WritingTestStore } from '../../store/WritingTestStore';
-import { useLicenses } from '@/hooks/useLicenses';
 
 export const CategoryIntro = () => {
   const setStep = useSetAtom(WritingTestStore.StepAtom);
   const setTestCategory = useSetAtom(WritingTestStore.TestCategoryAtom);
   const setQuestions = useSetAtom(WritingTestStore.QuestionsAtom);
-  const { sanitizeLicenseNames } = useLicenses(['friendsIcon']);
   useEffect(() => {
     setTestCategory(null);
     setQuestions([]);
-    return () => {
-      sanitizeLicenseNames();
-    };
-  }, [sanitizeLicenseNames, setQuestions, setTestCategory]);
+  }, [setQuestions, setTestCategory]);
 
   return (
     <>

@@ -51,7 +51,7 @@ export const ReadyModal = () => {
               setTakingTestStatus(TakingTestStatus.ING);
             }}
           >
-            <TimerIcon size={24} fill={'#FF9999'} />
+            <TimerIcon size={36} fill={'#FF9999'} />
           </motion.div>
           <motion.span
             initial={{ opacity: 1 }}
