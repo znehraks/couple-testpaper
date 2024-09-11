@@ -31,7 +31,9 @@ export const ReadyModal = () => {
           <span>
             응시 시작 버튼을 누르면 <strong>10분</strong>간 문제를 풀 수 있습니다.
           </span>
-          <span>응시 도중 새로고침을 하면, 처음부터 다시 응시해야 합니다.</span>
+          <span>
+            PC로 접속하면 시험지를 <strong>pdf로 다운로드</strong> 할 수 있어요.
+          </span>
         </StyledModalHeaderWrapper>
       }
     >
@@ -74,8 +76,11 @@ const StyledModalHeaderWrapper = styled(motion.div)`
   align-items: center;
   font-size: 28px;
   gap: 4px;
-  & > span:last-of-type {
+  & > span:not(:first-of-type) {
     font-size: 22px;
+    & > strong {
+      font-size: 24px;
+    }
   }
   & > span > strong {
     font-weight: 600;
