@@ -24,6 +24,7 @@ export default function Document() {
         <meta property="og:image" content="/cover_image.png" />
         <meta property="og:url" content="https://couple-test.netlify.app/" />
         <meta property="og:type" content="website" />
+        <meta name="google-site-verification" content="mSndha_j73A3R-lyn05C1VsXP-d9FiaF-bH3vTj9U-k" />
         <link rel="preload" href="/NanumBaeEunHyeCe.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
         <link rel="preload" href="/NanumSquareL.otf" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="preload" href="/NanumSquareB.otf" as="font" type="font/otf" crossOrigin="anonymous" />
