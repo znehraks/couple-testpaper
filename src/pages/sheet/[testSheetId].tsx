@@ -11,13 +11,13 @@ import { TestType } from '@/types/utils';
 import { Spinner } from '@/components/common/Spinner';
 
 export default function TestSheetPage() {
-  const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.romance });
+  const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.friends });
   const takingTestStatus = useAtomValue(TakingTestStore.TakingTestStatusAtom);
   useTimer();
   useAppearPDFDownloadButton();
   useRedirect({
     redirectCondition: data?.testQuestions.length === 0,
-    redirectPath: '/romance-test',
+    redirectPath: '/',
   });
 
   if (isLoading || isError || !data) return <Spinner />;

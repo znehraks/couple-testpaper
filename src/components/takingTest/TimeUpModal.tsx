@@ -29,9 +29,9 @@ export const TimesUpModal = ({ data }: { data: ITestSheet }) => {
 
   const [testerResult, setTesterResult] = useAtom(TestResultStore.TesterResultAtom);
 
-  const { mutateAsync } = useAddTakedTestResult({ testType: TestType.romance });
+  const { mutateAsync } = useAddTakedTestResult({ testType: TestType.friends });
   // const initialize = useCallback(() => {
-  //   setTimesUpModalStep(TimesUpModalStep.INTRO);
+  //   setTimesUpModalStep(TimesUpModalStep.READY);
   //   // TODO 시험보느라 더럽혀졌던 state들 초기화
   // }, [setTimesUpModalStep]);
 
@@ -40,7 +40,7 @@ export const TimesUpModal = ({ data }: { data: ITestSheet }) => {
     const animate = { y: 0, opacity: 1 };
     const transition = { duration: 0.5 };
     switch (timesUpModalStep) {
-      case TimesUpModalStep.INTRO:
+      case TimesUpModalStep.READY:
         return (
           <>
             <motion.span initial={initial} animate={animate} transition={{ ...transition }}>

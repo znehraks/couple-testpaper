@@ -6,46 +6,43 @@ import {
   StyledMenuContainer,
 } from './styles';
 import { useSetAtom } from 'jotai';
-import { FriendsIcon, HeartIcon } from '../icons/Icon';
 import { useEffect } from 'react';
 import { WritingTestStore } from '../../store/WritingTestStore';
 
-export const CategoryIntro = () => {
+export const SelectParent = () => {
   const setStep = useSetAtom(WritingTestStore.StepAtom);
-  const setTestCategory = useSetAtom(WritingTestStore.TestCategoryAtom);
+  const setMe = useSetAtom(WritingTestStore.MeAtom);
   const setQuestions = useSetAtom(WritingTestStore.QuestionsAtom);
   useEffect(() => {
-    setTestCategory(null);
+    setMe(null);
     setQuestions([]);
-  }, [setQuestions, setTestCategory]);
+  }, [setMe, setQuestions]);
+  // TODO route testType에 따라 응시자 다름
 
   return (
     <>
       <StyledContentTitleWrapper>
-        <StyledContentTitle>응시자 유형 고르기</StyledContentTitle>
+        <StyledContentTitle>당신은 누구인가요?</StyledContentTitle>
         <div>
-          <StyledContentDescription>이 문제를 풀 대상을 선택해주세요.</StyledContentDescription>
-          <StyledContentDescription>대상에 따라 문제의 성격이 달라져요.</StyledContentDescription>
+          <StyledContentDescription>집에서 당신은 어떤 이름으로 불리우고 계신가요?</StyledContentDescription>
         </div>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
         <StyledMenu
           onClick={() => {
-            setTestCategory('forAnyone');
-            setStep('INTRO');
+            setMe('father');
+            setStep('SELECT_TEST_TAKER');
           }}
         >
-          <FriendsIcon size={42} />
-          친구
+          <div>아버지</div>
         </StyledMenu>
         <StyledMenu
           onClick={() => {
-            setTestCategory('forCouple');
-            setStep('INTRO');
+            setMe('mother');
+            setStep('SELECT_TEST_TAKER');
           }}
         >
-          <HeartIcon size={42} />
-          연인
+          <div>어머니</div>
         </StyledMenu>
       </StyledMenuContainer>
     </>

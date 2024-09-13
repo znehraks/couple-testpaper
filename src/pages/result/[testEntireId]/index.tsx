@@ -17,7 +17,7 @@ import {
 
 export default function TestResultPage() {
   const router = useRouter();
-  const { data } = useGetTestEntire({ testType: TestType.romance });
+  const { data } = useGetTestEntire({ testType: TestType.friends });
   //   const { isFocused, ...inputProps } = useInput({ name: 'search', initialValue: '' });
   const [currentSortIndex, setCurrentSortIndex] = useState<'testScore' | 'testSpentTime'>('testScore');
 

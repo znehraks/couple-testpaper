@@ -22,7 +22,7 @@ export const useAddTest = ({ testType }: { testType: TestType }) => {
   const setIsAdOn = useSetAtom(WritingTestStore.IsAdOnAtom);
   const setTempTestSheetId = useSetAtom(WritingTestStore.TempTestSheetIdAtom);
   // const setIsCompleted = useSetAtom(WritingTestStore.IsCompletedAtom);
-
+  testType === TestType.friends;
   const addTest = useCallback(
     async (result: ITestWithAnswerResult) => {
       const entireQuery: IAddCoupleTestEntireQuery = {
@@ -32,7 +32,7 @@ export const useAddTest = ({ testType }: { testType: TestType }) => {
         status: result.status,
         createdAt: new Date()?.toLocaleDateString(),
       };
-      const { id: entireDocumentId } = await addDoc(collection(db, 'romance-test'), entireQuery);
+      const { id: entireDocumentId } = await addDoc(collection(db, `${testType}-test`), entireQuery);
       const testSheetPayload: IAddCoupleTestSheetQuery = {
         testType,
         maker: result.maker,
@@ -46,7 +46,7 @@ export const useAddTest = ({ testType }: { testType: TestType }) => {
         entireDocumentId,
       };
 
-      return addDoc(collection(db, 'romance-test-sheet'), testSheetPayload);
+      return addDoc(collection(db, `${testType}-test-sheet`), testSheetPayload);
     },
     [testType],
   );
@@ -89,7 +89,7 @@ export const useGetTestEntire = ({ testType }: { testType: TestType }) => {
 
   return useQuery<IEntireTest>(
     {
-      queryKey: ['romanceTestEntire', data?.entireDocumentId ?? router.query.testEntireId],
+      queryKey: ['testEntire', data?.entireDocumentId ?? router.query.testEntireId],
       queryFn: () => getTestEntire(data?.entireDocumentId ?? (router.query.testEntireId as string)),
       enabled: !!(data?.entireDocumentId ?? router.query.testEntireId),
       staleTime: Infinity,
@@ -117,7 +117,7 @@ export const useGetTestSheet = ({ testType }: { testType: TestType }) => {
 
   return useQuery<ITestSheet>(
     {
-      queryKey: ['romanceTestSheet', testSheetId],
+      queryKey: ['testSheet', testSheetId],
       queryFn: () => getTestSheet(testSheetId as string),
       staleTime: Infinity,
     },
@@ -160,7 +160,7 @@ export const useAddTakedTestResult = ({ testType }: { testType: TestType }) => {
     {
       mutationFn: addTakedTestResult,
       onSuccess: (_, { entireDocumentId }) => {
-        queryClient.invalidateQueries({ queryKey: ['romanceTestEntire', entireDocumentId] });
+        queryClient.invalidateQueries({ queryKey: ['testEntire', entireDocumentId] });
         router.replace(`/result/${entireDocumentId}`);
       },
       onError: (error) => {

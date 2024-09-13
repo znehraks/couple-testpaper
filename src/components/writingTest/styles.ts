@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { CSSProperties } from 'react';
 
 export const StyledMenuContainer = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ export const StyledMenuContainer = styled.div`
   gap: 24px;
 `;
 
-export const StyledMenu = styled.div`
+export const StyledMenu = styled.div<{ color?: CSSProperties['color'] }>`
   transition: background-color 0.2s ease-in-out;
   width: 120px;
   height: 120px;
@@ -22,8 +23,14 @@ export const StyledMenu = styled.div`
   gap: 8px;
   box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  color: ${({ color }) => color};
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
+  }
+  @media (max-width: 501px) {
+    &:hover {
+      background-color: unset;
+    }
   }
 `;
 

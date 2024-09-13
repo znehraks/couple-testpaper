@@ -12,7 +12,7 @@ import { WritingTestStore } from '../../store/WritingTestStore';
 
 export const Tutorial = () => {
   const setStep = useSetAtom(WritingTestStore.StepAtom);
-  const setTestCategory = useSetAtom(WritingTestStore.TestCategoryAtom);
+  const setTestCategory = useSetAtom(WritingTestStore.TestTakerAtom);
   const setQuestions = useSetAtom(WritingTestStore.QuestionsAtom);
   useEffect(() => {
     setTestCategory(null);
@@ -25,23 +25,20 @@ export const Tutorial = () => {
         <StyledContentTitle>시험 출제 방법</StyledContentTitle>
         <StyledTutorialDescriptionContainer>
           <StyledContentDescription>
-            1. 내가 만들 시험지를 풀 <strong>응시자 유형을 선택</strong>해요.
+            1. 주어진 문제에 대한 <strong>답을 선택</strong>해요.
           </StyledContentDescription>
           <StyledContentDescription>
-            2. 주어진 문제에 대한 <strong>답을 선택</strong>해요.
+            2. 시험지 <strong>링크를 복사</strong>해요.
           </StyledContentDescription>
           <StyledContentDescription>
-            3. 시험지 <strong>링크를 복사</strong>해요.
-          </StyledContentDescription>
-          <StyledContentDescription>
-            4. 응시자에게 <strong>시험지 링크를 전달</strong>하면 끝.
+            3. 응시자에게 <strong>시험지 링크를 전달</strong>하면 끝.
           </StyledContentDescription>
         </StyledTutorialDescriptionContainer>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
         <StyledMenu
           onClick={() => {
-            setStep('CATEGORY_INTRO');
+            setStep('QUESTIONS');
           }}
         >
           출제 시작

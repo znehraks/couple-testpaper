@@ -26,11 +26,11 @@ const IsTimeUpAtom = atom<boolean>(false);
 IsTimeUpAtom.debugLabel = 'TakingTest/IsTimeUp';
 
 export enum TimesUpModalStep {
-  INTRO,
+  READY,
   INPUT,
   AD,
 }
-const TimesUpModalStepAtom = atom<TimesUpModalStep>(TimesUpModalStep.INTRO);
+const TimesUpModalStepAtom = atom<TimesUpModalStep>(TimesUpModalStep.READY);
 TimesUpModalStepAtom.debugLabel = 'TakingTest/TimesUpModalStep';
 
 // TODO 나중에 소셜로그인 기능 추가 후에 도입하기

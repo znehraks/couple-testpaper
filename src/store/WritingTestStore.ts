@@ -1,11 +1,24 @@
 import { atom } from 'jotai';
 import { ITest } from '@/types/utils';
 
-export type TestCategory = 'forAnyone' | 'forCouple';
-const TestCategoryAtom = atom<TestCategory | null>(null);
-TestCategoryAtom.debugLabel = 'WritingTest/TestCategory';
+export type Parent = 'father' | 'mother';
+const MeAtom = atom<Parent | null>(null);
+MeAtom.debugLabel = 'WritingTest/Me';
 
-const StepAtom = atom<'TUTORIAL' | 'CATEGORY_INTRO' | 'INTRO' | 'QUESTIONS' | 'COMPLETE'>('TUTORIAL');
+export type TestTaker =
+  | 'forFriendsMale'
+  | 'forFriendsFemale'
+  | 'forCoupleMale'
+  | 'forCoupleFemale'
+  | 'forChildren'
+  | 'forEachother';
+
+const TestTakerAtom = atom<TestTaker | null>(null);
+TestTakerAtom.debugLabel = 'WritingTest/TestCategory';
+
+const StepAtom = atom<'SELECT_PARENT' | 'SELECT_TEST_TAKER' | 'READY' | 'TUTORIAL' | 'QUESTIONS' | 'COMPLETE'>(
+  'SELECT_TEST_TAKER',
+);
 StepAtom.debugLabel = 'WritingTest/Step';
 
 const CurrentTestQuestionIndexAtom = atom<number>(0);
@@ -27,7 +40,8 @@ const TempTestSheetIdAtom = atom<string | null>(null);
 TempTestSheetIdAtom.debugLabel = 'WritingTest/TempTestSheetId';
 
 export const WritingTestStore = {
-  TestCategoryAtom,
+  TestTakerAtom,
+  MeAtom,
   StepAtom,
   CurrentTestQuestionIndexAtom,
   QuestionsAtom,

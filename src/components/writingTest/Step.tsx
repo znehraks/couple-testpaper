@@ -42,7 +42,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
 
   const handleGoBack = useCallback(() => {
     if (currentTestQuestionIndex === 0) {
-      setStep('INTRO');
+      setStep('READY');
       return;
     }
     setCurrentTestQuestionIndex((prev) => prev - 1);

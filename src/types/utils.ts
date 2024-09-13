@@ -1,12 +1,13 @@
-import { QuestionType } from '@/data/questionnaire/romance/friends/questionnaireData';
+import { QuestionType } from '@/data/questionnaire/common';
 
 /**
  * 시험 종류
  * 연애고사, 부모님고사
  */
 export enum TestType {
-  romance = 'romance',
-  parent = 'parent',
+  friends = 'friends',
+  parents = 'parents',
+  couple = 'couple',
 }
 
 /**
@@ -136,8 +137,9 @@ export interface IEntireTest extends IAddCoupleTestEntireQuery {
 }
 
 export const testTypeMap = {
-  romance: '연애',
-  parent: '부모님',
+  couple: '연인',
+  friends: '친구',
+  parents: '부모님',
 };
 
 /**

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Layout } from '@/components/Layout';
 import { ITestWithAnswerResult, TestType } from '@/types/utils';
 import { useAddTest } from '@/services/useTests';
@@ -6,20 +6,28 @@ import { useAddTest } from '@/services/useTests';
 // import { WritingTestStore } from '@/store/WritingTestStore';
 import { Spinner } from '@/components/common/Spinner';
 import { useRouter } from 'next/router';
-import RomanceQuestionnaire from '@/components/writingTest/Romance';
-import ParentQuestionnaire from '@/components/writingTest/Parent';
+import WritingTest from '@/components/writingTest';
+import { useSetAtom } from 'jotai';
+import { WritingTestStore } from '@/store/WritingTestStore';
 
 export default function TestMakingTypePage() {
   const router = useRouter();
   // const isAdOn = useAtomValue(WritingTestStore.IsAdOnAtom);
   // const isCompleted = useAtomValue(WritingTestStore.IsCompletedAtom);
-  const mutation = useAddTest({ testType: TestType.romance });
+  const setStep = useSetAtom(WritingTestStore.StepAtom);
+  const mutation = useAddTest({ testType: TestType.friends });
   const handleSubmit = useCallback(
     async (result: ITestWithAnswerResult) => {
       mutation.mutate(result);
     },
     [mutation],
   );
+
+  useEffect(() => {
+    if (router.query.testType === 'parents-test') {
+      setStep('SELECT_PARENT');
+    }
+  }, [router.query.testType, setStep]);
 
   // if (isAdOn) {
   //   return <div>보상형 동영상 광고</div>;
@@ -35,8 +43,10 @@ export default function TestMakingTypePage() {
     <Layout>
       {/* {isAdOn && <div>보상형 동영상 광고</div>} */}
       {/* 동영상 시청 후, 콜백으로 시험지 페이지로 이동 */}
-      {router.query.testType === 'romance-test' && <RomanceQuestionnaire onSubmit={handleSubmit} />}
-      {router.query.testType === 'parent-test' && <ParentQuestionnaire onSubmit={handleSubmit} />}
+      {/* {router.query.testType === 'couple-test' && <CoupleQuestionnaire onSubmit={handleSubmit} />}
+      {router.query.testType === 'friends-test' && <FriendsQuestionnaire onSubmit={handleSubmit} />}
+      {router.query.testType === 'parents-test' && <ParentQuestionnaire onSubmit={handleSubmit} />} */}
+      <WritingTest onSubmit={handleSubmit} />
     </Layout>
   );
 }

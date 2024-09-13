@@ -6,16 +6,13 @@ interface IIconProps {
 export const HeartIcon = ({ size = 16, fill = '#FF9999' }: IIconProps) => {
   return (
     <svg width={size} height={size} version="1.1" viewBox="0 0 512 512" fill={fill} xmlns="http://www.w3.org/2000/svg">
-      <g id="Modified_Heart_Icon">
-        <path
-          d="M365.4,59.628c60.56,0,109.6,49.03,109.6,109.47c0,109.47-109.6,171.8-219.06,281.271
+      <path
+        d="M365.4,59.628c60.56,0,109.6,49.03,109.6,109.47c0,109.47-109.6,171.8-219.06,281.271
         C146.47,340.898,37,278.568,37,169.099c0-60.44,49.04-109.47,109.47-109.47c54.73,0,82.1,27.37,109.47,82.1
         C283.3,86.999,310.67,59.628,365.4,59.628z"
-        />
-        <circle cx="180" cy="140" r="20" fill="none" stroke={'#FF9998'} strokeWidth="15" />
-        <circle cx="330" cy="140" r="20" fill="none" stroke={fill} strokeWidth="15" />
-        <path d="M230,250 Q256,290 282,250" fill="none" stroke={fill} strokeWidth="15" strokeLinecap="round" />
-      </g>
+      />
+      <circle cx="330" cy="140" r="20" fill="none" stroke={fill} strokeWidth="15" />
+      <path d="M230,250 Q256,290 282,250" fill="none" stroke={fill} strokeWidth="15" strokeLinecap="round" />
     </svg>
   );
 };
@@ -150,6 +147,42 @@ export const GoBackIcon = ({ size = 16, fill }: IIconProps) => {
 96 88 94 104 -5 38 -35 28 -108 -36z"
         />
       </g>
+    </svg>
+  );
+};
+
+export const ChildIcon = ({ size = 16, fill = '#FF9999' }: IIconProps) => {
+  return (
+    <svg height={size} width={size} viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+      <rect fill="none" />
+      <circle
+        cx="128"
+        cy="128"
+        fill="none"
+        r="96"
+        stroke={fill}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="12"
+      />
+      <circle cx="92" cy="128" r="10" fill={fill} />
+      <circle cx="164" cy="128" r="10" fill={fill} />
+      <path
+        d="M154.5,168a47.9,47.9,0,0,1-53,0"
+        fill="none"
+        stroke={fill}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="12"
+      />
+      <path
+        d="M128,32c-16,20-16,40-16,40a16,16,0,0,0,32,0"
+        fill="none"
+        stroke={fill}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="12"
+      />
     </svg>
   );
 };
