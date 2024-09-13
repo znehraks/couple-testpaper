@@ -3,7 +3,11 @@ import { useEffect } from 'react';
 import { CategoryIntro } from './CategoryIntro';
 import { Step } from './Step';
 import { ITestWithAnswerResult } from '@/types/utils';
-import { commonQuestions, myInfoQuestions, requiredQuestions } from '../../data/questionnaireData';
+import {
+  commonQuestions,
+  myInfoQuestions,
+  requiredQuestions,
+} from '../../data/questionnaire/romance/friends/questionnaireData';
 import { useAtom, useAtomValue } from 'jotai';
 import { WritingTestStore } from '../../store/WritingTestStore';
 import { Intro } from './Intro';
@@ -11,11 +15,10 @@ import { StyledContentWrapper } from './styles';
 import { Tutorial } from './Tutorial';
 import { Complete } from './Complete';
 
-// const simulationQuestions = [];
-interface IQuestionnaireProps {
+interface IRomanceQuestionnaireProps {
   onSubmit: (result: ITestWithAnswerResult) => void;
 }
-const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
+const RomanceQuestionnaire = ({ onSubmit }: IRomanceQuestionnaireProps) => {
   const step = useAtomValue(WritingTestStore.StepAtom);
   const testCategory = useAtomValue(WritingTestStore.TestCategoryAtom);
   const [questions, setQuestions] = useAtom(WritingTestStore.QuestionsAtom);
@@ -78,4 +81,4 @@ const Questionnaire = ({ onSubmit }: IQuestionnaireProps) => {
   );
 };
 
-export default Questionnaire;
+export default RomanceQuestionnaire;

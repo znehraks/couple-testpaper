@@ -1,4 +1,4 @@
-import { QuestionType } from '@/data/questionnaireData';
+import { QuestionType } from '@/data/questionnaire/romance/friends/questionnaireData';
 
 /**
  * 시험 종류

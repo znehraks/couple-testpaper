@@ -1,13 +1,16 @@
 import { useCallback } from 'react';
-import Questionnaire from '../../components/writingTest';
 import { Layout } from '@/components/Layout';
 import { ITestWithAnswerResult, TestType } from '@/types/utils';
 import { useAddTest } from '@/services/useTests';
 // import { useAtomValue } from 'jotai';
 // import { WritingTestStore } from '@/store/WritingTestStore';
 import { Spinner } from '@/components/common/Spinner';
+import { useRouter } from 'next/router';
+import RomanceQuestionnaire from '@/components/writingTest/Romance';
+import ParentQuestionnaire from '@/components/writingTest/Parent';
 
-export default function RomanceTestMakingPage() {
+export default function TestMakingTypePage() {
+  const router = useRouter();
   // const isAdOn = useAtomValue(WritingTestStore.IsAdOnAtom);
   // const isCompleted = useAtomValue(WritingTestStore.IsCompletedAtom);
   const mutation = useAddTest({ testType: TestType.romance });
@@ -32,7 +35,8 @@ export default function RomanceTestMakingPage() {
     <Layout>
       {/* {isAdOn && <div>보상형 동영상 광고</div>} */}
       {/* 동영상 시청 후, 콜백으로 시험지 페이지로 이동 */}
-      <Questionnaire onSubmit={handleSubmit} />
+      {router.query.testType === 'romance-test' && <RomanceQuestionnaire onSubmit={handleSubmit} />}
+      {router.query.testType === 'parent-test' && <ParentQuestionnaire onSubmit={handleSubmit} />}
     </Layout>
   );
 }
