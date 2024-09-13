@@ -14,12 +14,12 @@ import { useRouter } from 'next/router';
 export const SelectTestTaker = () => {
   const router = useRouter();
   const setStep = useSetAtom(WritingTestStore.StepAtom);
-  const setTestCategory = useSetAtom(WritingTestStore.TestTakerAtom);
+  const setTestTaker = useSetAtom(WritingTestStore.TestTakerAtom);
   const setQuestions = useSetAtom(WritingTestStore.QuestionsAtom);
   useEffect(() => {
-    setTestCategory(null);
+    setTestTaker(null);
     setQuestions([]);
-  }, [setQuestions, setTestCategory]);
+  }, [setQuestions, setTestTaker]);
   // TODO route testType에 따라 응시자 다름
 
   const menus = useMemo(() => {
@@ -57,7 +57,7 @@ export const SelectTestTaker = () => {
           key={index}
           color={taker.fontColor}
           onClick={() => {
-            setTestCategory(taker.type);
+            setTestTaker(taker.type);
             setStep('READY');
           }}
         >
@@ -66,7 +66,7 @@ export const SelectTestTaker = () => {
         </StyledMenu>
       );
     });
-  }, [router.query.testType, setStep, setTestCategory]);
+  }, [router.query.testType, setStep, setTestTaker]);
 
   return (
     <>

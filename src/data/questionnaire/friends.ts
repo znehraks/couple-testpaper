@@ -117,12 +117,6 @@ export const colors = [
 ];
 
 export const myInfoQuestions: ITest[] = [
-  // {
-  //   type: QuestionType.MY_INFO,
-  //   question: '이 중 내 취향에 제일 가까운 영화는?',
-  //   choices: [...movies.sort(() => Math.random() - 0.5).slice(0, 4), '이 중에 없다'],
-  // },
-
   {
     type: QuestionType.MY_INFO,
     question: '연예시뮬레이션(하트O그널, 나는O로, 솔로O옥 등...)은?',

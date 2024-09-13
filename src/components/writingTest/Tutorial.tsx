@@ -6,18 +6,203 @@ import {
   StyledMenu,
   StyledMenuContainer,
 } from './styles';
-import { useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { WritingTestStore } from '../../store/WritingTestStore';
+import { commonQuestions, myInfoQuestions } from '@/data/questionnaire/friends';
+import { requiredQuestions } from '@/data/questionnaire/common';
 
 export const Tutorial = () => {
   const setStep = useSetAtom(WritingTestStore.StepAtom);
-  const setTestCategory = useSetAtom(WritingTestStore.TestTakerAtom);
+  const testTaker = useAtomValue(WritingTestStore.TestTakerAtom);
   const setQuestions = useSetAtom(WritingTestStore.QuestionsAtom);
+
   useEffect(() => {
-    setTestCategory(null);
-    setQuestions([]);
-  }, [setQuestions, setTestCategory]);
+    switch (testTaker) {
+      case 'forCoupleMale':
+        {
+          const selectedMyInfoQuestions = [...myInfoQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 2)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+
+          const selectedCommonQuestions = [...commonQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 8)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+        }
+        break;
+      case 'forCoupleFemale':
+        {
+          const selectedMyInfoQuestions = [...myInfoQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 2)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+
+          const selectedCommonQuestions = [...commonQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 8)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+        }
+        break;
+      case 'forFriendsMale':
+        {
+          const selectedMyInfoQuestions = [...myInfoQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 2)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+
+          const selectedCommonQuestions = [...commonQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 8)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+        }
+        break;
+      case 'forFriendsFemale':
+        {
+          const selectedMyInfoQuestions = [...myInfoQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 2)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+
+          const selectedCommonQuestions = [...commonQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 8)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+        }
+        break;
+      case 'forChildren':
+        {
+          const selectedMyInfoQuestions = [...myInfoQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 2)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+
+          const selectedCommonQuestions = [...commonQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 8)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+        }
+        break;
+      case 'forEachother':
+        {
+          const selectedMyInfoQuestions = [...myInfoQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 2)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+
+          const selectedCommonQuestions = [...commonQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 8)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+        }
+        break;
+      default:
+        break;
+    }
+  }, [setQuestions, testTaker]);
 
   return (
     <>

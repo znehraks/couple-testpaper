@@ -98,6 +98,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
     }
   }, [inputValue.length]);
 
+  if (!questions.length) return null;
   return (
     <StyledStepWrapper>
       <StyledContentTitleWrapper>

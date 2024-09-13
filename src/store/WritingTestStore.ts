@@ -14,7 +14,7 @@ export type TestTaker =
   | 'forEachother';
 
 const TestTakerAtom = atom<TestTaker | null>(null);
-TestTakerAtom.debugLabel = 'WritingTest/TestCategory';
+TestTakerAtom.debugLabel = 'WritingTest/TestTaker';
 
 const StepAtom = atom<'SELECT_PARENT' | 'SELECT_TEST_TAKER' | 'READY' | 'TUTORIAL' | 'QUESTIONS' | 'COMPLETE'>(
   'SELECT_TEST_TAKER',
