@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>모두의 시험</title>
+        <title>연애는 고사하고</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
@@ -19,8 +19,11 @@ export default function Document() {
         <meta name="robots" content="index, follow" />
 
         {/* Open Graph 메타 태그 */}
-        <meta property="og:title" content="모두의 시험" />
-        <meta property="og:description" content="친구, 연인, 부모님에 대해 재밌는 시험으로 알아가는 시간" />
+        <meta property="og:title" content="연애는 고사하고" />
+        <meta
+          property="og:description"
+          content="연애는 고사하고, 친구, 연인, 부모님에 대해 재밌는 시험으로 알아가는 시간"
+        />
         <meta property="og:image" content="/cover_image.png" />
         <meta property="og:url" content="https://couple-test.netlify.app/" />
         <meta property="og:type" content="website" />
