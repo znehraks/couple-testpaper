@@ -3,11 +3,7 @@ import { useEffect } from 'react';
 import { CategoryIntro } from './CategoryIntro';
 import { Step } from './Step';
 import { ITestWithAnswerResult } from '@/types/utils';
-import {
-  commonQuestions,
-  myInfoQuestions,
-  requiredQuestions,
-} from '../../data/questionnaire/romance/friends/questionnaireData';
+import { commonQuestions, myInfoQuestions, requiredQuestions } from '../../data/questionnaire/romance-friends';
 import { useAtom, useAtomValue } from 'jotai';
 import { WritingTestStore } from '../../store/WritingTestStore';
 import { Intro } from './Intro';
