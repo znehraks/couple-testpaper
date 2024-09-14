@@ -5,7 +5,7 @@ import { CSSProperties } from 'react';
 export const StyledMenuContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   gap: 24px;
 `;
@@ -15,6 +15,7 @@ export const StyledMenu = styled.div<{ color?: CSSProperties['color'] }>`
   width: 120px;
   height: 120px;
   font-size: 28px;
+  font-weight: bold;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,6 +29,8 @@ export const StyledMenu = styled.div<{ color?: CSSProperties['color'] }>`
     background-color: rgba(0, 0, 0, 0.05);
   }
   @media (max-width: 501px) {
+    width: 100px;
+    height: 100px;
     &:hover {
       background-color: unset;
     }

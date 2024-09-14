@@ -14,6 +14,8 @@ import {
   StyledTestResultHeaderWrapper,
   StyledTestResultWrapper,
 } from '@/components/testResult/desktop/TestResult.desktop.styles';
+// TODO 불특정 다수를 위한 시험은 지금처럼 내보내주고
+// TODO 특정 대상을 위한 시험은 다르게 보여줘야함(예를 들어, 남자친구, 여자친구 등)
 
 export default function TestResultPage() {
   const router = useRouter();

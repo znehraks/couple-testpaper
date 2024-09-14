@@ -8,6 +8,7 @@ import {
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { WritingTestStore } from '../../store/WritingTestStore';
+import { FatherIcon, MotherIcon } from '../icons/Icon';
 
 export const SelectParent = () => {
   const setStep = useSetAtom(WritingTestStore.StepAtom);
@@ -22,26 +23,30 @@ export const SelectParent = () => {
   return (
     <>
       <StyledContentTitleWrapper>
-        <StyledContentTitle>당신은 누구인가요?</StyledContentTitle>
+        <StyledContentTitle>당신은 누구신가요?</StyledContentTitle>
         <div>
           <StyledContentDescription>집에서 당신은 어떤 이름으로 불리우고 계신가요?</StyledContentDescription>
         </div>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
         <StyledMenu
+          color="#5a3d2b"
           onClick={() => {
             setMe('father');
             setStep('SELECT_TEST_TAKER');
           }}
         >
+          <FatherIcon size={60} fill={'#5a3d2b'} />
           <div>아버지</div>
         </StyledMenu>
         <StyledMenu
+          color="#5a3d2b"
           onClick={() => {
             setMe('mother');
             setStep('SELECT_TEST_TAKER');
           }}
         >
+          <MotherIcon size={60} fill={'#5a3d2b'} />
           <div>어머니</div>
         </StyledMenu>
       </StyledMenuContainer>

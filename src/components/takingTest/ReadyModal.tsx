@@ -53,7 +53,7 @@ export const ReadyModal = () => {
               setTakingTestStatus(TakingTestStatus.ING);
             }}
           >
-            <TimerIcon size={36} fill={'#FF9999'} />
+            <TimerIcon size={36} fill={'#eb8291'} />
           </motion.div>
           <motion.span
             initial={{ opacity: 1 }}
@@ -84,7 +84,7 @@ const StyledModalHeaderWrapper = styled(motion.div)`
   }
   & > span > strong {
     font-weight: 600;
-    color: #ff9999;
+    color: #eb8291;
     font-size: 32px;
     text-decoration: underline;
   }
@@ -95,7 +95,7 @@ const StyledModalHeaderWrapper = styled(motion.div)`
     }
     & > span > strong {
       font-weight: 600;
-      color: #ff9999;
+      color: #eb8291;
       font-size: 26px;
       text-decoration: underline;
     }

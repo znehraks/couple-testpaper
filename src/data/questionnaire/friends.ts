@@ -116,6 +116,8 @@ export const colors = [
   '청록색',
 ];
 
+export const friendsRequiredQuestions: ITest[] = [];
+
 export const myInfoQuestions: ITest[] = [
   {
     type: QuestionType.MY_INFO,

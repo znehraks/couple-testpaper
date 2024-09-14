@@ -26,27 +26,30 @@ export default function Home() {
         <StyledHomeTitle>출제를 원하는 시험 유형을 선택해주세요.</StyledHomeTitle>
         <StyledMenuContainer>
           <StyledMenu
+            color="#eb8291"
             onClick={() => {
               router.push('/making/couple-test');
             }}
           >
-            <HeartIcon size={42} />
+            <HeartIcon size={60} fill="#eb8291" />
             <div>연인고사</div>
           </StyledMenu>
           <StyledMenu
+            color="#666666"
             onClick={() => {
               router.push('/making/friends-test');
             }}
           >
-            <FriendsIcon size={42} />
+            <FriendsIcon size={60} fill="#666666" />
             <div>친구고사</div>
           </StyledMenu>
           <StyledMenu
+            color="#947463"
             onClick={() => {
               router.push('/making/parents-test');
             }}
           >
-            <ParentIcon size={42} />
+            <ParentIcon size={60} fill="#947463" />
             <div>부모님고사</div>
           </StyledMenu>
         </StyledMenuContainer>

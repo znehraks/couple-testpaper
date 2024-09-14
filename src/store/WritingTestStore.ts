@@ -8,6 +8,7 @@ MeAtom.debugLabel = 'WritingTest/Me';
 export type TestTaker =
   | 'forFriendsMale'
   | 'forFriendsFemale'
+  | 'forFriendsAll'
   | 'forCoupleMale'
   | 'forCoupleFemale'
   | 'forChildren'

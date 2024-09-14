@@ -19,7 +19,15 @@ export const Ready = () => {
         return (
           <>
             <StyledContentDescription>
-              남자친구가 나에 대해 더 잘 알 수 있도록 문제를 출제해요.
+              <span
+                style={{
+                  fontWeight: 'bold',
+                  color: '#009edd',
+                }}
+              >
+                남자친구
+              </span>
+              가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
@@ -30,7 +38,15 @@ export const Ready = () => {
         return (
           <>
             <StyledContentDescription>
-              여자친구가 나에 대해 더 잘 알 수 있도록 문제를 출제해요.
+              <span
+                style={{
+                  color: '#eb8291',
+                  fontWeight: 'bold',
+                }}
+              >
+                여자친구
+              </span>
+              가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
@@ -40,7 +56,17 @@ export const Ready = () => {
       case 'forFriendsMale':
         return (
           <>
-            <StyledContentDescription>남사친이 나에 대해 더 잘 알 수 있도록 문제를 출제해요.</StyledContentDescription>
+            <StyledContentDescription>
+              <span
+                style={{
+                  color: '#009edd',
+                  fontWeight: 'bold',
+                }}
+              >
+                남사친
+              </span>
+              이 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+            </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
             </StyledContentDescription>
@@ -49,7 +75,35 @@ export const Ready = () => {
       case 'forFriendsFemale':
         return (
           <>
-            <StyledContentDescription>여사친이 나에 대해 더 잘 알 수 있도록 문제를 출제해요.</StyledContentDescription>
+            <StyledContentDescription>
+              <span
+                style={{
+                  color: '#eb8291',
+                  fontWeight: 'bold',
+                }}
+              >
+                여사친
+              </span>
+              이 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+            </StyledContentDescription>
+            <StyledContentDescription>
+              문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
+            </StyledContentDescription>
+          </>
+        );
+      case 'forFriendsAll':
+        return (
+          <>
+            <StyledContentDescription>
+              <span
+                style={{
+                  fontWeight: 'bold',
+                }}
+              >
+                친구들
+              </span>
+              이 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+            </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
             </StyledContentDescription>
@@ -58,7 +112,17 @@ export const Ready = () => {
       case 'forChildren':
         return (
           <>
-            <StyledContentDescription>자녀가 나에 대해 더 잘 알 수 있도록 문제를 출제해요.</StyledContentDescription>
+            <StyledContentDescription>
+              <span
+                style={{
+                  color: '#eb8291',
+                  fontWeight: 'bold',
+                }}
+              >
+                자녀
+              </span>
+              가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+            </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
             </StyledContentDescription>
@@ -67,7 +131,17 @@ export const Ready = () => {
       case 'forEachother':
         return (
           <>
-            <StyledContentDescription>배우자가 나에 대해 더 잘 알 수 있도록 문제를 출제해요.</StyledContentDescription>
+            <StyledContentDescription>
+              <span
+                style={{
+                  color: '#947463',
+                  fontWeight: 'bold',
+                }}
+              >
+                배우자
+              </span>
+              가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+            </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
             </StyledContentDescription>

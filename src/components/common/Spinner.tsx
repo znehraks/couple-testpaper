@@ -21,7 +21,7 @@ export const Spinner = () => {
 const StyledSpinner = styled(motion.div)`
   width: 64px;
   height: 64px;
-  border: 8px solid #ff9999;
+  border: 8px solid #eb8291;
   border-top: 4px solid transparent;
   border-radius: 50%;
 `;

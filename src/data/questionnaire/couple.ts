@@ -16,6 +16,15 @@ import { QuestionType } from './common';
  * 반드시 포함해야할 질문
  **/
 
+export const coupleRequiredQuestions: ITest[] = [
+  { type: QuestionType.REQUIRED, question: '당신의 이름은?', choices: [] }, // 주관식
+  // {
+  //   type: QuestionType.REQUIRED,
+  //   question: '나는 지금?',
+  //   choices: ['자발적 솔로', '비자발적 솔로', '연애중', '결혼', '기타'],
+  // },
+];
+
 // 주관식으로 입력 받고, 시험지는 알아서 보기가 4개 채워져서 출제
 export const coupleQuestions: ITest[] = [
   {
