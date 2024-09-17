@@ -1,4 +1,5 @@
 import { QuestionType } from '@/data/questionnaire/common';
+import { TestTaker } from '@/store/WritingTestStore';
 
 /**
  * 시험 종류
@@ -59,10 +60,7 @@ export interface ITestResult {
    * 시험 출제자
    */
   maker: string;
-  /**
-   * 출제자의 연애 상태
-   */
-  status: string;
+
   /**
    * 시험 문제들
    */
@@ -79,13 +77,15 @@ export interface ITestWithAnswerResult {
   maker: string;
 
   /**
+   * 시험 응시자
+   */
+  testTaker: TestTaker;
+
+  /**
    * 시험 타입
    */
   testType: TestType;
-  /**
-   * 출제자의 연애 상태
-   */
-  status: string;
+
   /**
    * 시험 문제와 답이 함께있는 타입
    */
@@ -127,6 +127,7 @@ export interface IRanking {
  */
 export interface IAddCoupleTestSheetQuery extends ITestResult {
   testType: TestType;
+  testTaker: TestTaker;
   createdAt: string;
   entireDocumentId: string;
 }
@@ -144,6 +145,7 @@ export interface ITestSheet extends IAddCoupleTestSheetQuery {
  */
 export interface IAddCoupleTestEntireQuery extends ITestWithAnswerResult {
   testType: TestType;
+  testTaker: TestTaker;
   createdAt: string;
   rankings?: IRanking[];
 }

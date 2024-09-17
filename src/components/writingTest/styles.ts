@@ -91,7 +91,6 @@ export const StyledContentDescription = styled(motion.p)<{ fontSize?: number }>`
   word-break: keep-all;
   font-size: ${({ fontSize }) => (fontSize ? fontSize : 22)}px;
   & > strong {
-    font-weight: bold;
     color: #ff6b6b;
     font-size: ${({ fontSize }) => (fontSize ? fontSize + 4 : 28)}px;
   }

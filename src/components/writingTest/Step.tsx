@@ -1,5 +1,5 @@
 import { ITestWithAnswerResult, TestType } from '@/types/utils';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { WritingTestStore } from '../../store/WritingTestStore';
 import {
@@ -30,6 +30,7 @@ interface IStepProps {
 export const Step = ({ onSubmit }: IStepProps) => {
   const router = useRouter();
   const isMobile = useIsMobile();
+  const testTaker = useAtomValue(WritingTestStore.TestTakerAtom);
   const [currentTestQuestionIndex, setCurrentTestQuestionIndex] = useAtom(
     WritingTestStore.CurrentTestQuestionIndexAtom,
   );
@@ -126,6 +127,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
   ]);
 
   const handleSubmit = useCallback(() => {
+    if (!testTaker) return;
     const _testQuestionWithAnswers = questions.map((question, index) => {
       return {
         ...question,
@@ -133,14 +135,14 @@ export const Step = ({ onSubmit }: IStepProps) => {
       };
     });
     onSubmit({
-      testType: router.query.testType as TestType,
+      testType: (router.query.testType as string).split('-')[0] as TestType,
       testQuestionWithAnswers: _testQuestionWithAnswers.slice(1),
       maker: _testQuestionWithAnswers[0].answer,
-      status: _testQuestionWithAnswers[1].answer,
+      testTaker,
     });
     setTempAnswers({});
     setCurrentTestQuestionIndex(0);
-  }, [onSubmit, questions, router.query.testType, setCurrentTestQuestionIndex, tempAnswers]);
+  }, [onSubmit, questions, router.query.testType, setCurrentTestQuestionIndex, tempAnswers, testTaker]);
 
   const description = useMemo(() => {
     switch (currentTestQuestionIndex) {

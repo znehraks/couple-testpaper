@@ -212,12 +212,13 @@ export const HowTo = () => {
         <StyledContentTitle>시험 출제 방법</StyledContentTitle>
         <StyledTutorialDescriptionContainer>
           <StyledContentDescription>
-            1. 질문을 읽고, <strong>나에게 해당되는 답변을 선택</strong>해요.
+            1. 예시 질문을 읽고, <strong>나에게 해당되는 답변을 선택</strong>해요.
           </StyledContentDescription>
           <StyledContentDescription
             fontSize={18}
             style={{
               paddingLeft: '8px',
+              fontWeight: 'bold',
             }}
           >
             1-1. 질문 혹은 선지가 마음에 들지 않는다면,{' '}

@@ -11,8 +11,10 @@ import {
   StyledMenu,
   StyledMenuContainer,
 } from './styles';
+import { useIsMobile } from '@/hooks/useMobile';
 
 export const Complete = () => {
+  const isMobile = useIsMobile();
   const tempTestSheetId = useAtomValue(WritingTestStore.TempTestSheetIdAtom);
   const setStep = useSetAtom(WritingTestStore.StepAtom);
   const [copySuccessAlertVisible, setCopySuccessAlertVisible] = useState(false);
@@ -64,7 +66,7 @@ export const Complete = () => {
         </StyledContentDescriptionWrapper>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
-        <StyledMenu className="copy-btn" fontSize={18} ref={clipboardRef}>
+        <StyledMenu className="copy-btn" fontSize={isMobile ? 18 : 24} ref={clipboardRef}>
           시험지 링크 복사
         </StyledMenu>
       </StyledMenuContainer>

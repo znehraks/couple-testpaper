@@ -24,16 +24,16 @@ export const useAddTest = () => {
   const addTest = useCallback(async (result: ITestWithAnswerResult) => {
     const entireQuery: IAddCoupleTestEntireQuery = {
       testType: result.testType,
+      testTaker: result.testTaker,
       testQuestionWithAnswers: result.testQuestionWithAnswers,
       maker: result.maker,
-      status: result.status,
       createdAt: new Date()?.toLocaleDateString(),
     };
     const { id: entireDocumentId } = await addDoc(collection(db, 'test'), entireQuery);
     const testSheetPayload: IAddCoupleTestSheetQuery = {
       testType: result.testType,
+      testTaker: result.testTaker,
       maker: result.maker,
-      status: result.status,
       createdAt: new Date()?.toLocaleDateString(),
       testQuestions: result.testQuestionWithAnswers.map((question) => ({
         question: question.question,
