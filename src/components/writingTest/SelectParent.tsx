@@ -1,5 +1,6 @@
 import {
   StyledContentDescription,
+  StyledContentDescriptionWrapper,
   StyledContentTitle,
   StyledContentTitleWrapper,
   StyledMenu,
@@ -24,9 +25,9 @@ export const SelectParent = () => {
     <>
       <StyledContentTitleWrapper>
         <StyledContentTitle>당신은 누구신가요?</StyledContentTitle>
-        <div>
+        <StyledContentDescriptionWrapper>
           <StyledContentDescription>집에서 당신은 어떤 이름으로 불리우고 계신가요?</StyledContentDescription>
-        </div>
+        </StyledContentDescriptionWrapper>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
         <StyledMenu
@@ -36,7 +37,7 @@ export const SelectParent = () => {
             setStep('SELECT_TEST_TAKER');
           }}
         >
-          <FatherIcon size={60} fill={'#5a3d2b'} />
+          <FatherIcon size={48} fill={'#5a3d2b'} />
           <div>아버지</div>
         </StyledMenu>
         <StyledMenu
@@ -46,7 +47,7 @@ export const SelectParent = () => {
             setStep('SELECT_TEST_TAKER');
           }}
         >
-          <MotherIcon size={60} fill={'#5a3d2b'} />
+          <MotherIcon size={48} fill={'#5a3d2b'} />
           <div>어머니</div>
         </StyledMenu>
       </StyledMenuContainer>

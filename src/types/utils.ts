@@ -77,6 +77,11 @@ export interface ITestWithAnswerResult {
    * 시험 출제자
    */
   maker: string;
+
+  /**
+   * 시험 타입
+   */
+  testType: TestType;
   /**
    * 출제자의 연애 상태
    */

@@ -6,7 +6,7 @@ import { useAtomValue } from 'jotai';
 import { WritingTestStore } from '../../store/WritingTestStore';
 import { Ready } from './Ready';
 import { StyledContentWrapper } from './styles';
-import { Tutorial } from './Tutorial';
+import { HowTo } from './HowTo';
 import { Complete } from './Complete';
 import { useRouter } from 'next/router';
 import { SelectParent } from './SelectParent';
@@ -24,7 +24,7 @@ const WritingTest = ({ onSubmit }: IWritingTestProps) => {
       {router.query.testType === 'parents-test' && step === 'SELECT_PARENT' && <SelectParent />}
       {step === 'SELECT_TEST_TAKER' && <SelectTestTaker />}
       {step === 'READY' && <Ready />}
-      {step === 'TUTORIAL' && <Tutorial />}
+      {step === 'HOWTO' && <HowTo />}
       {step === 'QUESTIONS' && <Step onSubmit={onSubmit} />}
       {step === 'COMPLETE' && <Complete />}
     </StyledContentWrapper>

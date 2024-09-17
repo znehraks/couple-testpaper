@@ -1,37 +1,54 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
 
 interface EditableTextProps {
   initialText: string;
   onTextChange: (newText: string) => void;
   isEditable: boolean;
+  isTwinkle?: boolean;
+  onClick?: () => void;
 }
 
-export const EditableText = ({ initialText, onTextChange, isEditable }: EditableTextProps) => {
+const twinkleKeyframes = keyframes`
+  0% { box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.5); }
+  50% { box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.5); }
+  100% { box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.5); }
+`;
+
+const TwinkleSpan = styled(motion.span)<{ $isTwinkle: boolean }>`
+  display: inline-block;
+  padding: 0 8px;
+  max-width: fit-content;
+  animation: ${(props) => (props.$isTwinkle ? twinkleKeyframes : 'none')} 2s infinite;
+  border-radius: 4px;
+`;
+
+export const EditableText = ({
+  initialText,
+  onTextChange,
+  isEditable,
+  isTwinkle = false,
+  onClick,
+}: EditableTextProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const spanRef = useRef<HTMLSpanElement>(null);
 
   const enableEditing = useCallback(() => {
     if (isEditable) {
       setIsEditing(true);
-      setTimeout(() => {
-        const range = document.createRange();
-        const sel = window.getSelection();
-        range.selectNodeContents(spanRef.current!);
-        range.collapse(false);
-        sel?.removeAllRanges();
-        sel?.addRange(range);
-        spanRef.current?.focus();
-      }, 0);
     }
   }, [isEditable]);
 
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
+      onClick?.();
       if (isEditable && e.target === spanRef.current) {
         enableEditing();
       }
     },
-    [isEditable, enableEditing],
+    [onClick, isEditable, enableEditing],
   );
 
   const handleBlur = useCallback(() => {
@@ -55,19 +72,18 @@ export const EditableText = ({ initialText, onTextChange, isEditable }: Editable
   }, [isEditing]);
 
   return (
-    <span
+    <TwinkleSpan
       ref={spanRef}
       contentEditable={isEditing}
       onClick={handleClick}
       onBlur={handleBlur}
       onKeyDown={handleKeyDown}
+      $isTwinkle={isTwinkle}
       style={{
-        padding: '0 8px',
-        maxWidth: 'fit-content',
         cursor: isEditable ? 'pointer' : 'default',
       }}
     >
       {initialText}
-    </span>
+    </TwinkleSpan>
   );
 };

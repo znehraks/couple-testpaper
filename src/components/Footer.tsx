@@ -23,4 +23,7 @@ const StyledFooterWrapper = styled.div`
   * {
     font-family: notoSans;
   }
+  @media (max-width: 501px) {
+    font-size: 12px;
+  }
 `;

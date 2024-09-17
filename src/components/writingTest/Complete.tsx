@@ -5,6 +5,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { WritingTestStore } from '../../store/WritingTestStore';
 import {
   StyledContentDescription,
+  StyledContentDescriptionWrapper,
   StyledContentTitle,
   StyledContentTitleWrapper,
   StyledMenu,
@@ -58,9 +59,9 @@ export const Complete = () => {
       {copySuccessAlertVisible && <StyledCopySuccessAlert>링크가 복사되었습니다.</StyledCopySuccessAlert>}
       <StyledContentTitleWrapper>
         <StyledContentTitle>출제 완료</StyledContentTitle>
-        <div>
+        <StyledContentDescriptionWrapper>
           <StyledContentDescription>버튼을 눌러 링크를 복사하고, 응시자에게 공유해요.</StyledContentDescription>
-        </div>
+        </StyledContentDescriptionWrapper>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
         <StyledMenu className="copy-btn" ref={clipboardRef}>
@@ -69,7 +70,7 @@ export const Complete = () => {
       </StyledMenuContainer>
       <StyledGoToFirstStepButton
         onClick={() => {
-          setStep('TUTORIAL');
+          setStep('HOWTO');
         }}
       >
         문제를 다시 출제할래요.

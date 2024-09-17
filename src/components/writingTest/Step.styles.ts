@@ -47,6 +47,7 @@ export const StyledQuestionContainer = styled.div`
 `;
 
 export const StyledChoiceContainer = styled.div`
+  position: relative;
   font-size: 32px;
   display: flex;
   flex-direction: column;
@@ -62,6 +63,19 @@ export const StyledChoiceContainer = styled.div`
     & > div > input {
       margin-top: 6px;
     }
+  }
+`;
+
+export const StyledContentChoiceTooltipWrapper = styled.div`
+  width: 280px;
+  position: absolute;
+  font-size: 22px;
+  display: flex;
+  flex-direction: row;
+  left: 100%;
+  top: 50%;
+  & > div:last-of-type {
+    margin-top: 6px;
   }
 `;
 

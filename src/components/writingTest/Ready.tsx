@@ -1,5 +1,6 @@
 import {
   StyledContentDescription,
+  StyledContentDescriptionWrapper,
   StyledContentTitle,
   StyledContentTitleWrapper,
   StyledMenu,
@@ -27,7 +28,7 @@ export const Ready = () => {
               >
                 남자친구(남편)
               </span>
-              가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+              가 나에 대해 잘 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>총 10문항</strong> 출제할 수 있어요.
@@ -46,7 +47,7 @@ export const Ready = () => {
               >
                 여자친구(아내)
               </span>
-              가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+              가 나에 대해 잘 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>총 10문항</strong> 출제할 수 있어요.
@@ -65,7 +66,7 @@ export const Ready = () => {
               >
                 남사친
               </span>
-              이 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+              이 나에 대해 잘 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>총 10문항</strong> 출제할 수 있어요.
@@ -84,7 +85,7 @@ export const Ready = () => {
               >
                 여사친
               </span>
-              이 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+              이 나에 대해 잘 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>총 10문항</strong> 출제할 수 있어요.
@@ -102,7 +103,7 @@ export const Ready = () => {
               >
                 친구들
               </span>
-              이 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+              이 나에 대해 잘 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>총 10문항</strong> 출제할 수 있어요.
@@ -121,7 +122,7 @@ export const Ready = () => {
               >
                 자녀
               </span>
-              가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+              가 나에 대해 잘 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>총 10문항</strong> 출제할 수 있어요.
@@ -140,7 +141,7 @@ export const Ready = () => {
               >
                 배우자
               </span>
-              가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
+              가 나에 대해 잘 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
               문제는 <strong>총 10문항</strong> 출제할 수 있어요.
@@ -156,12 +157,12 @@ export const Ready = () => {
     <>
       <StyledContentTitleWrapper>
         <StyledContentTitle>출제 준비</StyledContentTitle>
-        <div>{description}</div>
+        <StyledContentDescriptionWrapper>{description}</StyledContentDescriptionWrapper>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
         <StyledMenu
           onClick={() => {
-            setStep('TUTORIAL');
+            setStep('HOWTO');
           }}
         >
           문제 출제하기

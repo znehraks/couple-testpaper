@@ -14,7 +14,7 @@ export const StyledMenu = styled.div<{ color?: CSSProperties['color'] }>`
   transition: background-color 0.2s ease-in-out;
   width: 120px;
   height: 120px;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
   display: flex;
   flex-direction: column;
@@ -50,10 +50,18 @@ export const StyledContentTitleWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: relative;
+`;
+
+export const StyledContentTitleTooltipWrapper = styled.div`
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  font-size: 22px;
+  display: flex;
+  flex-direction: row;
+  & > div:last-of-type {
+    margin-top: 4px;
   }
 `;
 
@@ -68,18 +76,24 @@ export const StyledContentTitle = styled(motion.h1)<{
     font-size: ${({ mobileFontSize }) => (mobileFontSize ? mobileFontSize : 28)}px;
   }
 `;
+export const StyledContentDescriptionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const StyledContentDescription = styled(motion.p)<{ fontSize?: number }>`
-  font-size: ${({ fontSize }) => (fontSize ? fontSize : 24)}px;
+  word-break: keep-all;
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : 22)}px;
   & > strong {
     font-weight: bold;
     color: #ff6b6b;
     font-size: ${({ fontSize }) => (fontSize ? fontSize + 4 : 28)}px;
   }
   @media (max-width: 501px) {
-    font-size: ${({ fontSize }) => (fontSize ? fontSize - 4 : 20)}px;
+    font-size: ${({ fontSize }) => (fontSize ? fontSize - 4 : 18)}px;
     & > strong {
-      font-size: ${({ fontSize }) => (fontSize ? fontSize : 24)}px;
+      font-size: ${({ fontSize }) => (fontSize ? fontSize : 20)}px;
     }
   }
 `;

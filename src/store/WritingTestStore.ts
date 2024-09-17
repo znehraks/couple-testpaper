@@ -17,7 +17,7 @@ export type TestTaker =
 const TestTakerAtom = atom<TestTaker | null>(null);
 TestTakerAtom.debugLabel = 'WritingTest/TestTaker';
 
-const StepAtom = atom<'SELECT_PARENT' | 'SELECT_TEST_TAKER' | 'READY' | 'TUTORIAL' | 'QUESTIONS' | 'COMPLETE'>(
+const StepAtom = atom<'SELECT_PARENT' | 'SELECT_TEST_TAKER' | 'READY' | 'HOWTO' | 'QUESTIONS' | 'COMPLETE'>(
   'SELECT_TEST_TAKER',
 );
 StepAtom.debugLabel = 'WritingTest/Step';

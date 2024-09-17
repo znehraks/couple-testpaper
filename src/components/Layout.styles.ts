@@ -6,6 +6,9 @@ export const StyledWrapper = styled.div<{ isMobile: boolean }>`
   padding: 8px;
   width: 100dvw;
   height: 100dvh;
+  @media (max-width: 501px) {
+    padding: 16px;
+  }
 `;
 export const StyledContentWrapper = styled.div<{ isMobile: boolean }>`
   display: flex;

@@ -22,7 +22,6 @@ export const useAddTest = ({ testType }: { testType: TestType }) => {
   const setIsAdOn = useSetAtom(WritingTestStore.IsAdOnAtom);
   const setTempTestSheetId = useSetAtom(WritingTestStore.TempTestSheetIdAtom);
   // const setIsCompleted = useSetAtom(WritingTestStore.IsCompletedAtom);
-  testType === TestType.friends;
   const addTest = useCallback(
     async (result: ITestWithAnswerResult) => {
       const entireQuery: IAddCoupleTestEntireQuery = {

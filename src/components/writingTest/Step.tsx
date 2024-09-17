@@ -1,4 +1,4 @@
-import { ITestWithAnswerResult } from '@/types/utils';
+import { ITestWithAnswerResult, TestType } from '@/types/utils';
 import { useAtom } from 'jotai';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { WritingTestStore } from '../../store/WritingTestStore';
@@ -6,18 +6,28 @@ import {
   StyledButton,
   StyledChoiceContainer,
   StyledContentButtonContainer,
+  StyledContentChoiceTooltipWrapper,
   StyledHelperText,
   StyledInput,
   StyledQuestionContainer,
   StyledStepWrapper,
 } from './Step.styles';
-import { StyledContentDescription, StyledContentTitle, StyledContentTitleWrapper } from './styles';
+import {
+  StyledContentDescription,
+  StyledContentTitle,
+  StyledContentTitleTooltipWrapper,
+  StyledContentTitleWrapper,
+} from './styles';
 import { EditableText } from '../EditableText';
+import { useRouter } from 'next/router';
+import { useInactivityDetector } from './useInactivityDetector';
+import { TooltipArrowIcon } from '../icons/Icon';
 
 interface IStepProps {
   onSubmit: (result: ITestWithAnswerResult) => void;
 }
 export const Step = ({ onSubmit }: IStepProps) => {
+  const router = useRouter();
   const [currentTestQuestionIndex, setCurrentTestQuestionIndex] = useAtom(
     WritingTestStore.CurrentTestQuestionIndexAtom,
   );
@@ -30,6 +40,14 @@ export const Step = ({ onSubmit }: IStepProps) => {
     () => questions[currentTestQuestionIndex],
     [questions, currentTestQuestionIndex],
   );
+  const [isTitleTwinkleOff, setIsTitleTwinkleOff] = useState(false);
+  const [isChoiceTwinkleOffMap, setIsChoiceTwinkleOffMap] = useState<{ [index: number]: boolean }>({
+    0: false,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+  });
 
   const [tempQuestion, setTempQuestion] = useState(question);
   const [tempChoices, setTempChoices] = useState(choices);
@@ -72,8 +90,10 @@ export const Step = ({ onSubmit }: IStepProps) => {
       setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: inputValue }));
     }
     setCurrentTestQuestionIndex((prev) => prev + 1);
+    setInputValue('');
     setTempQuestion(questions[currentTestQuestionIndex + 1].question);
     setTempChoices(questions[currentTestQuestionIndex + 1].choices);
+    setIsTitleTwinkleOff(false);
   }, [
     isValid,
     tempQuestion,
@@ -93,13 +113,14 @@ export const Step = ({ onSubmit }: IStepProps) => {
       };
     });
     onSubmit({
+      testType: router.query.testType as TestType,
       testQuestionWithAnswers: _testQuestionWithAnswers.slice(1),
       maker: _testQuestionWithAnswers[0].answer,
       status: _testQuestionWithAnswers[1].answer,
     });
     setTempAnswers({});
     setCurrentTestQuestionIndex(0);
-  }, [onSubmit, questions, setCurrentTestQuestionIndex, tempAnswers]);
+  }, [onSubmit, questions, router.query.testType, setCurrentTestQuestionIndex, tempAnswers]);
 
   const description = useMemo(() => {
     switch (currentTestQuestionIndex) {
@@ -116,16 +137,30 @@ export const Step = ({ onSubmit }: IStepProps) => {
     }
   }, [inputValue.length]);
 
+  const isInacitve = useInactivityDetector({
+    inactivityTime: 3000,
+  });
+
   if (!questions.length) return null;
 
   return (
     <StyledStepWrapper>
       <StyledContentTitleWrapper>
+        {isInacitve && !isTitleTwinkleOff && (
+          <StyledContentTitleTooltipWrapper>
+            <TooltipArrowIcon size={24} fill="#000" />
+            <div>문제를 수정하고 싶다면 클릭 후 수정해주세요.</div>
+          </StyledContentTitleTooltipWrapper>
+        )}
         <StyledContentTitle mobileFontSize={question.length > 10 ? 24 : 28}>
           {`${currentTestQuestionIndex + 1}. `}
           <EditableText
+            isTwinkle={isInacitve && !isTitleTwinkleOff}
             initialText={tempQuestion}
             onTextChange={setTempQuestion}
+            onClick={() => {
+              setIsTitleTwinkleOff(true);
+            }}
             isEditable={currentTestQuestionIndex !== 0}
           />
         </StyledContentTitle>
@@ -153,32 +188,64 @@ export const Step = ({ onSubmit }: IStepProps) => {
           />
         ) : (
           <StyledChoiceContainer>
-            {choices.map((choice, index) => (
-              <div key={index}>
-                <input
+            {choices.map((choice, index) => {
+              const isTooltipVisible =
+                isInacitve &&
+                isTitleTwinkleOff &&
+                !isChoiceTwinkleOffMap[index] &&
+                Math.min(
+                  ...Object.entries(isChoiceTwinkleOffMap)
+                    .filter((item) => item[1] === false)
+                    .map((item) => Number(item[0])),
+                ) === index;
+
+              console.log(
+                Object.entries(isChoiceTwinkleOffMap)
+                  .filter((item) => item[1] === false)
+                  .map((item) => Number(item[0])),
+              );
+              return (
+                <div
+                  key={index}
                   style={{
-                    transform: 'scale(1.5)',
+                    position: 'relative',
                   }}
-                  id={`choice-${index}`}
-                  type="radio"
-                  name="choice"
-                  checked={tempAnswers[currentTestQuestionIndex] === choice}
-                  value={choice}
-                  onChange={(e) => {
-                    setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: e.target.value }));
-                  }}
-                />
-                <EditableText
-                  initialText={choice}
-                  onTextChange={(newText) => {
-                    const _tempChoices = [...tempChoices];
-                    _tempChoices[index] = newText;
-                    setTempChoices(_tempChoices);
-                  }}
-                  isEditable={true}
-                />
-              </div>
-            ))}
+                >
+                  <input
+                    style={{
+                      transform: 'scale(1.5)',
+                    }}
+                    id={`choice-${index}`}
+                    type="radio"
+                    name="choice"
+                    checked={tempAnswers[currentTestQuestionIndex] === choice}
+                    value={choice}
+                    onChange={(e) => {
+                      setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: e.target.value }));
+                    }}
+                  />
+                  <EditableText
+                    initialText={choice}
+                    onTextChange={(newText) => {
+                      const _tempChoices = [...tempChoices];
+                      _tempChoices[index] = newText;
+                      setTempChoices(_tempChoices);
+                    }}
+                    onClick={() => {
+                      setIsChoiceTwinkleOffMap((prev) => ({ ...prev, [index]: true }));
+                    }}
+                    isEditable={true}
+                    isTwinkle={isTooltipVisible}
+                  />
+                  {isTooltipVisible && (
+                    <StyledContentChoiceTooltipWrapper>
+                      <TooltipArrowIcon size={24} fill="#000" />
+                      <div>선택지를 수정하고 싶다면 클릭 후 수정해주세요.</div>
+                    </StyledContentChoiceTooltipWrapper>
+                  )}
+                </div>
+              );
+            })}
           </StyledChoiceContainer>
         )}
       </StyledQuestionContainer>

@@ -31,7 +31,7 @@ export default function Home() {
               router.push('/making/couple-test');
             }}
           >
-            <HeartIcon size={60} fill="#eb8291" />
+            <HeartIcon size={48} fill="#eb8291" />
             <div>연인고사</div>
           </StyledMenu>
           <StyledMenu
@@ -40,7 +40,7 @@ export default function Home() {
               router.push('/making/friends-test');
             }}
           >
-            <FriendsIcon size={60} fill="#666666" />
+            <FriendsIcon size={48} fill="#666666" />
             <div>친구고사</div>
           </StyledMenu>
           <StyledMenu
@@ -49,7 +49,7 @@ export default function Home() {
               router.push('/making/parents-test');
             }}
           >
-            <ParentIcon size={60} fill="#947463" />
+            <ParentIcon size={48} fill="#947463" />
             <div>부모님고사</div>
           </StyledMenu>
         </StyledMenuContainer>
