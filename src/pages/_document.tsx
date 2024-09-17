@@ -4,9 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>연애는 고사하고</title>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
           content="친구, 연인, 부모님에 대해 재미있는 시험문제 형식으로 서로를 더 가까이 잘 알아가는 시간을 제공합니다."
