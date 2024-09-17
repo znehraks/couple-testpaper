@@ -16,7 +16,7 @@ import {
   StyledSubmitButton,
 } from './TimeUpModal.styles';
 import { useAddTakedTestResult } from '@/services/useTests';
-import { ITestSheet, TestType } from '@/types/utils';
+import { ITestSheet } from '@/types/utils';
 
 export const TimesUpModal = ({ data }: { data: ITestSheet }) => {
   const isMobile = useIsMobile();
@@ -29,7 +29,7 @@ export const TimesUpModal = ({ data }: { data: ITestSheet }) => {
 
   const [testerResult, setTesterResult] = useAtom(TestResultStore.TesterResultAtom);
 
-  const { mutateAsync } = useAddTakedTestResult({ testType: TestType.friends });
+  const { mutateAsync } = useAddTakedTestResult();
   // const initialize = useCallback(() => {
   //   setTimesUpModalStep(TimesUpModalStep.READY);
   //   // TODO 시험보느라 더럽혀졌던 state들 초기화

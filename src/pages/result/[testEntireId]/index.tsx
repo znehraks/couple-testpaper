@@ -1,5 +1,4 @@
 import { useGetTestEntire } from '@/services/useTests';
-import { TestType } from '@/types/utils';
 import { Layout } from '@/components/Layout';
 import { useEffect, useMemo, useState } from 'react';
 import { TrophyIcon } from '@/components/icons/Icon';
@@ -19,7 +18,7 @@ import {
 
 export default function TestResultPage() {
   const router = useRouter();
-  const { data } = useGetTestEntire({ testType: TestType.friends });
+  const { data } = useGetTestEntire();
   //   const { isFocused, ...inputProps } = useInput({ name: 'search', initialValue: '' });
   const [currentSortIndex, setCurrentSortIndex] = useState<'testScore' | 'testSpentTime'>('testScore');
 

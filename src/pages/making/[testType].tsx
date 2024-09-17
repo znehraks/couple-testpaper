@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import { Layout } from '@/components/Layout';
-import { ITestWithAnswerResult, TestType } from '@/types/utils';
 import { useAddTest } from '@/services/useTests';
 // import { useAtomValue } from 'jotai';
 // import { WritingTestStore } from '@/store/WritingTestStore';
@@ -9,13 +8,14 @@ import { useRouter } from 'next/router';
 import WritingTest from '@/components/writingTest';
 import { useSetAtom } from 'jotai';
 import { WritingTestStore } from '@/store/WritingTestStore';
+import { ITestWithAnswerResult } from '@/types/utils';
 
 export default function TestMakingTypePage() {
   const router = useRouter();
   // const isAdOn = useAtomValue(WritingTestStore.IsAdOnAtom);
   // const isCompleted = useAtomValue(WritingTestStore.IsCompletedAtom);
   const setStep = useSetAtom(WritingTestStore.StepAtom);
-  const mutation = useAddTest({ testType: TestType.friends });
+  const mutation = useAddTest();
   const handleSubmit = useCallback(
     async (result: ITestWithAnswerResult) => {
       mutation.mutate(result);

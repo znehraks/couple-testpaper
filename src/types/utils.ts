@@ -77,6 +77,7 @@ export interface ITestWithAnswerResult {
    * 시험 출제자
    */
   maker: string;
+
   /**
    * 시험 타입
    */

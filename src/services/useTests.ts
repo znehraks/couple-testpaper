@@ -7,7 +7,6 @@ import {
   IRanking,
   IAddCoupleTestSheetQuery,
   IEntireTest,
-  TestType,
   ITestSheet,
 } from '@/types/utils';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -16,39 +15,36 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 
-export const useAddTest = ({ testType }: { testType: TestType }) => {
+export const useAddTest = () => {
   const queryClient = useQueryClient();
   const setStep = useSetAtom(WritingTestStore.StepAtom);
   const setIsAdOn = useSetAtom(WritingTestStore.IsAdOnAtom);
   const setTempTestSheetId = useSetAtom(WritingTestStore.TempTestSheetIdAtom);
   // const setIsCompleted = useSetAtom(WritingTestStore.IsCompletedAtom);
-  const addTest = useCallback(
-    async (result: ITestWithAnswerResult) => {
-      const entireQuery: IAddCoupleTestEntireQuery = {
-        testType,
-        testQuestionWithAnswers: result.testQuestionWithAnswers,
-        maker: result.maker,
-        status: result.status,
-        createdAt: new Date()?.toLocaleDateString(),
-      };
-      const { id: entireDocumentId } = await addDoc(collection(db, `${testType}-test`), entireQuery);
-      const testSheetPayload: IAddCoupleTestSheetQuery = {
-        testType,
-        maker: result.maker,
-        status: result.status,
-        createdAt: new Date()?.toLocaleDateString(),
-        testQuestions: result.testQuestionWithAnswers.map((question) => ({
-          question: question.question,
-          choices: question.choices,
-          type: question.type,
-        })),
-        entireDocumentId,
-      };
+  const addTest = useCallback(async (result: ITestWithAnswerResult) => {
+    const entireQuery: IAddCoupleTestEntireQuery = {
+      testType: result.testType,
+      testQuestionWithAnswers: result.testQuestionWithAnswers,
+      maker: result.maker,
+      status: result.status,
+      createdAt: new Date()?.toLocaleDateString(),
+    };
+    const { id: entireDocumentId } = await addDoc(collection(db, 'test'), entireQuery);
+    const testSheetPayload: IAddCoupleTestSheetQuery = {
+      testType: result.testType,
+      maker: result.maker,
+      status: result.status,
+      createdAt: new Date()?.toLocaleDateString(),
+      testQuestions: result.testQuestionWithAnswers.map((question) => ({
+        question: question.question,
+        choices: question.choices,
+        type: question.type,
+      })),
+      entireDocumentId,
+    };
 
-      return addDoc(collection(db, `${testType}-test-sheet`), testSheetPayload);
-    },
-    [testType],
-  );
+    return addDoc(collection(db, 'test-sheet'), testSheetPayload);
+  }, []);
 
   return useMutation(
     {
@@ -69,22 +65,19 @@ export const useAddTest = ({ testType }: { testType: TestType }) => {
   );
 };
 
-export const useGetTestEntire = ({ testType }: { testType: TestType }) => {
+export const useGetTestEntire = () => {
   const router = useRouter();
-  const { data } = useGetTestSheet({ testType });
+  const { data } = useGetTestSheet();
   const queryClient = useQueryClient();
 
-  const getTestEntire = useCallback(
-    async (docId?: string): Promise<IEntireTest> => {
-      if (!docId) throw new Error('No docId found');
-      const docRef = doc(db, `${testType}-test`, docId);
-      const docSnap = await getDoc(docRef);
-      const data = docSnap.data() as IEntireTest;
-      if (!data) throw new Error('No data found');
-      return data;
-    },
-    [testType],
-  );
+  const getTestEntire = useCallback(async (docId?: string): Promise<IEntireTest> => {
+    if (!docId) throw new Error('No docId found');
+    const docRef = doc(db, `test`, docId);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data() as IEntireTest;
+    if (!data) throw new Error('No data found');
+    return data;
+  }, []);
 
   return useQuery<IEntireTest>(
     {
@@ -97,22 +90,19 @@ export const useGetTestEntire = ({ testType }: { testType: TestType }) => {
   );
 };
 
-export const useGetTestSheet = ({ testType }: { testType: TestType }) => {
+export const useGetTestSheet = () => {
   const router = useRouter();
   const { testSheetId } = router.query;
   const queryClient = useQueryClient();
 
-  const getTestSheet = useCallback(
-    async (docId: string): Promise<ITestSheet> => {
-      const docRef = doc(db, `${testType}-test-sheet`, docId);
-      const docSnap = await getDoc(docRef);
-      const data = docSnap.data() as ITestSheet;
+  const getTestSheet = useCallback(async (docId: string): Promise<ITestSheet> => {
+    const docRef = doc(db, `test-sheet`, docId);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data() as ITestSheet;
 
-      if (!data) throw new Error('No data found');
-      return { ...data, id: docSnap.id };
-    },
-    [testType],
-  );
+    if (!data) throw new Error('No data found');
+    return { ...data, id: docSnap.id };
+  }, []);
 
   return useQuery<ITestSheet>(
     {
@@ -124,10 +114,10 @@ export const useGetTestSheet = ({ testType }: { testType: TestType }) => {
   );
 };
 
-export const useAddTakedTestResult = ({ testType }: { testType: TestType }) => {
+export const useAddTakedTestResult = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { data } = useGetTestEntire({ testType });
+  const { data } = useGetTestEntire();
 
   const selectedAnswers = useAtomValue(TakingTestStore.SelectedAnswersAtom);
   const testScore = useMemo(
@@ -149,10 +139,10 @@ export const useAddTakedTestResult = ({ testType }: { testType: TestType }) => {
         ...data,
         rankings: data?.rankings ? [...data.rankings, _newRanking] : [_newRanking],
       };
-      const docRef = doc(db, `${testType}-test`, entireDocumentId);
+      const docRef = doc(db, `test`, entireDocumentId);
       return updateDoc(docRef, result);
     },
-    [data, testScore, testType],
+    [data, testScore],
   );
 
   return useMutation(
