@@ -25,6 +25,11 @@ export interface ITest {
   question: string;
 
   /**
+   * 시험 문항 설명
+   */
+  description?: string;
+
+  /**
    * 시험 선지
    */
   choices: string[];

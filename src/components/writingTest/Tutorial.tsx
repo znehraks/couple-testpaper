@@ -11,20 +11,21 @@ import { useEffect } from 'react';
 import { WritingTestStore } from '../../store/WritingTestStore';
 import { commonQuestions, myInfoQuestions } from '@/data/questionnaire/friends';
 import { requiredQuestions } from '@/data/questionnaire/common';
+import { coupleQuestions, coupleRequiredQuestions } from '@/data/questionnaire/couple';
 
 export const Tutorial = () => {
   const setStep = useSetAtom(WritingTestStore.StepAtom);
   const testTaker = useAtomValue(WritingTestStore.TestTakerAtom);
   const setQuestions = useSetAtom(WritingTestStore.QuestionsAtom);
-  // TODO 유형별 문제 출제
+  // TODO 유형별 문제 출제 -> 커플 문제처럼 올 주관식이면 현재 출제가 안됨 -> 디버그 필요
   // TODO 직장 동료들 끼리도 할수 있게 문제 출제
   useEffect(() => {
     switch (testTaker) {
       case 'forCoupleMale':
         {
-          const selectedMyInfoQuestions = [...myInfoQuestions]
+          const selectedMyInfoQuestions = [...coupleQuestions]
             .sort(() => Math.random() - 0.5)
-            .slice(0, 2)
+            .slice(0, 9)
             .map((quest) => {
               if (quest.choices.length <= 5) {
                 return quest;
@@ -34,27 +35,14 @@ export const Tutorial = () => {
                 choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
               };
             });
-
-          const selectedCommonQuestions = [...commonQuestions]
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 8)
-            .map((quest) => {
-              if (quest.choices.length <= 5) {
-                return quest;
-              }
-              return {
-                ...quest,
-                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
-              };
-            });
-          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+          setQuestions([...coupleRequiredQuestions, ...selectedMyInfoQuestions]);
         }
         break;
       case 'forCoupleFemale':
         {
-          const selectedMyInfoQuestions = [...myInfoQuestions]
+          const selectedMyInfoQuestions = [...coupleQuestions]
             .sort(() => Math.random() - 0.5)
-            .slice(0, 2)
+            .slice(0, 9)
             .map((quest) => {
               if (quest.choices.length <= 5) {
                 return quest;
@@ -64,20 +52,7 @@ export const Tutorial = () => {
                 choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
               };
             });
-
-          const selectedCommonQuestions = [...commonQuestions]
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 8)
-            .map((quest) => {
-              if (quest.choices.length <= 5) {
-                return quest;
-              }
-              return {
-                ...quest,
-                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
-              };
-            });
-          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+          setQuestions([...coupleRequiredQuestions, ...selectedMyInfoQuestions]);
         }
         break;
       case 'forFriendsMale':
