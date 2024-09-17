@@ -64,7 +64,7 @@ export const Complete = () => {
         </StyledContentDescriptionWrapper>
       </StyledContentTitleWrapper>
       <StyledMenuContainer>
-        <StyledMenu className="copy-btn" ref={clipboardRef}>
+        <StyledMenu className="copy-btn" fontSize={18} ref={clipboardRef}>
           시험지 링크 복사
         </StyledMenu>
       </StyledMenuContainer>

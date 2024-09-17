@@ -10,11 +10,11 @@ export const StyledMenuContainer = styled.div`
   gap: 24px;
 `;
 
-export const StyledMenu = styled.div<{ color?: CSSProperties['color'] }>`
+export const StyledMenu = styled.div<{ fontSize?: number; color?: CSSProperties['color'] }>`
   transition: background-color 0.2s ease-in-out;
   width: 120px;
   height: 120px;
-  font-size: 24px;
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : 24)}px;
   font-weight: bold;
   display: flex;
   flex-direction: column;
@@ -72,6 +72,7 @@ export const StyledContentTitleTooltipWrapper = styled.div`
 export const StyledContentTitle = styled(motion.h1)<{
   mobileFontSize?: number;
 }>`
+  font-weight: bold;
   padding: 8px;
   font-size: 48px;
   text-align: center;

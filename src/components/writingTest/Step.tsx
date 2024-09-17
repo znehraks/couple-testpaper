@@ -74,8 +74,17 @@ export const Step = ({ onSubmit }: IStepProps) => {
     }
     setCurrentTestQuestionIndex((prev) => prev - 1);
     setIsTitleTwinkleOff(false);
+    setTempQuestion(questions[currentTestQuestionIndex - 1].question);
+    setTempChoices(questions[currentTestQuestionIndex - 1].choices);
     setInputValue('');
-  }, [currentTestQuestionIndex, setCurrentTestQuestionIndex, setStep]);
+    setIsChoiceTwinkleOffMap({
+      0: false,
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+    });
+  }, [currentTestQuestionIndex, questions, setCurrentTestQuestionIndex, setStep]);
 
   const handleGoNext = useCallback(() => {
     if (!isValid || !tempQuestion || tempQuestion.length === 0) {
@@ -98,6 +107,13 @@ export const Step = ({ onSubmit }: IStepProps) => {
     setTempQuestion(questions[currentTestQuestionIndex + 1].question);
     setTempChoices(questions[currentTestQuestionIndex + 1].choices);
     setIsTitleTwinkleOff(false);
+    setIsChoiceTwinkleOffMap({
+      0: false,
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+    });
   }, [
     isValid,
     tempQuestion,
@@ -159,12 +175,13 @@ export const Step = ({ onSubmit }: IStepProps) => {
             <div>문제를 수정하고 싶다면 클릭 후 수정해주세요.</div>
           </StyledContentTitleTooltipWrapper>
         )}
-        <StyledContentTitle mobileFontSize={question.length > 10 ? 24 : 28}>
+        <StyledContentTitle mobileFontSize={question.length > 20 ? 22 : 28}>
           {`${currentTestQuestionIndex + 1}. `}
           <EditableText
+            key={`question-${currentTestQuestionIndex}`}
             isTwinkle={isContentTitleTooltipVisible}
             initialText={tempQuestion}
-            maxLength={20}
+            maxLength={40}
             onTextChange={setTempQuestion}
             onClick={() => {
               setIsTitleTwinkleOff(true);
@@ -227,6 +244,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
                     }}
                   />
                   <EditableText
+                    key={`choice-${currentTestQuestionIndex}-${index}`}
                     initialText={choice}
                     maxLength={20}
                     onTextChange={(newText) => {
