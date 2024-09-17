@@ -60,6 +60,7 @@ export const StyledContentTitleWrapper = styled.div`
 export const StyledContentTitle = styled(motion.h1)<{
   mobileFontSize?: number;
 }>`
+  padding: 8px;
   font-size: 48px;
   text-align: center;
   word-break: keep-all;
@@ -68,17 +69,17 @@ export const StyledContentTitle = styled(motion.h1)<{
   }
 `;
 
-export const StyledContentDescription = styled(motion.p)`
-  font-size: 24px;
+export const StyledContentDescription = styled(motion.p)<{ fontSize?: number }>`
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : 24)}px;
   & > strong {
     font-weight: bold;
     color: #ff6b6b;
-    font-size: 32px;
+    font-size: ${({ fontSize }) => (fontSize ? fontSize + 4 : 28)}px;
   }
   @media (max-width: 501px) {
-    font-size: 20px;
+    font-size: ${({ fontSize }) => (fontSize ? fontSize - 4 : 20)}px;
     & > strong {
-      font-size: 24px;
+      font-size: ${({ fontSize }) => (fontSize ? fontSize : 24)}px;
     }
   }
 `;

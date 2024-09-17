@@ -21,11 +21,17 @@ export const Step = ({ onSubmit }: IStepProps) => {
     WritingTestStore.CurrentTestQuestionIndexAtom,
   );
   const [, setStep] = useAtom(WritingTestStore.StepAtom);
-  const [questions] = useAtom(WritingTestStore.QuestionsAtom);
-  const [, setAnswers] = useAtom(WritingTestStore.AnswersAtom);
+  const [questions, setQuestions] = useAtom(WritingTestStore.QuestionsAtom);
   const [inputValue, setInputValue] = useState<string>('');
   const [helperText, setHelperText] = useState<string>('');
   const [tempAnswers, setTempAnswers] = useState<{ [step: number]: string }>({});
+  const { question, choices } = useMemo(
+    () => questions[currentTestQuestionIndex],
+    [questions, currentTestQuestionIndex],
+  );
+
+  const [tempQuestion, setTempQuestion] = useState(question);
+  const [tempChoices, setTempChoices] = useState(choices);
 
   const isSubjective = useMemo(() => {
     return questions[currentTestQuestionIndex].choices.length === 0;
@@ -49,16 +55,34 @@ export const Step = ({ onSubmit }: IStepProps) => {
   }, [currentTestQuestionIndex, setCurrentTestQuestionIndex, setStep]);
 
   const handleGoNext = useCallback(() => {
-    if (!isValid) {
+    if (!isValid || !tempQuestion || tempQuestion.length === 0) {
       return;
     }
+    setQuestions((prev) => {
+      const _prev = [...prev];
+      _prev[currentTestQuestionIndex] = {
+        ..._prev[currentTestQuestionIndex],
+        question: tempQuestion,
+        choices: tempChoices,
+      };
+      return _prev;
+    });
     if (currentTestQuestionIndex === 0) {
       setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: inputValue }));
-    } else {
-      setAnswers((prev) => [...prev, tempAnswers[currentTestQuestionIndex]]);
     }
     setCurrentTestQuestionIndex((prev) => prev + 1);
-  }, [inputValue, isValid, setAnswers, setCurrentTestQuestionIndex, currentTestQuestionIndex, tempAnswers]);
+    setTempQuestion(questions[currentTestQuestionIndex + 1].question);
+    setTempChoices(questions[currentTestQuestionIndex + 1].choices);
+  }, [
+    isValid,
+    tempQuestion,
+    setQuestions,
+    currentTestQuestionIndex,
+    setCurrentTestQuestionIndex,
+    questions,
+    tempChoices,
+    inputValue,
+  ]);
 
   const handleSubmit = useCallback(() => {
     const _testQuestionWithAnswers = questions.map((question, index) => {
@@ -67,21 +91,14 @@ export const Step = ({ onSubmit }: IStepProps) => {
         answer: tempAnswers[index],
       };
     });
-
     onSubmit({
-      testQuestionWithAnswers: _testQuestionWithAnswers.slice(2),
+      testQuestionWithAnswers: _testQuestionWithAnswers.slice(1),
       maker: _testQuestionWithAnswers[0].answer,
       status: _testQuestionWithAnswers[1].answer,
     });
-    setAnswers([]);
     setTempAnswers({});
     setCurrentTestQuestionIndex(0);
-  }, [onSubmit, questions, setAnswers, setCurrentTestQuestionIndex, tempAnswers]);
-
-  const { question, choices } = useMemo(
-    () => questions[currentTestQuestionIndex],
-    [questions, currentTestQuestionIndex],
-  );
+  }, [onSubmit, questions, setCurrentTestQuestionIndex, tempAnswers]);
 
   const description = useMemo(() => {
     switch (currentTestQuestionIndex) {
@@ -99,12 +116,26 @@ export const Step = ({ onSubmit }: IStepProps) => {
   }, [inputValue.length]);
 
   if (!questions.length) return null;
+
   return (
     <StyledStepWrapper>
       <StyledContentTitleWrapper>
-        <StyledContentTitle
-          mobileFontSize={question.length > 10 ? 24 : 28}
-        >{`${currentTestQuestionIndex + 1}. ${question}`}</StyledContentTitle>
+        <StyledContentTitle mobileFontSize={question.length > 10 ? 24 : 28}>
+          {`${currentTestQuestionIndex + 1}. `}
+          <span
+            contentEditable={currentTestQuestionIndex !== 0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                e.currentTarget.blur();
+              }
+            }}
+            onBlur={(e) => {
+              setTempQuestion(e.currentTarget.innerText);
+            }}
+          >{`${question}`}</span>
+        </StyledContentTitle>
+
         <StyledContentDescription>{description}</StyledContentDescription>
       </StyledContentTitleWrapper>
       <StyledQuestionContainer>
@@ -120,7 +151,6 @@ export const Step = ({ onSubmit }: IStepProps) => {
             }}
             onKeyUp={(e) => {
               if (e.key === 'Enter') {
-                setAnswers((prev) => [...prev, inputValue]);
                 setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: inputValue }));
                 setInputValue('');
                 handleGoNext();
@@ -132,6 +162,9 @@ export const Step = ({ onSubmit }: IStepProps) => {
             {choices.map((choice, index) => (
               <div key={index}>
                 <input
+                  style={{
+                    transform: 'scale(1.5)',
+                  }}
                   id={`choice-${index}`}
                   type="radio"
                   name="choice"
@@ -141,7 +174,22 @@ export const Step = ({ onSubmit }: IStepProps) => {
                     setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: e.target.value }));
                   }}
                 />
-                <label htmlFor={`choice-${index}`}>{choice}</label>
+                <span
+                  contentEditable
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      e.currentTarget.blur();
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const _tempChoices = [...tempChoices];
+                    _tempChoices[index] = e.currentTarget.innerText;
+                    setTempChoices(_tempChoices);
+                  }}
+                >
+                  {choice}
+                </span>
               </div>
             ))}
           </StyledChoiceContainer>

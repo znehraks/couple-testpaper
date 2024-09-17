@@ -10,7 +10,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { WritingTestStore } from '../../store/WritingTestStore';
 import { commonQuestions, myInfoQuestions } from '@/data/questionnaire/friends';
-import { requiredQuestions } from '@/data/questionnaire/common';
+import { commonRequiredQuestions } from '@/data/questionnaire/common';
 import { coupleQuestions, coupleRequiredQuestions } from '@/data/questionnaire/couple';
 
 export const Tutorial = () => {
@@ -27,12 +27,8 @@ export const Tutorial = () => {
             .sort(() => Math.random() - 0.5)
             .slice(0, 9)
             .map((quest) => {
-              if (quest.choices.length <= 5) {
-                return quest;
-              }
               return {
                 ...quest,
-                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
               };
             });
           setQuestions([...coupleRequiredQuestions, ...selectedMyInfoQuestions]);
@@ -44,12 +40,8 @@ export const Tutorial = () => {
             .sort(() => Math.random() - 0.5)
             .slice(0, 9)
             .map((quest) => {
-              if (quest.choices.length <= 5) {
-                return quest;
-              }
               return {
                 ...quest,
-                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
               };
             });
           setQuestions([...coupleRequiredQuestions, ...selectedMyInfoQuestions]);
@@ -82,7 +74,7 @@ export const Tutorial = () => {
                 choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
               };
             });
-          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+          setQuestions([...commonRequiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
         }
         break;
       case 'forFriendsFemale':
@@ -112,7 +104,37 @@ export const Tutorial = () => {
                 choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
               };
             });
-          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+          setQuestions([...commonRequiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+        }
+        break;
+      case 'forFriendsAll':
+        {
+          const selectedMyInfoQuestions = [...myInfoQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 2)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+
+          const selectedCommonQuestions = [...commonQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 8)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+          setQuestions([...commonRequiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
         }
         break;
       case 'forChildren':
@@ -142,7 +164,7 @@ export const Tutorial = () => {
                 choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
               };
             });
-          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+          setQuestions([...commonRequiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
         }
         break;
       case 'forEachother':
@@ -172,7 +194,7 @@ export const Tutorial = () => {
                 choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
               };
             });
-          setQuestions([...requiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+          setQuestions([...commonRequiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
         }
         break;
       default:
@@ -186,10 +208,18 @@ export const Tutorial = () => {
         <StyledContentTitle>시험 출제 방법</StyledContentTitle>
         <StyledTutorialDescriptionContainer>
           <StyledContentDescription>
-            1. 주어진 문제에 대한 <strong>답을 선택</strong>해요.
+            1. 질문을 읽고, <strong>나에게 해당되는 답변을 선택</strong>해요.
+          </StyledContentDescription>
+          <StyledContentDescription
+            fontSize={20}
+            style={{
+              paddingLeft: '8px',
+            }}
+          >
+            1-1. 질문 혹은 선지가 마음에 들지 않는다면, <strong>직접 문제와 선지를 수정</strong>할 수 있어요.
           </StyledContentDescription>
           <StyledContentDescription>
-            2. 시험지 <strong>링크를 복사</strong>해요.
+            2. 출제 완료 후, 시험지 <strong>링크를 복사</strong>해요.
           </StyledContentDescription>
           <StyledContentDescription>
             3. 응시자에게 <strong>시험지 링크를 전달</strong>하면 끝.

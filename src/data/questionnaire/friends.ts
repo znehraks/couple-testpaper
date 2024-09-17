@@ -120,17 +120,17 @@ export const friendsRequiredQuestions: ITest[] = [];
 
 export const myInfoQuestions: ITest[] = [
   {
-    type: QuestionType.MY_INFO,
+    type: QuestionType.FRIENDS,
     question: '연예시뮬레이션(하트O그널, 나는O로, 솔로O옥 등...)은?',
     choices: simulation,
   },
   {
-    type: QuestionType.MY_INFO,
+    type: QuestionType.FRIENDS,
     question: '주말에 주로 나는?',
     choices: weekendActivity,
   },
   {
-    type: QuestionType.MY_INFO,
+    type: QuestionType.FRIENDS,
     question: '학창시절 나는?',
     choices: schoolDays,
   },
@@ -138,12 +138,12 @@ export const myInfoQuestions: ITest[] = [
 
 export const commonQuestions: ITest[] = [
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '소개팅이 잡혔다. 내가 정한 약속 장소는?',
     choices: restaurant,
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '연인과 공원에서 산책 중이다. 이때 나는?',
     choices: [
       '손을 꼭 잡고 걷는다',
@@ -154,28 +154,28 @@ export const commonQuestions: ITest[] = [
     ],
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
 
     question: '나의 최애 안주는?',
     choices: [...drinkFood.sort(() => Math.random() - 0.5).slice(0, 4), '이 중에 없다'],
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '연인끼리 여행을 간다면 숙소는?',
     choices: accomodation,
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '술자리에서 연인에게 카톡이 왔을때 나는?',
     choices: drinkKakaotalk,
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '나는 연애를 시작할 때, 상대방과 안맞는 점이 보이면?',
     choices: ['손절한다', '상대에게 맞춰준다', '나에게 상대를 맞추려한다', '일단 넘어가고 지켜본다', '신경쓰지 않는다'],
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '나는 연애를 끝낼 때 주로?',
     choices: [
       '과감하게 내가 찬다',
@@ -186,7 +186,7 @@ export const commonQuestions: ITest[] = [
     ],
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '연인과 말싸움이 붙었다. 이때 나는?',
     choices: [
       '무조건 이기고 본다',
@@ -197,7 +197,7 @@ export const commonQuestions: ITest[] = [
     ],
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '연인과 만나는 주기는?',
     choices: [
       '매일봐도 부족하다',
@@ -208,7 +208,7 @@ export const commonQuestions: ITest[] = [
     ],
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '내가 원하는 데이트 스타일은?',
     choices: [
       '집에서 활동적으로 만나기',
@@ -219,7 +219,7 @@ export const commonQuestions: ITest[] = [
     ],
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: '다음 중 상대방이 가장 매력적으로 보이는 순간은?',
     choices: [
       '닭다리 두 개를 다 양보해줄 때',
@@ -230,7 +230,7 @@ export const commonQuestions: ITest[] = [
     ],
   },
   {
-    type: QuestionType.COMMON,
+    type: QuestionType.FRIENDS,
     question: "이 중 다른건 다 안맞아도 '이건 꼭 맞아야한다'라고 생각하는 것은?",
     choices: ['경제관념', '옷 입는 스타일', '음식 취향', '대화 스타일', '속궁합'],
   },

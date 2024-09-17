@@ -23,64 +23,71 @@ export const SelectTestTaker = () => {
   // TODO route testType에 따라 응시자 다름
 
   const menus = useMemo(() => {
-    const takersInfo: { type: TestTaker; title: string; icon?: ReactNode; fontColor?: CSSProperties['color'] }[] =
-      (() => {
-        switch (router.query.testType) {
-          case 'couple-test':
-            return [
-              {
-                type: 'forCoupleMale',
-                title: '남자친구',
-                fontColor: '#009edd',
-                icon: <HeartIcon size={60} fill="#0099dd" />,
-              },
-              {
-                type: 'forCoupleFemale',
-                title: '여자친구',
-                fontColor: '#eb8291',
-                icon: <HeartIcon size={60} fill="#eb8291" />,
-              },
-            ];
-          case 'friends-test':
-            return [
-              {
-                type: 'forFriendsMale',
-                title: '남사친',
-                fontColor: '#009edd',
-                icon: <MaleIcon size={60} fill="#009edd" />,
-              },
-              {
-                type: 'forFriendsFemale',
-                title: '여사친',
-                fontColor: '#eb8291',
-                icon: <FemaleIcon size={60} fill="#eb8291" />,
-              },
-              {
-                type: 'forFriendsAll',
-                title: '모든 친구',
-                fontColor: '#666666',
-                icon: <AllFriendsIcon size={60} fill="#666666" />,
-              },
-            ];
-          case 'parents-test':
-            return [
-              {
-                type: 'forChildren',
-                title: '자녀',
-                fontColor: '#eb8291',
-                icon: <ChildrenIcon size={60} fill="#eb8291" />,
-              },
-              {
-                type: 'forEachother',
-                title: '배우자',
-                fontColor: '#947463',
-                icon: <ParentIcon size={60} fill="#947463" />,
-              },
-            ];
-          default:
-            return [];
-        }
-      })();
+    const takersInfo: {
+      type: TestTaker;
+      title: string;
+      subTitle?: string;
+      icon?: ReactNode;
+      fontColor?: CSSProperties['color'];
+    }[] = (() => {
+      switch (router.query.testType) {
+        case 'couple-test':
+          return [
+            {
+              type: 'forCoupleMale',
+              title: '남자친구',
+              subTitle: '남편',
+              fontColor: '#009edd',
+              icon: <HeartIcon size={60} fill="#0099dd" />,
+            },
+            {
+              type: 'forCoupleFemale',
+              title: '여자친구',
+              subTitle: '아내',
+              fontColor: '#eb8291',
+              icon: <HeartIcon size={60} fill="#eb8291" />,
+            },
+          ];
+        case 'friends-test':
+          return [
+            {
+              type: 'forFriendsMale',
+              title: '남사친',
+              fontColor: '#009edd',
+              icon: <MaleIcon size={60} fill="#009edd" />,
+            },
+            {
+              type: 'forFriendsFemale',
+              title: '여사친',
+              fontColor: '#eb8291',
+              icon: <FemaleIcon size={60} fill="#eb8291" />,
+            },
+            {
+              type: 'forFriendsAll',
+              title: '모든 친구',
+              fontColor: '#666666',
+              icon: <AllFriendsIcon size={60} fill="#666666" />,
+            },
+          ];
+        case 'parents-test':
+          return [
+            {
+              type: 'forChildren',
+              title: '자녀',
+              fontColor: '#eb8291',
+              icon: <ChildrenIcon size={60} fill="#eb8291" />,
+            },
+            {
+              type: 'forEachother',
+              title: '배우자',
+              fontColor: '#947463',
+              icon: <ParentIcon size={60} fill="#947463" />,
+            },
+          ];
+        default:
+          return [];
+      }
+    })();
 
     return takersInfo.map((taker, index) => {
       return (
@@ -93,7 +100,10 @@ export const SelectTestTaker = () => {
           }}
         >
           {taker.icon}
-          <div>{taker.title}</div>
+          <div>
+            <span>{taker.title}</span>
+            {taker.subTitle && <small>{`(${taker.subTitle})`}</small>}
+          </div>
         </StyledMenu>
       );
     });
@@ -104,27 +114,7 @@ export const SelectTestTaker = () => {
       case 'couple-test':
         return (
           <div>
-            <StyledContentDescription>
-              나의{' '}
-              <span
-                style={{
-                  color: '#009edd',
-                  fontWeight: 'bold',
-                }}
-              >
-                남자친구
-              </span>{' '}
-              혹은{' '}
-              <span
-                style={{
-                  color: '#eb8291',
-                  fontWeight: 'bold',
-                }}
-              >
-                여자친구
-              </span>
-              가 풀 문제를 출제해요.
-            </StyledContentDescription>
+            <StyledContentDescription>내가 출제한 문제를 풀 응시자를 선택해요.</StyledContentDescription>
           </div>
         );
       case 'friends-test':

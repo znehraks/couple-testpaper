@@ -25,12 +25,12 @@ export const Ready = () => {
                   color: '#009edd',
                 }}
               >
-                남자친구
+                남자친구(남편)
               </span>
               가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
-              문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
+              문제는 <strong>총 10문항</strong> 출제할 수 있어요.
             </StyledContentDescription>
           </>
         );
@@ -44,12 +44,12 @@ export const Ready = () => {
                   fontWeight: 'bold',
                 }}
               >
-                여자친구
+                여자친구(아내)
               </span>
               가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
-              문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
+              문제는 <strong>총 10문항</strong> 출제할 수 있어요.
             </StyledContentDescription>
           </>
         );
@@ -68,7 +68,7 @@ export const Ready = () => {
               이 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
-              문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
+              문제는 <strong>총 10문항</strong> 출제할 수 있어요.
             </StyledContentDescription>
           </>
         );
@@ -87,7 +87,7 @@ export const Ready = () => {
               이 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
-              문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
+              문제는 <strong>총 10문항</strong> 출제할 수 있어요.
             </StyledContentDescription>
           </>
         );
@@ -105,7 +105,7 @@ export const Ready = () => {
               이 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
-              문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
+              문제는 <strong>총 10문항</strong> 출제할 수 있어요.
             </StyledContentDescription>
           </>
         );
@@ -124,7 +124,7 @@ export const Ready = () => {
               가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
-              문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
+              문제는 <strong>총 10문항</strong> 출제할 수 있어요.
             </StyledContentDescription>
           </>
         );
@@ -143,7 +143,7 @@ export const Ready = () => {
               가 나에 대해 얼마나 알고 있는지 테스트하는 문제를 출제해요.
             </StyledContentDescription>
             <StyledContentDescription>
-              문제는 <strong>약 10</strong>개 정도로 구성되어 있어요.
+              문제는 <strong>총 10문항</strong> 출제할 수 있어요.
             </StyledContentDescription>
           </>
         );

@@ -2,14 +2,12 @@ import { ITest } from '@/types/utils';
 
 export enum QuestionType {
   REQUIRED = 'required',
-  MY_INFO = 'myInfo',
-  COMMON = 'common',
   COUPLE = 'couple',
   FRIENDS = 'friends',
   PARENTS = 'parents',
 }
 
-export const requiredQuestions: ITest[] = [
+export const commonRequiredQuestions: ITest[] = [
   {
     type: QuestionType.REQUIRED,
     question: '당신의 이름은?',

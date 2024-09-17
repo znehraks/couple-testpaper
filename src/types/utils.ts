@@ -33,6 +33,16 @@ export interface ITest {
    * 시험 선지
    */
   choices: string[];
+
+  /**
+   * 주관식으로 입력 받는 문제의 경우 입력창에 미리 표시할 텍스트
+   */
+  placeholder?: string;
+
+  /**
+   * 주관식으로 입력 받고, 시험지는 알아서 보기가 4개 채워져서 출제되는 문제에서 나머지 4개의 보기
+   */
+  randomChoices?: string[];
 }
 /**
  * 시험문제 + 답
