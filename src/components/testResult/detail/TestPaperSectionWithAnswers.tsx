@@ -8,14 +8,12 @@ export const TestPaperSectionWithAnswers = ({ entireTestData }: { entireTestData
   const router = useRouter();
   const isMobile = useIsMobile();
   const { testQuestionWithAnswers } = entireTestData;
-  console.log('entireTestData', entireTestData);
   const testerAnswers = useMemo(() => {
     return (
       entireTestData.rankings?.find((ranking) => ranking.testerNickname === router.query.name)?.testerAnswers ?? []
     );
   }, [entireTestData.rankings, router.query.name]);
 
-  console.log('testerAnswers', testerAnswers);
 
   const score = useMemo(() => {
     return (

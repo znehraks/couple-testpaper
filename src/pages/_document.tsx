@@ -35,7 +35,7 @@ export default function Document() {
         <link rel="preload" href="/NanumMyeongBold.otf" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="preload" href="/NanumMyeongExtraBold.otf" as="font" type="font/otf" crossOrigin="anonymous" />
 
-        <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon-144x144.png" sizes="114x114" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" />
         <link rel="manifest" href="/manifest.json" />

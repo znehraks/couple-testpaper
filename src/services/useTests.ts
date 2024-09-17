@@ -76,6 +76,7 @@ export const useGetTestEntire = () => {
     const docSnap = await getDoc(docRef);
     const data = docSnap.data() as IEntireTest;
     if (!data) throw new Error('No data found');
+
     return data;
   }, []);
 

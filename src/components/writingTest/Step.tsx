@@ -129,11 +129,20 @@ export const Step = ({ onSubmit }: IStepProps) => {
   const handleSubmit = useCallback(() => {
     if (!testTaker) return;
     const _testQuestionWithAnswers = questions.map((question, index) => {
+      if (index === questions.length - 1) {
+        return {
+          ...question,
+          question: tempQuestion,
+          choices: tempChoices,
+          answer: tempAnswers[index],
+        };
+      }
       return {
         ...question,
         answer: tempAnswers[index],
       };
     });
+
     onSubmit({
       testType: (router.query.testType as string).split('-')[0] as TestType,
       testQuestionWithAnswers: _testQuestionWithAnswers.slice(1),
@@ -142,7 +151,16 @@ export const Step = ({ onSubmit }: IStepProps) => {
     });
     setTempAnswers({});
     setCurrentTestQuestionIndex(0);
-  }, [onSubmit, questions, router.query.testType, setCurrentTestQuestionIndex, tempAnswers, testTaker]);
+  }, [
+    onSubmit,
+    questions,
+    router.query.testType,
+    setCurrentTestQuestionIndex,
+    tempAnswers,
+    tempChoices,
+    tempQuestion,
+    testTaker,
+  ]);
 
   const description = useMemo(() => {
     switch (currentTestQuestionIndex) {
@@ -239,10 +257,10 @@ export const Step = ({ onSubmit }: IStepProps) => {
                     id={`choice-${index}`}
                     type="radio"
                     name="choice"
-                    checked={tempAnswers[currentTestQuestionIndex] === choice}
-                    value={choice}
-                    onChange={(e) => {
-                      setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: e.target.value }));
+                    checked={tempAnswers[currentTestQuestionIndex] === tempChoices[index]}
+                    value={tempChoices[index]}
+                    onChange={() => {
+                      setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: tempChoices[index] }));
                     }}
                   />
                   <EditableText
