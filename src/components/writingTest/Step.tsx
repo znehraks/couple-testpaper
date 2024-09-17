@@ -12,6 +12,7 @@ import {
   StyledStepWrapper,
 } from './Step.styles';
 import { StyledContentDescription, StyledContentTitle, StyledContentTitleWrapper } from './styles';
+import { EditableText } from '../EditableText';
 
 interface IStepProps {
   onSubmit: (result: ITestWithAnswerResult) => void;
@@ -122,18 +123,11 @@ export const Step = ({ onSubmit }: IStepProps) => {
       <StyledContentTitleWrapper>
         <StyledContentTitle mobileFontSize={question.length > 10 ? 24 : 28}>
           {`${currentTestQuestionIndex + 1}. `}
-          <span
-            contentEditable={currentTestQuestionIndex !== 0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                e.currentTarget.blur();
-              }
-            }}
-            onBlur={(e) => {
-              setTempQuestion(e.currentTarget.innerText);
-            }}
-          >{`${question}`}</span>
+          <EditableText
+            initialText={tempQuestion}
+            onTextChange={setTempQuestion}
+            isEditable={currentTestQuestionIndex !== 0}
+          />
         </StyledContentTitle>
 
         <StyledContentDescription>{description}</StyledContentDescription>
@@ -174,22 +168,15 @@ export const Step = ({ onSubmit }: IStepProps) => {
                     setTempAnswers((prev) => ({ ...prev, [currentTestQuestionIndex]: e.target.value }));
                   }}
                 />
-                <span
-                  contentEditable
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      e.currentTarget.blur();
-                    }
-                  }}
-                  onBlur={(e) => {
+                <EditableText
+                  initialText={choice}
+                  onTextChange={(newText) => {
                     const _tempChoices = [...tempChoices];
-                    _tempChoices[index] = e.currentTarget.innerText;
+                    _tempChoices[index] = newText;
                     setTempChoices(_tempChoices);
                   }}
-                >
-                  {choice}
-                </span>
+                  isEditable={true}
+                />
               </div>
             ))}
           </StyledChoiceContainer>

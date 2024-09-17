@@ -88,6 +88,7 @@ export const StyledTestQuestionWrapper = styled.div`
   position: relative;
   flex: 1;
   min-height: 1200px;
+  width: 100%;
 `;
 
 export const StyledTestSectionWrapper = styled.div`
