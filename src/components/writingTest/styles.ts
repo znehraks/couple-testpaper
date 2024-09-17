@@ -60,8 +60,12 @@ export const StyledContentTitleTooltipWrapper = styled.div`
   font-size: 22px;
   display: flex;
   flex-direction: row;
+  background-color: #fff;
   & > div:last-of-type {
     margin-top: 4px;
+  }
+  @media (max-width: 501px) {
+    font-size: 12px;
   }
 `;
 

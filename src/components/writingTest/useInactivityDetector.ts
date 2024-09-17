@@ -3,9 +3,12 @@ import { useState, useEffect, useCallback } from 'react';
 export const useInactivityDetector = ({
   inactivityTime = 10000,
   enable = true,
+  resetTrigger = [],
 }: {
   inactivityTime?: number;
   enable?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resetTrigger?: any[];
 }) => {
   const [isInactive, setIsInactive] = useState(false);
 
@@ -15,7 +18,7 @@ export const useInactivityDetector = ({
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
-
+    resetTimer();
     if (!enable) return;
     const handleActivity = () => {
       resetTimer();
@@ -34,7 +37,8 @@ export const useInactivityDetector = ({
       window.removeEventListener('pointermove', handleActivity);
       clearTimeout(timeoutId);
     };
-  }, [enable, inactivityTime, resetTimer]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enable, inactivityTime, resetTimer, ...resetTrigger]);
 
   return isInactive;
 };

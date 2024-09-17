@@ -9,6 +9,7 @@ interface EditableTextProps {
   isEditable: boolean;
   isTwinkle?: boolean;
   onClick?: () => void;
+  maxLength?: number;
 }
 
 const twinkleKeyframes = keyframes`
@@ -31,32 +32,34 @@ export const EditableText = ({
   isEditable,
   isTwinkle = false,
   onClick,
+  maxLength = 20,
 }: EditableTextProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const spanRef = useRef<HTMLSpanElement>(null);
-
-  const enableEditing = useCallback(() => {
-    if (isEditable) {
-      setIsEditing(true);
-    }
-  }, [isEditable]);
+  const previousTextRef = useRef(initialText.slice(0, maxLength));
 
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
       onClick?.();
       if (isEditable && e.target === spanRef.current) {
-        enableEditing();
+        setIsEditing(true);
       }
     },
-    [onClick, isEditable, enableEditing],
+    [onClick, isEditable],
   );
 
   const handleBlur = useCallback(() => {
     setIsEditing(false);
     if (spanRef.current) {
-      onTextChange(spanRef.current.innerText);
+      const newText = spanRef.current.innerText.trim().slice(0, maxLength);
+      if (newText !== '') {
+        onTextChange(newText);
+        previousTextRef.current = newText;
+      } else {
+        spanRef.current.innerText = previousTextRef.current;
+      }
     }
-  }, [onTextChange]);
+  }, [onTextChange, maxLength]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -71,6 +74,37 @@ export const EditableText = ({
     }
   }, [isEditing]);
 
+  useEffect(() => {
+    const newText = initialText.slice(0, maxLength);
+    previousTextRef.current = newText;
+    if (spanRef.current) {
+      spanRef.current.innerText = newText;
+    }
+  }, [initialText, maxLength]);
+
+  useEffect(() => {
+    if (!spanRef.current) return;
+
+    const observer = new MutationObserver(() => {
+      const currentText = spanRef.current?.innerText || '';
+      if (currentText.length > maxLength || currentText.trim() === '') {
+        spanRef.current!.innerText = previousTextRef.current;
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.setStart(spanRef.current!.childNodes[0], previousTextRef.current.length);
+        range.collapse(true);
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+      } else {
+        previousTextRef.current = currentText;
+      }
+    });
+
+    observer.observe(spanRef.current, { childList: true, characterData: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, [maxLength]);
+
   return (
     <TwinkleSpan
       ref={spanRef}
@@ -83,7 +117,7 @@ export const EditableText = ({
         cursor: isEditable ? 'pointer' : 'default',
       }}
     >
-      {initialText}
+      {previousTextRef.current}
     </TwinkleSpan>
   );
 };

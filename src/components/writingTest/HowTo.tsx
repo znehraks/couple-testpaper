@@ -220,7 +220,16 @@ export const HowTo = () => {
               paddingLeft: '8px',
             }}
           >
-            1-1. 질문 혹은 선지가 마음에 들지 않는다면, <strong>직접 문제와 선지를 수정</strong>할 수 있어요.
+            1-1. 질문 혹은 선지가 마음에 들지 않는다면,{' '}
+            <strong
+              style={{
+                fontWeight: 'bold',
+                textDecoration: 'underline',
+              }}
+            >
+              직접 문제와 선지를 수정
+            </strong>
+            할 수 있어요.
           </StyledContentDescription>
           <StyledContentDescription>
             2. 출제 완료 후, 시험지 <strong>링크를 복사</strong>해요.

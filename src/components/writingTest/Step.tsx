@@ -22,12 +22,14 @@ import { EditableText } from '../EditableText';
 import { useRouter } from 'next/router';
 import { useInactivityDetector } from './useInactivityDetector';
 import { TooltipArrowIcon } from '../icons/Icon';
+import { useIsMobile } from '@/hooks/useMobile';
 
 interface IStepProps {
   onSubmit: (result: ITestWithAnswerResult) => void;
 }
 export const Step = ({ onSubmit }: IStepProps) => {
   const router = useRouter();
+  const isMobile = useIsMobile();
   const [currentTestQuestionIndex, setCurrentTestQuestionIndex] = useAtom(
     WritingTestStore.CurrentTestQuestionIndexAtom,
   );
@@ -71,6 +73,8 @@ export const Step = ({ onSubmit }: IStepProps) => {
       return;
     }
     setCurrentTestQuestionIndex((prev) => prev - 1);
+    setIsTitleTwinkleOff(false);
+    setInputValue('');
   }, [currentTestQuestionIndex, setCurrentTestQuestionIndex, setStep]);
 
   const handleGoNext = useCallback(() => {
@@ -138,25 +142,29 @@ export const Step = ({ onSubmit }: IStepProps) => {
   }, [inputValue.length]);
 
   const isInacitve = useInactivityDetector({
-    inactivityTime: 3000,
+    inactivityTime: 5000,
+    resetTrigger: [currentTestQuestionIndex, isTitleTwinkleOff, isChoiceTwinkleOffMap],
   });
+
+  const isContentTitleTooltipVisible = isInacitve && !isTitleTwinkleOff && currentTestQuestionIndex !== 0;
 
   if (!questions.length) return null;
 
   return (
     <StyledStepWrapper>
       <StyledContentTitleWrapper>
-        {isInacitve && !isTitleTwinkleOff && (
+        {isContentTitleTooltipVisible && (
           <StyledContentTitleTooltipWrapper>
-            <TooltipArrowIcon size={24} fill="#000" />
+            <TooltipArrowIcon size={isMobile ? 12 : 24} fill="#000" />
             <div>문제를 수정하고 싶다면 클릭 후 수정해주세요.</div>
           </StyledContentTitleTooltipWrapper>
         )}
         <StyledContentTitle mobileFontSize={question.length > 10 ? 24 : 28}>
           {`${currentTestQuestionIndex + 1}. `}
           <EditableText
-            isTwinkle={isInacitve && !isTitleTwinkleOff}
+            isTwinkle={isContentTitleTooltipVisible}
             initialText={tempQuestion}
+            maxLength={20}
             onTextChange={setTempQuestion}
             onClick={() => {
               setIsTitleTwinkleOff(true);
@@ -198,12 +206,6 @@ export const Step = ({ onSubmit }: IStepProps) => {
                     .filter((item) => item[1] === false)
                     .map((item) => Number(item[0])),
                 ) === index;
-
-              console.log(
-                Object.entries(isChoiceTwinkleOffMap)
-                  .filter((item) => item[1] === false)
-                  .map((item) => Number(item[0])),
-              );
               return (
                 <div
                   key={index}
@@ -226,6 +228,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
                   />
                   <EditableText
                     initialText={choice}
+                    maxLength={20}
                     onTextChange={(newText) => {
                       const _tempChoices = [...tempChoices];
                       _tempChoices[index] = newText;
@@ -239,7 +242,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
                   />
                   {isTooltipVisible && (
                     <StyledContentChoiceTooltipWrapper>
-                      <TooltipArrowIcon size={24} fill="#000" />
+                      <TooltipArrowIcon size={isMobile ? 12 : 24} fill="#000" />
                       <div>선택지를 수정하고 싶다면 클릭 후 수정해주세요.</div>
                     </StyledContentChoiceTooltipWrapper>
                   )}

@@ -60,6 +60,7 @@ export const StyledChoiceContainer = styled.div`
   }
   @media (max-width: 501px) {
     font-size: 24px;
+    gap: 14px;
     & > div > input {
       margin-top: 6px;
     }
@@ -76,6 +77,14 @@ export const StyledContentChoiceTooltipWrapper = styled.div`
   top: 50%;
   & > div:last-of-type {
     margin-top: 6px;
+  }
+  @media (max-width: 501px) {
+    left: 40%;
+    top: 28px;
+    font-size: 16px;
+    & > div:last-of-type {
+      margin-top: 0;
+    }
   }
 `;
 
