@@ -51,7 +51,7 @@ export const EditableText = ({
   const handleBlur = useCallback(() => {
     setIsEditing(false);
     if (spanRef.current) {
-      const newText = spanRef.current.innerText.trim().slice(0, maxLength);
+      const newText = spanRef.current.innerText.trim();
       if (newText !== '') {
         onTextChange(newText);
         previousTextRef.current = newText;
@@ -59,14 +59,27 @@ export const EditableText = ({
         spanRef.current.innerText = previousTextRef.current;
       }
     }
-  }, [onTextChange, maxLength]);
+  }, [onTextChange]);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      spanRef.current?.blur();
-    }
-  }, []);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLSpanElement>) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        spanRef.current?.blur();
+        return;
+      }
+
+      const currentText = spanRef.current?.innerText || '';
+
+      if (
+        currentText.length >= maxLength &&
+        !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)
+      ) {
+        e.preventDefault();
+      }
+    },
+    [maxLength],
+  );
 
   useEffect(() => {
     if (isEditing) {
@@ -81,29 +94,6 @@ export const EditableText = ({
       spanRef.current.innerText = newText;
     }
   }, [initialText, maxLength]);
-
-  useEffect(() => {
-    if (!spanRef.current) return;
-
-    const observer = new MutationObserver(() => {
-      const currentText = spanRef.current?.innerText || '';
-      if (currentText.length > maxLength || currentText.trim() === '') {
-        spanRef.current!.innerText = previousTextRef.current;
-        const range = document.createRange();
-        const sel = window.getSelection();
-        range.setStart(spanRef.current!.childNodes[0], previousTextRef.current.length);
-        range.collapse(true);
-        sel?.removeAllRanges();
-        sel?.addRange(range);
-      } else {
-        previousTextRef.current = currentText;
-      }
-    });
-
-    observer.observe(spanRef.current, { childList: true, characterData: true, subtree: true });
-
-    return () => observer.disconnect();
-  }, [maxLength]);
 
   return (
     <TwinkleSpan
