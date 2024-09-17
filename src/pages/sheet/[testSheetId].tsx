@@ -7,11 +7,10 @@ import { PDFDownloadButton } from '@/components/PDFDownloadButton';
 import { useTimer } from '@/components/takingTest/hooks/useTimer';
 import { useAppearPDFDownloadButton } from '@/components/takingTest/hooks/useAppearPDFDownloadButton';
 import { useRedirect } from '@/components/takingTest/hooks/useRedirect';
-import { TestType } from '@/types/utils';
 import { Spinner } from '@/components/common/Spinner';
 
 export default function TestSheetPage() {
-  const { data, isLoading, isError } = useGetTestSheet({ testType: TestType.friends });
+  const { data, isLoading, isError } = useGetTestSheet();
   const takingTestStatus = useAtomValue(TakingTestStore.TakingTestStatusAtom);
   useTimer();
   useAppearPDFDownloadButton();
