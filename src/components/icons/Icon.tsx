@@ -117,7 +117,6 @@ export const TrophyIcon = ({ size = 16, fill }: IIconProps) => {
 export const MagnifierIcon = ({ size = 16, fill }: IIconProps) => {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={fill} xmlns="http://www.w3.org/2000/svg">
-      <title />
       <g data-name="Layer 2" id="Layer_2">
         <path d="M18,10a8,8,0,1,0-3.1,6.31l6.4,6.4,1.41-1.41-6.4-6.4A8,8,0,0,0,18,10Zm-8,6a6,6,0,1,1,6-6A6,6,0,0,1,10,16Z" />
       </g>
@@ -143,7 +142,6 @@ export const GoBackIcon = ({ size = 16, fill }: IIconProps) => {
 export const MaleIcon = ({ size = 16, fill = '#7bb3ff' }: IIconProps) => {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-      <title>Male Icon</title>
       <path
         d="M29,24.79167v5.13261l11.73385,3.34534A9.58333,9.58333,0,0,1,47,42.26052V47"
         fill="none"
@@ -183,7 +181,6 @@ export const MaleIcon = ({ size = 16, fill = '#7bb3ff' }: IIconProps) => {
 export const FemaleIcon = ({ size = 16, fill = '#eb8291' }: IIconProps) => {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-      <title>Male Icon</title>
       <path
         d="M23.01091,27.75453a3.77649,3.77649,0,0,0,2.16993,0l.0002-.00006a9.56156,9.56156,0,0,0,4.32813-2.72686h0a9.56154,9.56154,0,0,0,2.33214-4.72107l.08137-.44749a9.56149,9.56149,0,0,0,.15424-1.7105V18l-.02365-4h-1.568a9.05117,9.05117,0,0,1-6.4621-2.58333V14H15.99314L16,18v.0589a9.56146,9.56146,0,0,0,.15424,1.7105l.08137.44749a10.90567,10.90567,0,0,0,2.34772,5.11644l.34732.3734v6.024L7.492,35.69051a5.07457,5.07457,0,0,0-3.50449,4.26741L3,47"
         fill="none"
@@ -224,7 +221,6 @@ export const FemaleIcon = ({ size = 16, fill = '#eb8291' }: IIconProps) => {
 export const AllFriendsIcon = ({ size = 16, fill = '#353535' }: IIconProps) => {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-      <title>Custom Icon</title>
       <g>
         <path
           d="M17.94705,37l9.4942-3.0056V29.1803l-.7104-.8864a9.49328,9.49328,0,0,1-2.0435-4.4535l-.0708-.3896a8.31482,8.31482,0,0,1-.1343-1.4889v-.0512l-.006-3.4818"
