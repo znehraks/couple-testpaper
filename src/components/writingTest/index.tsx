@@ -6,7 +6,7 @@ import { useAtomValue } from 'jotai';
 import { WritingTestStore } from '../../store/WritingTestStore';
 import { Ready } from './Ready';
 import { StyledContentWrapper } from './styles';
-import { HowTo } from './HowTo';
+import { HowTo } from './HowTo';
 import { Complete } from './Complete';
 import { useRouter } from 'next/router';
 import { SelectParent } from './SelectParent';

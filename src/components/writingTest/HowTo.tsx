@@ -44,8 +44,12 @@ export const HowTo = () => {
             .sort(() => Math.random() - 0.5)
             .slice(0, 10)
             .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
               return {
                 ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
               };
             });
           setQuestions([...coupleRequiredQuestions, ...selectedMyInfoQuestions]);
