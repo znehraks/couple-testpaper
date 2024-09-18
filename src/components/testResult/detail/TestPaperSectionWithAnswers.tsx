@@ -14,7 +14,6 @@ export const TestPaperSectionWithAnswers = ({ entireTestData }: { entireTestData
     );
   }, [entireTestData.rankings, router.query.name]);
 
-
   const score = useMemo(() => {
     return (
       testQuestionWithAnswers.filter((question, index) => {
@@ -34,7 +33,7 @@ export const TestPaperSectionWithAnswers = ({ entireTestData }: { entireTestData
           {testQuestionWithAnswers.map((question, index) => (
             <TestPaper.Question
               isCorrect={testerAnswers[index]?.text === question.answer}
-              submittedAnswerIndex={testerAnswers[index + 1]?.index}
+              submittedAnswerIndex={testerAnswers[index]?.index}
               key={question.question}
               question={question}
               index={index}
