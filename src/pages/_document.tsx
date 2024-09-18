@@ -39,6 +39,29 @@ export default function Document() {
         <link rel="apple-touch-icon" href="/apple-icon-144x144.png" sizes="114x114" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="preload" href="/0.png" as="image" type="image/png" />
+        <link rel="preload" href="/5.png" as="image" type="image/png" />
+        <link rel="preload" href="/10.png" as="image" type="image/png" />
+        <link rel="preload" href="/15.png" as="image" type="image/png" />
+        <link rel="preload" href="/20.png" as="image" type="image/png" />
+        <link rel="preload" href="/25.png" as="image" type="image/png" />
+        <link rel="preload" href="/30.png" as="image" type="image/png" />
+        <link rel="preload" href="/35.png" as="image" type="image/png" />
+        <link rel="preload" href="/40.png" as="image" type="image/png" />
+        <link rel="preload" href="/45.png" as="image" type="image/png" />
+        <link rel="preload" href="/50.png" as="image" type="image/png" />
+        <link rel="preload" href="/55.png" as="image" type="image/png" />
+        <link rel="preload" href="/60.png" as="image" type="image/png" />
+        <link rel="preload" href="/65.png" as="image" type="image/png" />
+        <link rel="preload" href="/70.png" as="image" type="image/png" />
+        <link rel="preload" href="/75.png" as="image" type="image/png" />
+        <link rel="preload" href="/80.png" as="image" type="image/png" />
+        <link rel="preload" href="/85.png" as="image" type="image/png" />
+        <link rel="preload" href="/90.png" as="image" type="image/png" />
+        <link rel="preload" href="/95.png" as="image" type="image/png" />
+        <link rel="preload" href="/100.png" as="image" type="image/png" />
+        <link rel="preload" href="/correct.png" as="image" type="image/png" />
+        <link rel="preload" href="/wrong.png" as="image" type="image/png" />
 
         <script
           async
