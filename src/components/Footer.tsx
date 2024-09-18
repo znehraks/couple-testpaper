@@ -20,7 +20,7 @@ export const Footer = () => {
           <iframe
             ref={iframeRef}
             width="400"
-            height="140"
+            height="50"
             referrerPolicy="unsafe-url"
             title="Coupang Partners Advertisement"
           />
