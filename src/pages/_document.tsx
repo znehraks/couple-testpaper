@@ -32,8 +32,6 @@ export default function Document() {
         <link rel="preload" href="/NanumSquareEB.otf" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="preload" href="/NanumSquareR.otf" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="preload" href="/NanumMyeongjo.otf" as="font" type="font/otf" crossOrigin="anonymous" />
-        <link rel="preload" href="/NanumMyeongBold.otf" as="font" type="font/otf" crossOrigin="anonymous" />
-        <link rel="preload" href="/NanumMyeongExtraBold.otf" as="font" type="font/otf" crossOrigin="anonymous" />
 
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon-144x144.png" sizes="114x114" />
@@ -62,15 +60,26 @@ export default function Document() {
         <link rel="preload" href="/100.png" as="image" type="image/png" />
         <link rel="preload" href="/correct.png" as="image" type="image/png" />
         <link rel="preload" href="/wrong.png" as="image" type="image/png" />
-
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
         <script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730783665107254"
-          crossOrigin="anonymous"
-        ></script>
-      </Head>
-      <Main />
-      <NextScript />
+          dangerouslySetInnerHTML={{
+            __html: `
+              new PartnersCoupang.G({
+                "id":808718,
+                "template":"carousel",
+                "trackingCode":"AF4635557",
+                "width":"680",
+                "height":"140",
+                "tsource":""
+              });
+            `,
+          }}
+        />
+      </body>
     </Html>
   );
 }
