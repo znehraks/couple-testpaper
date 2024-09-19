@@ -17,6 +17,11 @@ export const HowTo = () => {
   const setStep = useSetAtom(WritingTestStore.StepAtom);
   const testTaker = useAtomValue(WritingTestStore.TestTakerAtom);
   const setQuestions = useSetAtom(WritingTestStore.QuestionsAtom);
+  const setCurrentTestQuestionIndex = useSetAtom(WritingTestStore.CurrentTestQuestionIndexAtom);
+
+  useEffect(() => {
+    setCurrentTestQuestionIndex(0);
+  }, [setCurrentTestQuestionIndex]);
   // TODO 유형별 문제 출제 -> 커플 문제처럼 올 주관식이면 현재 출제가 안됨 -> 디버그 필요
   // TODO 직장 동료들 끼리도 할수 있게 문제 출제
   useEffect(() => {
