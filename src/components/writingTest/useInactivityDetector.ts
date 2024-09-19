@@ -27,14 +27,14 @@ export const useInactivityDetector = ({
     };
 
     // 포인터 이동 이벤트 리스너 추가
-    window.addEventListener('pointermove', handleActivity);
+    window.addEventListener('pointerdown', handleActivity);
 
     // 초기 타이머 설정
     timeoutId = setTimeout(() => setIsInactive(true), inactivityTime);
 
     // 컴포넌트 언마운트 시 정리
     return () => {
-      window.removeEventListener('pointermove', handleActivity);
+      window.removeEventListener('pointerdown', handleActivity);
       clearTimeout(timeoutId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

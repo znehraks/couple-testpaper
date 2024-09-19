@@ -178,7 +178,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
   }, [inputValue.length]);
 
   const isInacitve = useInactivityDetector({
-    inactivityTime: 5000,
+    inactivityTime: 3000,
     resetTrigger: [currentTestQuestionIndex, isTitleTwinkleOff, isChoiceTwinkleOffMap],
   });
 
