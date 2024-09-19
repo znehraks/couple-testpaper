@@ -2,9 +2,11 @@
   "name": "couple-testpaper",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -27,6 +29,7 @@
     "jspdf": "^2.5.1",
     "lodash-es": "^4.17.21",
     "next": "14.2.3",
+    "next-sitemap": "^4.2.3",
     "openai": "^4.47.1",
     "prettier": "^3.2.5",
     "react": "^18",

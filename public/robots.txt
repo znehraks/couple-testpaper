@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://couple-gosa.netlify.app/
+
+# Sitemaps
+Sitemap: https://couple-gosa.netlify.app/sitemap.xml
