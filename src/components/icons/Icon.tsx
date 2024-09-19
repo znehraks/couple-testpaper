@@ -11,19 +11,19 @@ export const HeartIcon = ({ size = 16, fill = '#eb8291' }: IIconProps) => {
           d="   M27,16.4c-1.5-4.8-6.1-8.2-11.5-8.2c-6.6,0-12,5.2-12,11.5c0,4.1,2,6.3,5.7,9.8l18.1,18.1"
           fill="none"
           stroke={fill}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-miterlimit="10"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeMiterlimit="10"
+          strokeWidth="2"
         />
         <path
           d="   M27,16.4c1.1-5.4,6.7-9.1,12.5-9.1c6.6,0,12,5.2,12,11.5c0,3.5-1.6,5.7-4.2,8.8L28.1,46.8"
           fill="none"
           stroke={fill}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-miterlimit="10"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeMiterlimit="10"
+          strokeWidth="2"
         />
       </g>
     </svg>

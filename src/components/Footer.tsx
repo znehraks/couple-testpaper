@@ -62,6 +62,7 @@ const StyledCoupangAdWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #ffffff;
   & > div {
     font-size: 11px;
     max-width: 400px;

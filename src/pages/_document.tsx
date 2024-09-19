@@ -64,21 +64,7 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <script
-          async
-          dangerouslySetInnerHTML={{
-            __html: `
-              new PartnersCoupang.G({
-                "id":808718,
-                "template":"carousel",
-                "trackingCode":"AF4635557",
-                "width":"680",
-                "height":"140",
-                "tsource":""
-              });
-            `,
-          }}
-        />
+        <script async src={process.env.NEXT_PUBLIC_GOOGLE_AD_URL} crossOrigin="anonymous"></script>
       </body>
     </Html>
   );

@@ -25,7 +25,7 @@ export const PDFDownloadButton = () => {
 
 const StyledPdfButton = styled.button<{ visible: boolean }>`
   position: fixed;
-  bottom: 50px;
+  bottom: 120px;
   right: 50%;
   transform: translateX(50%);
   transition:
