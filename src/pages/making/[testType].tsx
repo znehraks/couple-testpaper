@@ -26,6 +26,12 @@ export default function TestMakingTypePage() {
   useEffect(() => {
     if (router.query.testType === 'parents-test') {
       setStep('SELECT_PARENT');
+      return;
+    }
+
+    if (router.query.testType === 'friends-test') {
+      setStep('READY');
+      return;
     }
   }, [router.query.testType, setStep]);
 

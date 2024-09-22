@@ -1,4 +1,5 @@
 import { Layout } from '@/components/Layout';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FriendsIcon, HeartIcon, ParentIcon } from '@/components/icons/Icon';
 import { StyledMenu, StyledMenuContainer } from '@/components/writingTest/styles';
 import { WritingTestStore } from '@/store/WritingTestStore';
@@ -17,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     setTestTaker(null);
     setMe(null);
-    setStep('SELECT_TEST_TAKER');
+    setStep('READY');
   }, [setMe, setStep, setTestTaker]);
 
   return (
@@ -28,6 +29,8 @@ export default function Home() {
           <StyledMenu
             color="#eb8291"
             onClick={() => {
+              setTestTaker('forCoupleBoth');
+              setStep('READY');
               router.push('/making/couple-test');
             }}
           >
@@ -37,13 +40,15 @@ export default function Home() {
           <StyledMenu
             color="#666666"
             onClick={() => {
+              setTestTaker('forFriendsAll');
+              setStep('READY');
               router.push('/making/friends-test');
             }}
           >
             <FriendsIcon size={48} fill="#666666" />
             <div>친구고사</div>
           </StyledMenu>
-          <StyledMenu
+          {/* <StyledMenu
             color="#947463"
             onClick={() => {
               router.push('/making/parents-test');
@@ -51,7 +56,7 @@ export default function Home() {
           >
             <ParentIcon size={48} fill="#947463" />
             <div>부모님고사</div>
-          </StyledMenu>
+          </StyledMenu> */}
         </StyledMenuContainer>
       </StyledHomeContent>
     </Layout>

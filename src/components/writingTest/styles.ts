@@ -56,12 +56,14 @@ export const StyledContentTitleWrapper = styled.div`
 export const StyledContentTitleTooltipWrapper = styled.div`
   position: absolute;
   bottom: -20px;
-  right: 0;
+  left: 50%;
   font-size: 22px;
   display: flex;
   flex-direction: row;
   background-color: #fff;
+  width: 100%;
   & > div:last-of-type {
+    min-width: fit-content;
     margin-top: 4px;
   }
   @media (max-width: 501px) {

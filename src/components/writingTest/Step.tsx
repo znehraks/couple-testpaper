@@ -191,7 +191,9 @@ export const Step = ({ onSubmit }: IStepProps) => {
       <StyledContentTitleWrapper>
         {isContentTitleTooltipVisible && (
           <StyledContentTitleTooltipWrapper>
-            <TooltipArrowIcon size={isMobile ? 12 : 24} fill="#000" />
+            <div>
+              <TooltipArrowIcon size={isMobile ? 12 : 24} fill="#000" />
+            </div>
             <div>문제를 수정하고 싶다면 클릭 후 수정해주세요.</div>
           </StyledContentTitleTooltipWrapper>
         )}

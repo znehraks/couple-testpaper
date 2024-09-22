@@ -8,14 +8,40 @@ import {
 } from './styles';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { WritingTestStore } from '../../store/WritingTestStore';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 export const Ready = () => {
+  const router = useRouter();
   const setStep = useSetAtom(WritingTestStore.StepAtom);
   const testTaker = useAtomValue(WritingTestStore.TestTakerAtom);
 
+  useEffect(() => {
+    if (testTaker === null) {
+      router.replace('/');
+    }
+  }, [router, testTaker]);
+
   const description = useMemo(() => {
     switch (testTaker) {
+      case 'forCoupleBoth':
+        return (
+          <>
+            <StyledContentDescription>
+              <span
+                style={{
+                  fontWeight: 'bold',
+                }}
+              >
+                나의 연인
+              </span>
+              이 나에 대해 잘 알고 있는지 테스트하는 문제를 출제해요.
+            </StyledContentDescription>
+            <StyledContentDescription>
+              문제는 <strong>총 10문항</strong> 출제할 수 있어요.
+            </StyledContentDescription>
+          </>
+        );
       case 'forCoupleMale':
         return (
           <>

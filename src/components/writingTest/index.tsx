@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /** @jsxImportSource @emotion/react */
 import { SelectTestTaker } from './SelectTestTaker';
 import { Step } from './Step';
@@ -21,8 +22,8 @@ const WritingTest = ({ onSubmit }: IWritingTestProps) => {
   return (
     <StyledContentWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       {/* 부모님 고사일때에만 자기 자신이 아빠인지 엄마인지 선택 */}
-      {router.query.testType === 'parents-test' && step === 'SELECT_PARENT' && <SelectParent />}
-      {step === 'SELECT_TEST_TAKER' && <SelectTestTaker />}
+      {/* {router.query.testType === 'parents-test' && step === 'SELECT_PARENT' && <SelectParent />}
+      {step === 'SELECT_TEST_TAKER' && <SelectTestTaker />} */}
       {step === 'READY' && <Ready />}
       {step === 'HOWTO' && <HowTo />}
       {step === 'QUESTIONS' && <Step onSubmit={onSubmit} />}
