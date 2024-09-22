@@ -162,6 +162,7 @@ export const testTypeMap = {
   couple: '연인',
   friends: '친구',
   parents: '부모님',
+  office: '회사',
 };
 
 /**
