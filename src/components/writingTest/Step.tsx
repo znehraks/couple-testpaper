@@ -203,7 +203,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
             key={`question-${currentTestQuestionIndex}`}
             isTwinkle={isContentTitleTooltipVisible}
             initialText={tempQuestion}
-            maxLength={40}
+            maxLength={80}
             onTextChange={setTempQuestion}
             onClick={() => {
               setIsTitleTwinkleOff(true);
@@ -268,7 +268,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
                   <EditableText
                     key={`choice-${currentTestQuestionIndex}-${index}`}
                     initialText={choice}
-                    maxLength={40}
+                    maxLength={80}
                     onTextChange={(newText) => {
                       const _tempChoices = [...tempChoices];
                       _tempChoices[index] = newText;
