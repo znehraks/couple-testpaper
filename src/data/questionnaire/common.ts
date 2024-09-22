@@ -5,6 +5,7 @@ export enum QuestionType {
   COUPLE = 'couple',
   FRIENDS = 'friends',
   PARENTS = 'parents',
+  OFFICE = 'office',
 }
 
 export const commonRequiredQuestions: ITest[] = [

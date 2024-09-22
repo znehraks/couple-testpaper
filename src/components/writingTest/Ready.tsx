@@ -174,6 +174,25 @@ export const Ready = () => {
             </StyledContentDescription>
           </>
         );
+      case 'forOfficeWorker':
+        return (
+          <>
+            <StyledContentDescription>
+              <span
+                style={{
+                  color: '#947463',
+                  fontWeight: 'bold',
+                }}
+              >
+                직장에서의 내 모습
+              </span>
+              을 잘 알고 있는지 테스트하는 문제를 출제해요.
+            </StyledContentDescription>
+            <StyledContentDescription>
+              문제는 <strong>총 10문항</strong> 출제할 수 있어요.
+            </StyledContentDescription>
+          </>
+        );
       default:
         return '';
     }

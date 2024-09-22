@@ -32,7 +32,7 @@ export const EditableText = ({
   isEditable,
   isTwinkle = false,
   onClick,
-  maxLength = 20,
+  maxLength = 30,
 }: EditableTextProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const spanRef = useRef<HTMLSpanElement>(null);

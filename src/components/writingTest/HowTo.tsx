@@ -12,6 +12,7 @@ import { WritingTestStore } from '../../store/WritingTestStore';
 import { commonQuestions, myInfoQuestions } from '@/data/questionnaire/friends';
 import { commonRequiredQuestions } from '@/data/questionnaire/common';
 import { coupleQuestions, coupleRequiredQuestions } from '@/data/questionnaire/couple';
+import { officeCommonQuestions, officeRequiredQuestions } from '@/data/questionnaire/office';
 
 export const HowTo = () => {
   const setStep = useSetAtom(WritingTestStore.StepAtom);
@@ -226,6 +227,23 @@ export const HowTo = () => {
               };
             });
           setQuestions([...commonRequiredQuestions, ...selectedMyInfoQuestions, ...selectedCommonQuestions]);
+        }
+        break;
+      case 'forOfficeWorker':
+        {
+          const selectedCommonQuestions = [...officeCommonQuestions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 10)
+            .map((quest) => {
+              if (quest.choices.length <= 5) {
+                return quest;
+              }
+              return {
+                ...quest,
+                choices: [...quest.choices].sort(() => Math.random() - 0.5).slice(0, 5),
+              };
+            });
+          setQuestions([...officeRequiredQuestions, ...selectedCommonQuestions]);
         }
         break;
       default:

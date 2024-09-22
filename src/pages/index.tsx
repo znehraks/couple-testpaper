@@ -1,6 +1,6 @@
 import { Layout } from '@/components/Layout';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FriendsIcon, HeartIcon, ParentIcon } from '@/components/icons/Icon';
+import { FriendsIcon, HeartIcon, ParentIcon, WorkBagIcon } from '@/components/icons/Icon';
 import { StyledMenu, StyledMenuContainer } from '@/components/writingTest/styles';
 import { WritingTestStore } from '@/store/WritingTestStore';
 import styled from '@emotion/styled';
@@ -47,6 +47,17 @@ export default function Home() {
           >
             <FriendsIcon size={48} fill="#666666" />
             <div>친구고사</div>
+          </StyledMenu>
+          <StyledMenu
+            color="#666666"
+            onClick={() => {
+              setTestTaker('forOfficeWorker');
+              setStep('READY');
+              router.push('/making/office-test');
+            }}
+          >
+            <WorkBagIcon size={48} fill="#947463" />
+            <div>회사고사</div>
           </StyledMenu>
           {/* <StyledMenu
             color="#947463"

@@ -33,6 +33,10 @@ export default function TestMakingTypePage() {
       setStep('READY');
       return;
     }
+    if (router.query.testType === 'office-test') {
+      setStep('READY');
+      return;
+    }
   }, [router.query.testType, setStep]);
 
   // if (isAdOn) {

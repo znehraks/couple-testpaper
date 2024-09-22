@@ -13,7 +13,8 @@ export type TestTaker =
   | 'forCoupleMale'
   | 'forCoupleFemale'
   | 'forChildren'
-  | 'forEachother';
+  | 'forEachother'
+  | 'forOfficeWorker';
 
 const TestTakerAtom = atom<TestTaker | null>(null);
 TestTakerAtom.debugLabel = 'WritingTest/TestTaker';

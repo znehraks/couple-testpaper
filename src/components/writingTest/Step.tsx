@@ -268,7 +268,7 @@ export const Step = ({ onSubmit }: IStepProps) => {
                   <EditableText
                     key={`choice-${currentTestQuestionIndex}-${index}`}
                     initialText={choice}
-                    maxLength={20}
+                    maxLength={40}
                     onTextChange={(newText) => {
                       const _tempChoices = [...tempChoices];
                       _tempChoices[index] = newText;
