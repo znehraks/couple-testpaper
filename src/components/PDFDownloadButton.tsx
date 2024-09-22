@@ -38,6 +38,7 @@ const StyledPdfButton = styled.button<{ visible: boolean }>`
   background-color: #fff;
   z-index: 2;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
+  pointer-events: ${({ visible }) => (visible ? 'auto' : 'none')};
   &:hover {
     box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.2);
   }
